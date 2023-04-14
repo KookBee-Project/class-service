@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-    private String userType;
+public class Teacher {
+    private Long id;
 }

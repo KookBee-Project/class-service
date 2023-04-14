@@ -13,16 +13,13 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter @Setter
 public class ProductRequest {
-    public Long manager_id;
-    public Long student_id;
-    public Date product_rental_start_date;
-    public Date product_rental_end_date;
-    public String product_name;
-    public String product_code;
-    public EProductType product_type;
-    public EProductStatus product_status;
-    public Integer product_count;
-    public ProductRequest(Student student){
-        this.student_id = student.getStudentId();
-    }
+    public Long managerId;
+    public Long studentId;
+    public Date productRentalStartDate;
+    public Date productRentalEndDate;
+    public String productName;
+    public String productCode;
+    public EProductType productType;
+    public EProductStatus productStatus;
+    public Integer productCount;
 }

@@ -15,7 +15,9 @@ public class StudentClass {
     @Column(name = "student_class_id")
     private Long id;
     private Long studentId;
-    private Long classId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_id")
+    private Classes classes;
     // 일단 제거 private String studentClassAttendance;
     //총 출석일
     //현제 출석일

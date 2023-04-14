@@ -18,27 +18,27 @@ public class Product {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     public Long id;
-    public Long manager_id;
-    public Long student_id;
-    public Date product_rental_start_date;
-    public Date product_rental_end_date;
-    public String product_name;
-    public String product_code;
+    public Long managerId;
+    public Long studentId;
+    public Date productRentalStartDate;
+    public Date productRentalEndDate;
+    public String productName;
+    public String productCode;
     @Enumerated(EnumType.STRING)
-    public EProductType product_type;
+    public EProductType productType;
     @Enumerated(EnumType.STRING)
-    public EProductStatus product_status;
-    public Integer product_count;
+    public EProductStatus productStatus;
+    public Integer productCount;
 
     public Product(ProductRequest productRequest) {
-        this.manager_id = productRequest.getManager_id();
-        this.student_id = productRequest.getStudent_id();
-        this.product_rental_start_date = productRequest.getProduct_rental_start_date();
-        this.product_rental_end_date = productRequest.getProduct_rental_end_date();
-        this.product_name = productRequest.getProduct_name();
-        this.product_code = productRequest.getProduct_code();
-        this.product_type = productRequest.getProduct_type();
-        this.product_status = productRequest.getProduct_status();
-        this.product_count = productRequest.getProduct_count();
+        this.managerId = productRequest.getManagerId();
+        this.studentId = productRequest.getStudentId();
+        this.productRentalStartDate = productRequest.getProductRentalStartDate();
+        this.productRentalEndDate = productRequest.getProductRentalEndDate();
+        this.productName = productRequest.getProductName();
+        this.productCode = productRequest.getProductCode();
+        this.productType = productRequest.getProductType();
+        this.productStatus = productRequest.getProductStatus();
+        this.productCount = productRequest.getProductCount();
     }
 }
