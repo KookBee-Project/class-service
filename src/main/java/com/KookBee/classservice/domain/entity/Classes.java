@@ -38,4 +38,5 @@ public class Classes {
         this.classEnterDate = dto.getClassEnterDate();
         this.classStatus = dto.getClassStatus();
     }
+
 }
