@@ -22,6 +22,5 @@ public class HomeworkQuestion {
     private String homeworkQuestionTitle;
     private String homeworkQuestionContent;
     private String homeworkQuestionImage;
-    @OneToMany(mappedBy = "homework_question", fetch = FetchType.LAZY)
-    private String
+
 }

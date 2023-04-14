@@ -20,4 +20,8 @@ public class StudentClass {
     //총 출석일
     //현제 출석일
     private String studentClassStatus;
+
+    public StudentClass(Classes classes){
+        this.classId = classes.getId();
+    }
 }

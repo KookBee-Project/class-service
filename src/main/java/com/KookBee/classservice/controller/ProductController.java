@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
-
     @PostMapping
     public String postProduct(@RequestBody ProductRequest productRequest){
-        return productService.postPorductService(productRequest);
+        return productService.postProductService(productRequest);
     }
-
-
 }
