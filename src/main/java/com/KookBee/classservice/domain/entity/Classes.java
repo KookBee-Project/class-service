@@ -29,6 +29,8 @@ public class Classes {
     private String classEnterDate;
     @Enumerated(EnumType.STRING)
     private EStatus classStatus;
+    @OneToMany(mappedBy = "classes", fetch = FetchType.LAZY)
+    private List<StudentClass> studentClassList;
 
     public Classes(ClassDTO dto) {
         this.companyId = dto.getCompanyId();
