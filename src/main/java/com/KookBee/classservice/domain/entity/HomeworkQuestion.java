@@ -9,21 +9,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-
-public class StudentClass {
+public class HomeworkQuestion {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_class_id")
+    @Column(name = "homework_question_id")
     private Long id;
-    private Long studentId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private Long teacherId;
+    @ManyToOne
     @JoinColumn(name = "class_id")
     private Classes classes;
-    // 일단 제거 private String studentClassAttendance;
-    //총 출석일
-    //현제 출석일
-    private String studentClassStatus;
+    private String homeworkQuestionStartDate;
+    private String homeworkQuestionEndDate;
+    private String homeworkQuestionTitle;
+    private String homeworkQuestionContent;
+    private String homeworkQuestionImage;
 
-    public StudentClass(Classes classes){
-        this.classId = classes.getId();
-    }
 }

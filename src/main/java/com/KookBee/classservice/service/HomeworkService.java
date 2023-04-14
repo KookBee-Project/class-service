@@ -32,8 +32,8 @@ public class HomeworkService {
                 Optional<Classes> findClassesById = classRepository.findById(request.getClassesId());
                 Classes classes = findClassesById.orElseThrow(NullPointerException::new);
                 List<SkillSet> skillSetList = request.getSkillSetIdList().stream().map(el -> skillSetRepository.findById(el).get()).collect(Collectors.toList());
-                HomeworkQuestions homeworkQuestionssssssssssssssss = new HomeworkQuestions(request, userId, classes, skillSetList);
-                return homeworkQuestionRepository.save(homeworkQuestionssssssssssssssss);
+                HomeworkQuestions homeworkQuestions = new HomeworkQuestions(request, userId, classes, skillSetList);
+                return homeworkQuestionRepository.save(homeworkQuestions);
             }catch (Exception e){
                 return null;
             }
