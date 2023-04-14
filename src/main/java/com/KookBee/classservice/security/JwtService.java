@@ -1,7 +1,7 @@
 package com.KookBee.classservice.security;
 
-import com.KookBee.userservice.domain.entity.RefreshToken;
-import com.KookBee.userservice.repository.RefreshTokenRepository;
+import com.KookBee.classservice.domain.entity.RefreshToken;
+import com.KookBee.classservice.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
