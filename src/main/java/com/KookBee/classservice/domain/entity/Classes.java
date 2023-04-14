@@ -1,7 +1,6 @@
 package com.KookBee.classservice.domain.entity;
 
 import com.KookBee.classservice.domain.enums.EStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Class {
+public class Classes {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "class_id")
     private Long id;
