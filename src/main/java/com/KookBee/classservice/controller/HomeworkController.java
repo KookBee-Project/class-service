@@ -4,10 +4,9 @@ import com.KookBee.classservice.domain.entity.HomeworkQuestions;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
 import com.KookBee.classservice.service.HomeworkService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/homework")
@@ -18,5 +17,10 @@ public class HomeworkController {
     @PostMapping
     public HomeworkQuestions createHomework(@RequestBody HomeworkQuestionRequest request){
         return homeworkService.createHomework(request);
+    }
+
+    @GetMapping("/{bootcampId}")
+    public List<HomeworkQuestions> getTeacherHomeworkList(@PathVariable("bootcampId") Long bootcampId) {
+        return homeworkService.getHomeworkList(bootcampId);
     }
 }

@@ -42,7 +42,9 @@ public class Bootcamp {
         this.bootcampEnterDate = dto.getBootcampEnterDate();
         this.bootcampStatus = dto.getBootcampStatus();
     }
+
     public Bootcamp updateStatus(EStatus classStatus) {
+
         this.bootcampStatus = classStatus;
         return this;
     }
