@@ -17,13 +17,13 @@ public class StudentClass {
     private Long studentId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_id")
-    private Classes classes;
+    private Bootcamp bootcamp;
     // 일단 제거 private String studentClassAttendance;
     //총 출석일
     //현제 출석일
     private String studentClassStatus;
 
-    public StudentClass(Classes classes){
-        this.classId = classes.getId();
-    }
+//    public StudentClass(Classes classes){
+//        this.classId = classes.getId();
+//    }
 }

@@ -16,7 +16,7 @@ public class HomeworkQuestion {
     private Long teacherId;
     @ManyToOne
     @JoinColumn(name = "class_id")
-    private Classes classes;
+    private Bootcamp bootcamp;
     private String homeworkQuestionStartDate;
     private String homeworkQuestionEndDate;
     private String homeworkQuestionTitle;

@@ -1,10 +1,5 @@
 package com.KookBee.classservice.domain.request;
 
-import com.KookBee.classservice.domain.entity.Classes;
-import com.KookBee.classservice.domain.entity.SkillSet;
-import com.KookBee.classservice.domain.enums.EStatus;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

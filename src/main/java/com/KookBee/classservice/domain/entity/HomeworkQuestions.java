@@ -20,7 +20,7 @@ public class HomeworkQuestions {
     private Long userId;
     @ManyToOne
     @JoinColumn(name = "class_id")
-    private Classes classes;
+    private Bootcamp bootcamp;
     private String homeworkQuestionStartDate;
     private String homeworkQuestionEndDate;
     private String homeworkQuestionTitle;
@@ -32,9 +32,9 @@ public class HomeworkQuestions {
     private EStatus homeworkStatus = EStatus.PROCEEDING;
 
 
-    public HomeworkQuestions(HomeworkQuestionRequest request, Long userId, Classes classes, List<SkillSet> skillSetList) {
+    public HomeworkQuestions(HomeworkQuestionRequest request, Long userId, Bootcamp bootcamp, List<SkillSet> skillSetList) {
         this.userId = userId;
-        this.classes = classes;
+        this.bootcamp = bootcamp;
         this.homeworkQuestionStartDate = request.getHomeworkQuestionStartDate();
         this.homeworkQuestionEndDate = request.getHomeworkQuestionEndDate();
         this.homeworkQuestionTitle = request.getHomeworkQuestionTitle();
