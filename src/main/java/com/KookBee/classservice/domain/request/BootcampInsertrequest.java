@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class ClassEditRequest {
-    private Long classId;
+public class BootcampInsertrequest {
     private Long companyId;
     private Long campusId;
     private String classTitle;
     private String classDescription;
     private String classStartDate;
     private String classEndDate;
-    private String classEnterDate;
+    private String classEnterCode;
     private EStatus classStatus;
+
 }

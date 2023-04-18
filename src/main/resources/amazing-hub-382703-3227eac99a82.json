@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "amazing-hub-382703",
+  "private_key_id": "3227eac99a828720a43b4441c354cf3ab4da03c3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCgdBZ4UhhkUkcr\ncDNye0AC+sIcJ0l4ETLxF1o5HlXXBmuyP2E7XM6pViN3Q2Z/zidsbOdmooaBdeMs\nlXc4UjkM6cwaTDNkR4Q7tsqgFcSiDB+48XB48NRDwEZv5fyG7Z2yx/HvXjnHmVSV\nbeqjCkijpA6TCv9fRP+mBm2Hq6vjrgOZSUCKbWIQNmzOKoYYgLka6AE+J5I/yjnw\n6/7nC4PnXLf/5rgt3m3a7Q3tioM+KZnCPd82mAL5Wtj+29WCnST0mXOK25GBTE6w\nt2zc0B6hKpWZ4feSYDhsNie826Zrl+we8MOPTnZogITl5oRz/c363X7BTrWC0wT+\nsaOr927XAgMBAAECggEAP6oAFmqgggHBemNRDn4HxobfiRMvjAPq/g0hf+Ng9On3\nxmhueILY/wiOFu6310MhklxdrnQTQX/YjSKbBM5fE5gao16Tz5iux5C+Mimg9Rkx\nZwzpbxtDZcR/TjvnaFQUy9CY1rzA2Ukl7gqIXHuimcdo/wAQlqkGdMY9JGVB1Rrf\n18ZKNYYfttZKoF+h+GE9YWElIkg5BYT/TEtICgs6+sefQurhucppaqO559M33M4t\nYgGMZePFgW4uuuUxd4m0mkzwdgIda6gZyPz1ivHtoPyXaUt9gRngkk3tKNlVfF+M\nNc4pS+rBwVsHqJNsOC1ccFsFiqwGQVefl6O/x298EQKBgQDZfUK8bdxR7ksPcLnc\nvO+HQlOAD6rHZkTxmuqXA0xTXBgyHkm5MISt+9ONKhpmrlpUEwi7kfpy5dVCffj8\nvhS5BeOXrukKuf0fKB8lJS+LLvbkg+ScPqdvVjq69n0KI1mOq/2Nj+rEw2GIYr/Q\nBjDzrnD15Oo9a6SQGxz3rtmhJwKBgQC83Wf3Gx8A35b9bjGEs0mV9jpAhDzCNV4m\nsr93gBXBRdI9Jvk9nacPE9oK8yoZJTbh2yVOBUzEbxn7eyl/4GCWinNCytOTNbvP\nJZuMXwOkzGcqm03sg0N/V2Vno1oBNZeeD+SEOpDwZlZ3fiyAIJTdMhlqbbsjhlh1\nz9Lgjuzy0QKBgCyuZz9+8nyCkDkj14tZ5XvMTItKrLM6d3+LbBaKPuwBR5dEUbES\nHq//xH6D39ioiTYskua2HtXsEdwPNU/3XRqF8zP+YzIo86+q9nsTIKlfhKl9z0Gq\nPYvKE1bFvPqQOJ3vB7BFmN3Dpg32+6EpJHVrqRlbZiQoMS7J4zGfYmaRAoGBAJk5\nAuyt2yRJQWUP7iqbjdqU7cODxQtGYsEAiWd4ya2IaL1mDhUX/v2zfFUf3AqUb4ci\n1IwMrrA69phY3l05ewMHBeWtSaMHl/vBpgVm3Dzp+9TMNJbqE2uPStye4RlUElKQ\n0DMalJYEYKgG/DFivYMK7yWyKn3ys3e5CHtYWRHRAoGBAK4qqzw94DwUeOlW1Lu1\no0gdNTpD7wxmKXmiZKLFXKiU5XOqcDd8oWMIvuQR+tabxZCb+NoMExF/fXxt80MG\nCMXvN6CldrWHtzgvDoKW6uHX/EvISRCfTQUjMvb3XVvXTdGKuzDUxrYHk5QkTcn/\nHcFY83kC+qsfat4GTG/NYQzl\n-----END PRIVATE KEY-----\n",
+  "client_email": "springboot-storage-access@amazing-hub-382703.iam.gserviceaccount.com",
+  "client_id": "111592705364714691231",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/springboot-storage-access%40amazing-hub-382703.iam.gserviceaccount.com"
+}

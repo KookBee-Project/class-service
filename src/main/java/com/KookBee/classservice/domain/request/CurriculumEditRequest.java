@@ -4,11 +4,14 @@ import com.KookBee.classservice.domain.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CurriculumInsertRequest {
+@Setter
+public class CurriculumEditRequest {
+    private Long id;
     private Long classesId;
     private Long teacherId;
     private String curriculumStartDate;
