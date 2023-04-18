@@ -29,8 +29,8 @@ public class HomeworkService {
 //        User user = userServiceClient.getUserById(userId);
 //        if(jwtService.isValidTokens() && user.getUserType() == "TEACHER"){
             try {
-                Optional<Bootcamp> findClassesById = bootcampRepository.findById(request.getClassesId());
-                Bootcamp bootcamp = findClassesById.orElseThrow(NullPointerException::new);
+                Optional<Bootcamp> findBootcampById = bootcampRepository.findById(request.getBootcampId());
+                Bootcamp bootcamp = findBootcampById.orElseThrow(NullPointerException::new);
                 List<SkillSet> skillSetList = request.getSkillSetIdList().stream().map(el -> skillSetRepository.findById(el).get()).collect(Collectors.toList());
                 HomeworkQuestions homeworkQuestions = new HomeworkQuestions(request, userId, bootcamp, skillSetList);
                 return homeworkQuestionRepository.save(homeworkQuestions);

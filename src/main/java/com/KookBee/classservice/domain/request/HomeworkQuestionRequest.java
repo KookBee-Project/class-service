@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class HomeworkQuestionRequest {
-    private Long classesId;
+    private Long bootcampId;
     private String homeworkQuestionStartDate;
     private String homeworkQuestionEndDate;
     private String homeworkQuestionTitle;

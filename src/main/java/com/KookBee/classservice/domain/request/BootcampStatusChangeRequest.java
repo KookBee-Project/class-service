@@ -10,7 +10,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-public class ClassStatusChangeRequest {
-    private Long classId;
-    public EStatus eStatus;
+public class BootcampStatusChangeRequest {
+    private Long bootcampId;
+    public EStatus bootcampStatus;
 }

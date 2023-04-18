@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class BootcampEditRequest {
-    private Long classId;
+    private Long bootcampId;
     private Long companyId;
     private Long campusId;
-    private String classTitle;
-    private String classDescription;
-    private String classStartDate;
-    private String classEndDate;
-    private String classEnterDate;
-    private EStatus classStatus;
+    private String bootcampTitle;
+    private String bootcampDescription;
+    private String bootcampStartDate;
+    private String bootcampEndDate;
+    private String bootcampEnterDate;
+    private EStatus bootcampStatus;
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class CurriculumInsertRequest {
-    private Long classesId;
+    private Long bootcampId;
     private Long teacherId;
     private String curriculumStartDate;
     private String curriculumEndDate;

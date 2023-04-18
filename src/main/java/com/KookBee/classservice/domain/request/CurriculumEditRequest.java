@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class CurriculumEditRequest {
     private Long id;
-    private Long classesId;
+    private Long bootcampId;
     private Long teacherId;
     private String curriculumStartDate;
     private String curriculumEndDate;

@@ -18,7 +18,7 @@ public class CurriculumService {
     private final BootcampRepository bootcampRepository;
 
     public Curriculum insertCurriculum (CurriculumInsertRequest request) {
-        Bootcamp bootcamp = bootcampRepository.findById(request.getClassesId()).orElse(null);
+        Bootcamp bootcamp = bootcampRepository.findById(request.getBootcampId()).orElse(null);
         Curriculum curriculum = new Curriculum(request, bootcamp);
         return curriculumRepository.save(curriculum);
     }
