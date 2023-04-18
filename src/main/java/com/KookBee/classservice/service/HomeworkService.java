@@ -40,4 +40,21 @@ public class HomeworkService {
 //        }
 //        return null;
     }
+
+    public List<HomeworkQuestions> getHomeworkList(Long bootcampId) {
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+//        User user = userServiceClient.getUserById(userId);
+//        if(jwtService.isValidTokens() && user.getUserType() == "TEACHER"){
+        try{
+            Optional<Classes> findById = classRepository.findById(bootcampId);
+            Classes classes = findById.orElseThrow(NullPointerException::new);
+            Optional<List<HomeworkQuestions>> findByBootcampId = homeworkQuestionRepository.findAllByClasses(classes);
+            List<HomeworkQuestions> response = findByBootcampId.orElseThrow(NullPointerException::new);
+            return response;
+            } catch (Exception e) {
+                return null;
+            }
+//        }
+//        return null;
+    }
 }

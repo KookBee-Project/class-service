@@ -42,7 +42,23 @@ public class Bootcamp {
         this.classEnterDate = dto.getClassEnterDate();
         this.classStatus = dto.getClassStatus();
     }
+<<<<<<< HEAD:src/main/java/com/KookBee/classservice/domain/entity/Classes.java
+
+    public Classes(Classes orDefault) {
+        this.companyId = orDefault.getCompanyId();
+        this.campusId = orDefault.getCampusId();
+        this.classTitle = orDefault.getClassTitle();
+        this.classDescription = orDefault.getClassDescription();
+        this.classStartDate = orDefault.getClassStartDate();
+        this.classEndDate = orDefault.getClassEnterDate();
+        this.classEnterDate = orDefault.getClassEnterDate();
+        this.classStatus = orDefault.getClassStatus();
+    }
+
+    public Classes updateStatus(EStatus classStatus) {
+=======
     public Bootcamp updateStatus(EStatus classStatus) {
+>>>>>>> dev:src/main/java/com/KookBee/classservice/domain/entity/Bootcamp.java
         this.classStatus = classStatus;
         return this;
     }
