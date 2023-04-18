@@ -17,7 +17,7 @@ public class Curriculum {
     @Column(name = "curriculum_id")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "class_id")
+    @JoinColumn(name = "bootcamp_id")
     private Bootcamp bootcamp;
     private Long teacherId;
     private String curriculumStartDate;

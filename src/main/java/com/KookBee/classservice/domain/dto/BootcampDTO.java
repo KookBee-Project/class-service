@@ -2,7 +2,7 @@ package com.KookBee.classservice.domain.dto;
 
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.enums.EStatus;
-import com.KookBee.classservice.domain.request.BootcampInsertrequest;
+import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import lombok.*;
 
 @AllArgsConstructor
@@ -12,31 +12,31 @@ import lombok.*;
 public class BootcampDTO {
     private Long companyId;
     private Long campusId;
-    private String classTitle;
-    private String classDescription;
-    private String classStartDate;
-    private String classEndDate;
-    private String classEnterDate;
-    private EStatus classStatus;
+    private String bootcampTitle;
+    private String bootcampDescription;
+    private String bootcampStartDate;
+    private String bootcampEndDate;
+    private String bootcampEnterDate;
+    private EStatus bootcampStatus;
 
-    public BootcampDTO(BootcampInsertrequest request) {
+    public BootcampDTO(BootcampInsertRequest request) {
         this.companyId = request.getCompanyId();
         this.campusId = request.getCampusId();
-        this.classTitle = request.getClassTitle();
-        this.classDescription = request.getClassDescription();
-        this.classStartDate = request.getClassStartDate();
-        this.classEndDate = request.getClassEnterCode();
-        this.classEnterDate = request.getClassEnterCode();
-        this.classStatus = request.getClassStatus();
+        this.bootcampTitle = request.getBootcampTitle();
+        this.bootcampDescription = request.getBootcampDescription();
+        this.bootcampStartDate = request.getBootcampStartDate();
+        this.bootcampEndDate = request.getBootcampEnterCode();
+        this.bootcampEnterDate = request.getBootcampEnterCode();
+        this.bootcampStatus = request.getBootcampStatus();
     }
     public BootcampDTO(Bootcamp bootcamp) {
         this.companyId = bootcamp.getCompanyId();
         this.campusId = bootcamp.getCampusId();
-        this.classTitle = bootcamp.getClassTitle();
-        this.classDescription = bootcamp.getClassDescription();
-        this.classStartDate = bootcamp.getClassStartDate();
-        this.classEndDate = bootcamp.getClassEnterDate();
-        this.classEnterDate = bootcamp.getClassEnterDate();
-        this.classStatus = bootcamp.getClassStatus();
+        this.bootcampTitle = bootcamp.getBootcampTitle();
+        this.bootcampDescription = bootcamp.getBootcampDescription();
+        this.bootcampStartDate = bootcamp.getBootcampStartDate();
+        this.bootcampEndDate = bootcamp.getBootcampEnterDate();
+        this.bootcampEnterDate = bootcamp.getBootcampEnterDate();
+        this.bootcampStatus = bootcamp.getBootcampStatus();
     }
 }

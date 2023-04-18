@@ -20,42 +20,42 @@ public class Bootcamp {
     private Long id;
     private Long companyId;
     private Long campusId;
-    private String classTitle;
-    private String classDescription;
+    private String bootcampTitle;
+    private String bootcampDescription;
     @OneToMany (mappedBy = "bootcamp", fetch = FetchType.LAZY)
     private List<Curriculum> curriculumList;
-    private String classStartDate;
-    private String classEndDate;
-    private String classEnterDate;
+    private String bootcampStartDate;
+    private String bootcampEndDate;
+    private String bootcampEnterDate;
     @Enumerated(EnumType.STRING)
-    private EStatus classStatus;
+    private EStatus bootcampStatus;
     @OneToMany(mappedBy = "bootcamp", fetch = FetchType.LAZY)
-    private List<StudentClass> studentClassList;
+    private List<StudentBootcamp> studentBootcampList;
 
     public Bootcamp(BootcampDTO dto) {
         this.companyId = dto.getCompanyId();
         this.campusId = dto.getCampusId();
-        this.classTitle = dto.getClassTitle();
-        this.classDescription = dto.getClassDescription();
-        this.classStartDate = dto.getClassStartDate();
-        this.classEndDate = dto.getClassEnterDate();
-        this.classEnterDate = dto.getClassEnterDate();
-        this.classStatus = dto.getClassStatus();
+        this.bootcampTitle = dto.getBootcampTitle();
+        this.bootcampDescription = dto.getBootcampDescription();
+        this.bootcampStartDate = dto.getBootcampStartDate();
+        this.bootcampEndDate = dto.getBootcampEnterDate();
+        this.bootcampEnterDate = dto.getBootcampEnterDate();
+        this.bootcampStatus = dto.getBootcampStatus();
     }
     public Bootcamp updateStatus(EStatus classStatus) {
-        this.classStatus = classStatus;
+        this.bootcampStatus = classStatus;
         return this;
     }
-    public Bootcamp updateClasses(BootcampEditRequest request) {
-        this.id = request.getClassId();
+    public Bootcamp updateBootcamp(BootcampEditRequest request) {
+        this.id = request.getBootcampId();
         this.companyId = request.getCompanyId();
         this.campusId = request.getCampusId();
-        this.classTitle = request.getClassTitle();
-        this.classDescription = request.getClassDescription();
-        this.classStartDate = request.getClassStartDate();
-        this.classEndDate = request.getClassEnterDate();
-        this.classEnterDate = request.getClassEnterDate();
-        this.classStatus = request.getClassStatus();
+        this.bootcampTitle = request.getBootcampTitle();
+        this.bootcampDescription = request.getBootcampDescription();
+        this.bootcampStartDate = request.getBootcampStartDate();
+        this.bootcampEndDate = request.getBootcampEnterDate();
+        this.bootcampEnterDate = request.getBootcampEnterDate();
+        this.bootcampStatus = request.getBootcampStatus();
         return this;
     }
 }
