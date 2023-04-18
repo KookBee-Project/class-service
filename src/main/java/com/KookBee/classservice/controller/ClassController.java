@@ -9,6 +9,8 @@ import com.KookBee.classservice.service.ClassService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("classes")
 @RequiredArgsConstructor
@@ -29,4 +31,9 @@ public class ClassController {
     public Classes updateClass(@RequestBody ClassEditRequest request){
         return classService.updateClass(request);
     }
+    @GetMapping("/teacher")
+    public List<Classes> getClassByTeacherId(){
+        return classService.getClassesByTeacherId();
+    }
+
 }

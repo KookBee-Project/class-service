@@ -42,6 +42,18 @@ public class Classes {
         this.classEnterDate = dto.getClassEnterDate();
         this.classStatus = dto.getClassStatus();
     }
+
+    public Classes(Classes orDefault) {
+        this.companyId = orDefault.getCompanyId();
+        this.campusId = orDefault.getCampusId();
+        this.classTitle = orDefault.getClassTitle();
+        this.classDescription = orDefault.getClassDescription();
+        this.classStartDate = orDefault.getClassStartDate();
+        this.classEndDate = orDefault.getClassEnterDate();
+        this.classEnterDate = orDefault.getClassEnterDate();
+        this.classStatus = orDefault.getClassStatus();
+    }
+
     public Classes updateStatus(EStatus classStatus) {
         this.classStatus = classStatus;
         return this;
