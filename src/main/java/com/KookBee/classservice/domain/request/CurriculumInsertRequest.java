@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class CurriculumInsertRequest {
     private Long bootcampId;
-    private Long teacherId;
+    private String teacherEmail;
     private String curriculumStartDate;
     private String curriculumEndDate;
     private EStatus curriculumStatus;

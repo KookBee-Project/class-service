@@ -1,5 +1,7 @@
 package com.KookBee.classservice.service;
 
+import com.KookBee.classservice.client.User;
+import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.request.CurriculumEditRequest;
@@ -16,10 +18,12 @@ import java.util.Optional;
 public class CurriculumService {
     private final CurriculumRepository curriculumRepository;
     private final BootcampRepository bootcampRepository;
+    private final UserServiceClient userServiceClient;
 
     public Curriculum insertCurriculum (CurriculumInsertRequest request) {
         Bootcamp bootcamp = bootcampRepository.findById(request.getBootcampId()).orElse(null);
-        Curriculum curriculum = new Curriculum(request, bootcamp);
+        User user = userServiceClient.getUserByEmail(request.getTeacherEmail());
+        Curriculum curriculum = new Curriculum(request, bootcamp, user.getId());
         return curriculumRepository.save(curriculum);
     }
 
