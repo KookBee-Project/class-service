@@ -43,9 +43,9 @@ public class Bootcamp {
         this.bootcampStatus = dto.getBootcampStatus();
     }
 
-    public Bootcamp updateStatus(EStatus classStatus) {
+    public Bootcamp updateStatus(EStatus bootcampStatus) {
 
-        this.bootcampStatus = classStatus;
+        this.bootcampStatus = bootcampStatus;
         return this;
     }
     public Bootcamp updateBootcamp(BootcampEditRequest request) {
