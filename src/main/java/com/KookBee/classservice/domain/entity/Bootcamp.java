@@ -43,6 +43,17 @@ public class Bootcamp {
         this.bootcampStatus = dto.getBootcampStatus();
     }
 
+    public Bootcamp(Bootcamp orDefault) {
+        this.companyId = orDefault.getCompanyId();
+        this.campusId = orDefault.getCampusId();
+        this.bootcampTitle = orDefault.getBootcampTitle();
+        this.bootcampDescription = orDefault.getBootcampDescription();
+        this.bootcampStartDate = orDefault.getBootcampStartDate();
+        this.bootcampEndDate = orDefault.getBootcampEnterDate();
+        this.bootcampEnterDate = orDefault.getBootcampEnterDate();
+        this.bootcampStatus = orDefault.getBootcampStatus();
+    }
+
     public Bootcamp updateStatus(EStatus bootcampStatus) {
 
         this.bootcampStatus = bootcampStatus;

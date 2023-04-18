@@ -9,6 +9,8 @@ import com.KookBee.classservice.service.BootcampService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/bootcamp")
 @RequiredArgsConstructor
@@ -30,4 +32,10 @@ public class BootcampController {
     public Bootcamp updateBootcamp(@RequestBody BootcampEditRequest request){
         return bootcampService.updateBootcamp(request);
     }
+
+    @GetMapping
+    public List<Bootcamp> getBootcampListByTeacherId(){
+        return bootcampService.getBootcampByTeacherId();
+    }
+
 }

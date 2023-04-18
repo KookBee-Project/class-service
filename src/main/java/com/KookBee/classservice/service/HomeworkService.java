@@ -48,7 +48,7 @@ public class HomeworkService {
         try{
             Optional<Bootcamp> findById = bootcampRepository.findById(bootcampId);
             Bootcamp bootcamp = findById.orElseThrow(NullPointerException::new);
-            Optional<List<HomeworkQuestions>> findByBootcampId = homeworkQuestionRepository.findAllByBootcamp(bootcamp);
+            Optional<List<HomeworkQuestions>> findByBootcampId = homeworkQuestionRepository.findByBootcamp(bootcamp);
             List<HomeworkQuestions> response = findByBootcampId.orElseThrow(NullPointerException::new);
             return response;
             } catch (Exception e) {

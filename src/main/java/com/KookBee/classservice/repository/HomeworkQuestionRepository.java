@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface HomeworkQuestionRepository extends JpaRepository<HomeworkQuestions, Long> {
-    Optional<List<HomeworkQuestions>> findAllByBootcamp(Bootcamp bootcamp);
+    Optional<List<HomeworkQuestions>> findByBootcamp(Bootcamp bootcamp);
 }
