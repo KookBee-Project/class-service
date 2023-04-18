@@ -1,10 +1,10 @@
 package com.KookBee.classservice.service;
 
-import com.KookBee.classservice.domain.entity.Classes;
+import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.HomeworkQuestions;
 import com.KookBee.classservice.domain.entity.SkillSet;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
-import com.KookBee.classservice.repository.ClassRepository;
+import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.HomeworkQuestionRepository;
 import com.KookBee.classservice.repository.SkillSetRepository;
 import com.KookBee.classservice.security.JwtService;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class HomeworkService {
 
     private final HomeworkQuestionRepository homeworkQuestionRepository;
-    private final ClassRepository classRepository;
+    private final BootcampRepository bootcampRepository;
     private final SkillSetRepository skillSetRepository;
     private final JwtService jwtService;
 
@@ -29,10 +29,10 @@ public class HomeworkService {
 //        User user = userServiceClient.getUserById(userId);
 //        if(jwtService.isValidTokens() && user.getUserType() == "TEACHER"){
             try {
-                Optional<Classes> findClassesById = classRepository.findById(request.getClassesId());
-                Classes classes = findClassesById.orElseThrow(NullPointerException::new);
+                Optional<Bootcamp> findClassesById = bootcampRepository.findById(request.getClassesId());
+                Bootcamp bootcamp = findClassesById.orElseThrow(NullPointerException::new);
                 List<SkillSet> skillSetList = request.getSkillSetIdList().stream().map(el -> skillSetRepository.findById(el).get()).collect(Collectors.toList());
-                HomeworkQuestions homeworkQuestions = new HomeworkQuestions(request, userId, classes, skillSetList);
+                HomeworkQuestions homeworkQuestions = new HomeworkQuestions(request, userId, bootcamp, skillSetList);
                 return homeworkQuestionRepository.save(homeworkQuestions);
             }catch (Exception e){
                 return null;

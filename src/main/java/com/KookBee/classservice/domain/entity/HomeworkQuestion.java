@@ -1,20 +1,26 @@
-package com.KookBee.classservice.domain.request;
+package com.KookBee.classservice.domain.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class HomeworkQuestionRequest {
-    private Long classesId;
+public class HomeworkQuestion {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "homework_question_id")
+    private Long id;
+    private Long teacherId;
+    @ManyToOne
+    @JoinColumn(name = "class_id")
+    private Bootcamp bootcamp;
     private String homeworkQuestionStartDate;
     private String homeworkQuestionEndDate;
     private String homeworkQuestionTitle;
     private String homeworkQuestionContent;
     private String homeworkQuestionImage;
-    private List<Long> skillSetIdList;
+
 }

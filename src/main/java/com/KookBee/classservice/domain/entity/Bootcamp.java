@@ -1,8 +1,8 @@
 package com.KookBee.classservice.domain.entity;
 
-import com.KookBee.classservice.domain.dto.ClassDTO;
+import com.KookBee.classservice.domain.dto.BootcampDTO;
 import com.KookBee.classservice.domain.enums.EStatus;
-import com.KookBee.classservice.domain.request.ClassEditRequest;
+import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Classes {
+public class Bootcamp {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "class_id")
     private Long id;
@@ -22,17 +22,17 @@ public class Classes {
     private Long campusId;
     private String classTitle;
     private String classDescription;
-    @OneToMany (fetch = FetchType.LAZY)
+    @OneToMany (mappedBy = "bootcamp", fetch = FetchType.LAZY)
     private List<Curriculum> curriculumList;
     private String classStartDate;
     private String classEndDate;
     private String classEnterDate;
     @Enumerated(EnumType.STRING)
     private EStatus classStatus;
-    @OneToMany(mappedBy = "classes", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "bootcamp", fetch = FetchType.LAZY)
     private List<StudentClass> studentClassList;
 
-    public Classes(ClassDTO dto) {
+    public Bootcamp(BootcampDTO dto) {
         this.companyId = dto.getCompanyId();
         this.campusId = dto.getCampusId();
         this.classTitle = dto.getClassTitle();
@@ -42,6 +42,7 @@ public class Classes {
         this.classEnterDate = dto.getClassEnterDate();
         this.classStatus = dto.getClassStatus();
     }
+<<<<<<< HEAD:src/main/java/com/KookBee/classservice/domain/entity/Classes.java
 
     public Classes(Classes orDefault) {
         this.companyId = orDefault.getCompanyId();
@@ -55,10 +56,13 @@ public class Classes {
     }
 
     public Classes updateStatus(EStatus classStatus) {
+=======
+    public Bootcamp updateStatus(EStatus classStatus) {
+>>>>>>> dev:src/main/java/com/KookBee/classservice/domain/entity/Bootcamp.java
         this.classStatus = classStatus;
         return this;
     }
-    public Classes updateClasses(ClassEditRequest request) {
+    public Bootcamp updateClasses(BootcampEditRequest request) {
         this.id = request.getClassId();
         this.companyId = request.getCompanyId();
         this.campusId = request.getCampusId();
