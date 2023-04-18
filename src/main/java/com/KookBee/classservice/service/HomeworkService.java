@@ -46,9 +46,9 @@ public class HomeworkService {
 //        User user = userServiceClient.getUserById(userId);
 //        if(jwtService.isValidTokens() && user.getUserType() == "TEACHER"){
         try{
-            Optional<Classes> findById = classRepository.findById(bootcampId);
-            Classes classes = findById.orElseThrow(NullPointerException::new);
-            Optional<List<HomeworkQuestions>> findByBootcampId = homeworkQuestionRepository.findAllByClasses(classes);
+            Optional<Bootcamp> findById = bootcampRepository.findById(bootcampId);
+            Bootcamp bootcamp = findById.orElseThrow(NullPointerException::new);
+            Optional<List<HomeworkQuestions>> findByBootcampId = homeworkQuestionRepository.findAllByBootcamp(bootcamp);
             List<HomeworkQuestions> response = findByBootcampId.orElseThrow(NullPointerException::new);
             return response;
             } catch (Exception e) {
