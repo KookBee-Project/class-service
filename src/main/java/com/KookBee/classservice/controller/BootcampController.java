@@ -18,7 +18,7 @@ public class BootcampController {
     //class 가
     // 강사가 등록되어 있는 지  확인은 여기서 하는거 아님
     private final BootcampService bootcampService;
-    @PostMapping()
+    @PostMapping
     public Bootcamp createBootcamp(@RequestBody BootcampInsertRequest request) {
         return bootcampService.createClass(request);
     }
@@ -28,9 +28,14 @@ public class BootcampController {
     public String updateBootcampStatus(@RequestBody BootcampStatusChangeRequest request) {
         return bootcampService.updateBootcampStatus(request);
     }
-    @PutMapping()
+    @PutMapping
     public Bootcamp updateBootcamp(@RequestBody BootcampEditRequest request){
         return bootcampService.updateBootcamp(request);
+    }
+
+    @GetMapping("/manager")
+    public List<Bootcamp> getBootcampByManagerId() {
+        return bootcampService.getBootcampByManagerId();
     }
 
     @GetMapping

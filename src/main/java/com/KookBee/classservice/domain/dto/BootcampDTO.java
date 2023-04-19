@@ -19,14 +19,14 @@ public class BootcampDTO {
     private String bootcampEnterDate;
     private EStatus bootcampStatus;
 
-    public BootcampDTO(BootcampInsertRequest request) {
+    public BootcampDTO(BootcampInsertRequest request, String enterCode) {
         this.companyId = request.getCompanyId();
         this.campusId = request.getCampusId();
         this.bootcampTitle = request.getBootcampTitle();
         this.bootcampDescription = request.getBootcampDescription();
         this.bootcampStartDate = request.getBootcampStartDate();
-        this.bootcampEndDate = request.getBootcampEnterCode();
-        this.bootcampEnterDate = request.getBootcampEnterCode();
+        this.bootcampEndDate = request.getBootcampEndDate();
+        this.bootcampEnterDate = enterCode;
         this.bootcampStatus = request.getBootcampStatus();
     }
     public BootcampDTO(Bootcamp bootcamp) {

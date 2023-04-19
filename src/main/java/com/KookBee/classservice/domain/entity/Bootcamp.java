@@ -20,6 +20,7 @@ public class Bootcamp {
     private Long id;
     private Long companyId;
     private Long campusId;
+    private Long managerId; // userId
     private String bootcampTitle;
     private String bootcampDescription;
     @OneToMany (mappedBy = "bootcamp", fetch = FetchType.LAZY)
@@ -32,9 +33,10 @@ public class Bootcamp {
     @OneToMany(mappedBy = "bootcamp", fetch = FetchType.LAZY)
     private List<StudentBootcamp> studentBootcampList;
 
-    public Bootcamp(BootcampDTO dto) {
+    public Bootcamp(BootcampDTO dto, Long userId) {
         this.companyId = dto.getCompanyId();
         this.campusId = dto.getCampusId();
+        this.managerId = userId;
         this.bootcampTitle = dto.getBootcampTitle();
         this.bootcampDescription = dto.getBootcampDescription();
         this.bootcampStartDate = dto.getBootcampStartDate();
@@ -59,10 +61,11 @@ public class Bootcamp {
         this.bootcampStatus = bootcampStatus;
         return this;
     }
-    public Bootcamp updateBootcamp(BootcampEditRequest request) {
+    public Bootcamp updateBootcamp(BootcampEditRequest request, Long userId) {
         this.id = request.getBootcampId();
         this.companyId = request.getCompanyId();
         this.campusId = request.getCampusId();
+        this.managerId = userId;
         this.bootcampTitle = request.getBootcampTitle();
         this.bootcampDescription = request.getBootcampDescription();
         this.bootcampStartDate = request.getBootcampStartDate();

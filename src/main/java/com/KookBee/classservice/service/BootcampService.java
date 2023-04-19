@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +25,19 @@ public class BootcampService {
     private final JwtService jwtService;
 
     public Bootcamp createClass(BootcampInsertRequest request) {
-        BootcampDTO dto = new BootcampDTO(request);
-        Bootcamp bootcamp = new Bootcamp(dto);
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        StringBuilder enterCode = new StringBuilder();
+        for (int i = 1;i<=10;i++){
+            char ch;
+            if(i<=6){
+                ch = (char) ((Math.random() * 26) + 65);
+            }else {
+                ch = (char) ((Math.random() * 10) + 48);
+            }
+            enterCode.append(Character.toString(ch));
+        }
+        BootcampDTO dto = new BootcampDTO(request, enterCode.toString());
+        Bootcamp bootcamp = new Bootcamp(dto, userId);
         return bootcampRepository.save(bootcamp);
 
     }
@@ -39,10 +51,17 @@ public class BootcampService {
     }
 
     public Bootcamp updateBootcamp(BootcampEditRequest request) {
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         Bootcamp bootcamp = bootcampRepository.findById(request.getBootcampId()).orElse(null);
         assert bootcamp != null;
-        bootcampRepository.save(bootcamp.updateBootcamp(request));
+        bootcampRepository.save(bootcamp.updateBootcamp(request, userId));
         return bootcamp;
+    }
+
+    public List<Bootcamp> getBootcampByManagerId() {
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        List<Bootcamp> bootcampList = bootcampRepository.findByManagerId(userId);
+        return bootcampList;
     }
 
     public List<Bootcamp> getBootcampByTeacherId() {
@@ -66,4 +85,5 @@ public class BootcampService {
         }
         return null;
     }
+
 }
