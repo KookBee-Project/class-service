@@ -27,7 +27,7 @@ public class Bootcamp {
     private List<Curriculum> curriculumList;
     private String bootcampStartDate;
     private String bootcampEndDate;
-    private String bootcampEnterDate;
+    private String bootcampEnterCode;
     @Enumerated(EnumType.STRING)
     private EStatus bootcampStatus;
     @OneToMany(mappedBy = "bootcamp", fetch = FetchType.LAZY)
@@ -40,8 +40,8 @@ public class Bootcamp {
         this.bootcampTitle = dto.getBootcampTitle();
         this.bootcampDescription = dto.getBootcampDescription();
         this.bootcampStartDate = dto.getBootcampStartDate();
-        this.bootcampEndDate = dto.getBootcampEnterDate();
-        this.bootcampEnterDate = dto.getBootcampEnterDate();
+        this.bootcampEndDate = dto.getBootcampEndDate();
+        this.bootcampEnterCode = dto.getBootcampEnterCode();
         this.bootcampStatus = dto.getBootcampStatus();
     }
 
@@ -51,8 +51,8 @@ public class Bootcamp {
         this.bootcampTitle = orDefault.getBootcampTitle();
         this.bootcampDescription = orDefault.getBootcampDescription();
         this.bootcampStartDate = orDefault.getBootcampStartDate();
-        this.bootcampEndDate = orDefault.getBootcampEnterDate();
-        this.bootcampEnterDate = orDefault.getBootcampEnterDate();
+        this.bootcampEndDate = orDefault.getBootcampEndDate();
+        this.bootcampEnterCode = orDefault.getBootcampEnterCode();
         this.bootcampStatus = orDefault.getBootcampStatus();
     }
 
@@ -70,7 +70,7 @@ public class Bootcamp {
         this.bootcampDescription = request.getBootcampDescription();
         this.bootcampStartDate = request.getBootcampStartDate();
         this.bootcampEndDate = request.getBootcampEnterDate();
-        this.bootcampEnterDate = request.getBootcampEnterDate();
+        this.bootcampEnterCode = request.getBootcampEnterDate();
         this.bootcampStatus = request.getBootcampStatus();
         return this;
     }

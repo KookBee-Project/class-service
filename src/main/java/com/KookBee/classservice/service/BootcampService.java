@@ -1,11 +1,14 @@
 package com.KookBee.classservice.service;
 
+import com.KookBee.classservice.client.Campus;
+import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.dto.BootcampDTO;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
+import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.CurriculumRepository;
 import com.KookBee.classservice.security.JwtService;
@@ -16,12 +19,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BootcampService {
     private final BootcampRepository bootcampRepository;
     private final CurriculumRepository curriculumRepository;
+    private final UserServiceClient userServiceClient;
     private final JwtService jwtService;
 
     public Bootcamp createClass(BootcampInsertRequest request) {
@@ -58,10 +63,14 @@ public class BootcampService {
         return bootcamp;
     }
 
-    public List<Bootcamp> getBootcampByManagerId() {
+    public List<ManagerBootcampListResponse> getBootcampByManagerId() {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         List<Bootcamp> bootcampList = bootcampRepository.findByManagerId(userId);
-        return bootcampList;
+        List<ManagerBootcampListResponse> response = bootcampList.stream().map(el -> {
+            Campus campusName = userServiceClient.getCampusById(el.getCampusId());
+            return new ManagerBootcampListResponse(el, campusName.getCampusName());
+        }).collect(Collectors.toList());
+        return response;
     }
 
     public List<Bootcamp> getBootcampByTeacherId() {
@@ -86,4 +95,9 @@ public class BootcampService {
         return null;
     }
 
+    public Bootcamp getBootcampById(Long bootcampId) {
+        Optional<Bootcamp> findById = bootcampRepository.findById(bootcampId);
+        Bootcamp bootcamp = findById.orElseThrow(NullPointerException::new);
+        return bootcamp;
+    }
 }

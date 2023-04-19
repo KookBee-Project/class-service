@@ -21,4 +21,5 @@ public class CurriculumController {
     public Curriculum updateCurriculum(@RequestBody CurriculumEditRequest request){
         return curriculumService.updateCurriculum(request);
     }
+
 }
