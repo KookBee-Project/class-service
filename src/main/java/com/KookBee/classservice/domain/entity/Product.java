@@ -20,6 +20,7 @@ public class Product {
     public Long id;
     public Long managerId;
     public Long studentId;
+    private String bootcampTitle;
     public Date productRentalStartDate;
     public Date productRentalEndDate;
     public String productName;
@@ -40,5 +41,6 @@ public class Product {
         this.productType = productRequest.getProductType();
         this.productStatus = productRequest.getProductStatus();
         this.productCount = productRequest.getProductCount();
+        this.bootcampTitle = productRequest.getBootcampTitle();
     }
 }
