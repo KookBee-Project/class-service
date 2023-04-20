@@ -1,10 +1,8 @@
 package com.KookBee.classservice.repository;
 
-import com.KookBee.classservice.domain.entity.Vacation;
+import com.KookBee.classservice.domain.entity.DayOff;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
-public interface VacationRepository extends JpaRepository<Vacation,Long> {
+public interface DayOffRepository extends JpaRepository<DayOff,Long> {
 //    Optional<Vacation> findByCurriculumName(String curriculumId);
 }

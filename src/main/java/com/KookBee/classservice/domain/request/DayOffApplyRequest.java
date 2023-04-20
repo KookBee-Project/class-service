@@ -10,8 +10,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class VacationApplyRequest {
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private String reason;
+public class DayOffApplyRequest {
+    private String dayOffStartDate;
+    private String dayOffEndDate;
+    private String dayOffReason;
+    private Long bootcampId;
 }

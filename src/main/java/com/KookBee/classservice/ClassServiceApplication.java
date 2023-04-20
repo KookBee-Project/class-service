@@ -17,6 +17,7 @@ public class ClassServiceApplication {
 		SpringApplication.run(ClassServiceApplication.class, args);
 	}
 
+	// cors 해결법-----------
 	@Bean
 	public WebMvcConfigurer corsConfigure(){
 		return new WebMvcConfigurer() {
@@ -30,4 +31,5 @@ public class ClassServiceApplication {
 			}
 		};
 	}
+	//----------------------------
 }
