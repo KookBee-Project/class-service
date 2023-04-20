@@ -3,11 +3,13 @@ package com.KookBee.classservice.domain.entity;
 import com.KookBee.classservice.domain.dto.BootcampDTO;
 import com.KookBee.classservice.domain.enums.EStatus;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -23,6 +25,7 @@ public class Bootcamp {
     private Long managerId; // userId
     private String bootcampTitle;
     private String bootcampDescription;
+    @JsonIgnore
     @OneToMany (mappedBy = "bootcamp", fetch = FetchType.LAZY)
     private List<Curriculum> curriculumList;
     private String bootcampStartDate;
@@ -30,6 +33,7 @@ public class Bootcamp {
     private String bootcampEnterCode;
     @Enumerated(EnumType.STRING)
     private EStatus bootcampStatus;
+    @JsonIgnore
     @OneToMany(mappedBy = "bootcamp", fetch = FetchType.LAZY)
     private List<StudentBootcamp> studentBootcampList;
 
@@ -54,6 +58,10 @@ public class Bootcamp {
         this.bootcampEndDate = orDefault.getBootcampEndDate();
         this.bootcampEnterCode = orDefault.getBootcampEnterCode();
         this.bootcampStatus = orDefault.getBootcampStatus();
+    }
+
+    public Bootcamp(Long bootcampId) {
+        this.id = bootcampId;
     }
 
     public Bootcamp updateStatus(EStatus bootcampStatus) {
