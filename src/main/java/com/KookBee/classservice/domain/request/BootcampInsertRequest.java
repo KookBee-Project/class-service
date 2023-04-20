@@ -15,7 +15,6 @@ public class BootcampInsertRequest {
     private String bootcampDescription;
     private String bootcampStartDate;
     private String bootcampEndDate;
-    private String bootcampEnterCode;
     private EStatus bootcampStatus;
 
 }

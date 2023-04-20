@@ -16,17 +16,17 @@ public class BootcampDTO {
     private String bootcampDescription;
     private String bootcampStartDate;
     private String bootcampEndDate;
-    private String bootcampEnterDate;
+    private String bootcampEnterCode;
     private EStatus bootcampStatus;
 
-    public BootcampDTO(BootcampInsertRequest request) {
+    public BootcampDTO(BootcampInsertRequest request, String enterCode) {
         this.companyId = request.getCompanyId();
         this.campusId = request.getCampusId();
         this.bootcampTitle = request.getBootcampTitle();
         this.bootcampDescription = request.getBootcampDescription();
         this.bootcampStartDate = request.getBootcampStartDate();
-        this.bootcampEndDate = request.getBootcampEnterCode();
-        this.bootcampEnterDate = request.getBootcampEnterCode();
+        this.bootcampEndDate = request.getBootcampEndDate();
+        this.bootcampEnterCode = enterCode;
         this.bootcampStatus = request.getBootcampStatus();
     }
     public BootcampDTO(Bootcamp bootcamp) {
@@ -35,8 +35,8 @@ public class BootcampDTO {
         this.bootcampTitle = bootcamp.getBootcampTitle();
         this.bootcampDescription = bootcamp.getBootcampDescription();
         this.bootcampStartDate = bootcamp.getBootcampStartDate();
-        this.bootcampEndDate = bootcamp.getBootcampEnterDate();
-        this.bootcampEnterDate = bootcamp.getBootcampEnterDate();
+        this.bootcampEndDate = bootcamp.getBootcampEndDate();
+        this.bootcampEnterCode = bootcamp.getBootcampEnterCode();
         this.bootcampStatus = bootcamp.getBootcampStatus();
     }
 }
