@@ -10,7 +10,7 @@ spring:
         project-id: {amazing-hub-382703}
         bucket: kookbee-test-strorage
   datasource:
-    url: jdbc:mysql://34.22.69.46:3306/kookbee_class?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://34.22.69.46:3306/kookbee_bootcamp?serverTimezone=Asia/Seoul
     username: bee
     password: 1q2w3e4r
   jpa:
@@ -23,7 +23,7 @@ spring:
         default_batch_fetch_size: 100
   data:
     redis:
-      host: 34.64.173.178
+      host: 35.205.7.177
       port: 6379
   application:
     name: class-service
@@ -36,6 +36,7 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://34.64.69.238:8761/eureka
+#      defaultZone: http://127.0.0.1:8761/eureka
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
