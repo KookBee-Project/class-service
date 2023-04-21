@@ -40,5 +40,6 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
     preferIpAddress: true
+    ip-address: 34.22.69.46
 
 
