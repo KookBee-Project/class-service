@@ -10,14 +10,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 
-public class StudentClass {
+public class StudentBootcamp {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_class_id")
+    @Column(name = "student_bootcamp_id")
     private Long id;
     private Long studentId;
-    private Long classId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bootcamp_id")
+    private Bootcamp bootcamp;
     // 일단 제거 private String studentClassAttendance;
     //총 출석일
     //현제 출석일
     private String studentClassStatus;
+
+//    public StudentClass(Classes classes){
+//        this.classId = classes.getId();
+//    }
 }
