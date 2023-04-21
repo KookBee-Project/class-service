@@ -17,7 +17,7 @@ public interface CurriculumRepository extends JpaRepository<Curriculum,Long> {
     @Query("SELECT c.id FROM Curriculum c WHERE c.bootcamp.id = :bootcampId " +
             "AND date(c.curriculumStartDate) <= date(:date) " +
             "AND date(c.curriculumEndDate) >= date(:date)")
-    Optional<Long> findCIdByBootcampIdAndDate(Long bootcampId, LocalDate date);
+    Optional<Long> findCIdByBootcampIdAndDate(@Param("bootcampId") Long bootcampId, @Param("date") LocalDate date);
 
     List<Curriculum> findByBootcamp(Bootcamp bootcamp);
 }
