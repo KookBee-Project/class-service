@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("/class/upload")
 @RequiredArgsConstructor
 public class UpdateImageController {
 

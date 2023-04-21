@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/homework")
+@RequestMapping("/class/homework")
 @RequiredArgsConstructor
 public class HomeworkController {
     private final HomeworkService homeworkService;

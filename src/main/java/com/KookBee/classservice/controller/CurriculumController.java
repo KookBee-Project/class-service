@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/curriculum")
+@RequestMapping("/class/curriculum")
 @RequiredArgsConstructor
 public class CurriculumController {
     private final CurriculumService curriculumService;

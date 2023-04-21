@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/skill_set")
+@RequestMapping("/class/skill_set")
 @RequiredArgsConstructor
 public class SkillSetController {
 

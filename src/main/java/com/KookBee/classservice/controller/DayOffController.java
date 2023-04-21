@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/dayoff")
+@RequestMapping("/class/dayoff")
 @RequiredArgsConstructor
 public class DayOffController {
     private final DayOffService dayOffService;
