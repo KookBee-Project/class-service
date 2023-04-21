@@ -48,4 +48,4 @@ jobs:
             sudo docker stop $(sudo docker ps -a | grep kookbee-class-service | awk '{print $1}') 
             sudo docker rm $(sudo docker ps -a | grep kookbee-class-service | awk '{print $1}') 
             sudo docker pull youruchul/kookbee-class-service
-            sudo docker run -d -p 9100:9100 --name kookbee-class-service youruchul/kookbee-class-service
+            sudo docker run -d --network host --name kookbee-class-service youruchul/kookbee-class-service
