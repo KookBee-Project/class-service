@@ -14,12 +14,14 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor
 @Getter @Setter
 public class StudentDayOffBootcampListResponse {
+    private Long bootcampId;
     private String bootcampName;
     private LocalDate bootcampStartDate;
     private LocalDate bootcampEndDate;
     private Integer remainingDayOff;
 
     public StudentDayOffBootcampListResponse(Bootcamp bootcamp, Integer sumOfDays) {
+        this.bootcampId = bootcamp.getId();
         if(bootcamp.getBootcampTitle().length() <= 10)
             this.bootcampName = bootcamp.getBootcampTitle();
         else

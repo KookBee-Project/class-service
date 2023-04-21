@@ -7,6 +7,7 @@ import com.KookBee.classservice.domain.entity.DayOff;
 import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.request.DayOffApplyRequest;
 import com.KookBee.classservice.domain.response.StudentDayOffBootcampListResponse;
+import com.KookBee.classservice.domain.response.StudentDayOffListResponse;
 import com.KookBee.classservice.exception.DayOffDateCheckException;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.CurriculumRepository;
@@ -59,15 +60,28 @@ public class DayOffService {
     }
 
     public List<StudentDayOffBootcampListResponse> getBootcampList(){
+        // 토큰에서 userId가져오기
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        // userId로 부트캠프 목록 가져오기
         List<StudentBootcamp> bootcampListByStudentId = studentBootcampRepository.findByStudentId(userId);
-        Optional<Integer> sumOfDays = dayOffRepository.findSumOfDaysByUserId(userId);
+        // 가져온 정보들을 response로 만들어주기
         List<StudentDayOffBootcampListResponse> studentDayOffBootcampListResponses
                 = bootcampListByStudentId.stream().map(el->{
+            // 먼저 부트캠프Id로 커리큘럼List를 가져옵니다.
+            List<Curriculum> byBootcamp = curriculumRepository.findByBootcamp(el.getBootcamp());
+            // 그 후 커리큘럼의 Id를 통해 휴가들의 총합을 가져옵니다.
+            Integer bootcampSumOfDays = byBootcamp.stream().mapToInt(cu->
+                dayOffRepository.findSumOfDaysByUserId(userId,cu.getId()).orElse(0)).sum();
+
             StudentDayOffBootcampListResponse response
-                    = new StudentDayOffBootcampListResponse(el.getBootcamp(),sumOfDays.orElse(0));
+                    = new StudentDayOffBootcampListResponse(el.getBootcamp(),bootcampSumOfDays);
             return response;
         }).collect(Collectors.toList());
         return  studentDayOffBootcampListResponses;
     }
+
+//    public List<StudentDayOffListResponse> getDayOffList(Long bootcampId){
+//        // 토큰에서 userId 가져오기
+//        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+//    }
 }
