@@ -1,5 +1,6 @@
 package com.KookBee.classservice.domain.dto;
 
+import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.enums.EDayOffStatus;
 import com.KookBee.classservice.domain.request.DayOffApplyRequest;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import java.time.temporal.ChronoUnit;
 @Getter @Setter
 public class DayOffApplyDTO {
     private Long userId; // 휴가 신청자의 Id
-    private Long curriculumId; // 매니저,강사,학생의 연결요소
+    private Curriculum curriculum; // 매니저,강사,학생의 연결요소
     private LocalDate startDate;
     private LocalDate endDate;
     private String reason; // 휴가 신청사유
@@ -27,7 +28,7 @@ public class DayOffApplyDTO {
 
     public DayOffApplyDTO(DayOffApplyRequest request, Long userId, Long curriculumId) {
         this.userId = userId;
-        this.curriculumId = curriculumId;
+        this.curriculum = new Curriculum(curriculumId);
         this.startDate = LocalDate.parse(request.getDayOffStartDate(),
                 DateTimeFormatter.ISO_DATE);
         this.endDate = LocalDate.parse(request.getDayOffEndDate(),

@@ -18,7 +18,9 @@ public class DayOff {
     @Column(name = "day_off_id")
     private Long id;
     private Long userId; // 휴가 신청자의 Id
-    private Long curriculumId; // 매니저,강사,학생의 연결요소
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "curriculum_id")
+    private Curriculum curriculum; // 매니저,강사,학생의 연결요소
     private LocalDate startDate;
     private LocalDate endDate;
     private String reason; // 휴가 신청사유
@@ -32,7 +34,7 @@ public class DayOff {
 
     public DayOff(DayOffApplyDTO dto) {
         this.userId = dto.getUserId();
-        this.curriculumId = dto.getCurriculumId();
+        this.curriculum = dto.getCurriculum();
         this.startDate = dto.getStartDate();
         this.endDate = dto.getEndDate();
         this.reason = dto.getReason();

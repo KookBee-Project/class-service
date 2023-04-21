@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +28,8 @@ public class Curriculum {
     private String curriculumStartDate;
     private String curriculumEndDate;
     private EStatus curriculumStatus;
+    @OneToMany(mappedBy = "curriculum", fetch = FetchType.LAZY)
+    private List<DayOff> dayOffList;
 
     public Curriculum(CurriculumInsertRequest request, Bootcamp bootcamp, Long id) {
         this.bootcamp = bootcamp;
@@ -33,6 +37,10 @@ public class Curriculum {
         this.curriculumStartDate = request.getCurriculumStartDate();
         this.curriculumEndDate = request.getCurriculumEndDate();
         this.curriculumStatus = request.getCurriculumStatus();
+    }
+
+    public Curriculum(Long curriculumId) {
+        this.id = curriculumId;
     }
 
     public Curriculum updateCurriculum(CurriculumEditRequest request){
