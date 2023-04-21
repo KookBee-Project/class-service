@@ -3,6 +3,7 @@ package com.KookBee.classservice.controller;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.request.CurriculumEditRequest;
 import com.KookBee.classservice.domain.request.CurriculumInsertRequest;
+import com.KookBee.classservice.domain.response.ManagerCurriculumListResponse;
 import com.KookBee.classservice.service.CurriculumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,12 @@ public class CurriculumController {
     }
 
     @PutMapping
-    public Curriculum updateCurriculum(@RequestBody CurriculumEditRequest request){
+    public List<Curriculum> updateCurriculum(@RequestBody List<CurriculumEditRequest> request){
         return curriculumService.updateCurriculum(request);
     }
 
     @GetMapping("/{bootcampId}")
-    public List<Curriculum> getCurriculumByBootcampId(@PathVariable("bootcampId") Long bootcampId){
+    public List<ManagerCurriculumListResponse> getCurriculumByBootcampId(@PathVariable("bootcampId") Long bootcampId){
         return curriculumService.getCurriculumByBootcampId(bootcampId);
     }
 }

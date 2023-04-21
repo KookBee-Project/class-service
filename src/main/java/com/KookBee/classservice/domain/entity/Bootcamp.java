@@ -70,15 +70,15 @@ public class Bootcamp {
         return this;
     }
     public Bootcamp updateBootcamp(BootcampEditRequest request, Long userId) {
-        this.id = request.getBootcampId();
+        this.id = request.getId();
         this.companyId = request.getCompanyId();
         this.campusId = request.getCampusId();
         this.managerId = userId;
         this.bootcampTitle = request.getBootcampTitle();
         this.bootcampDescription = request.getBootcampDescription();
         this.bootcampStartDate = request.getBootcampStartDate();
-        this.bootcampEndDate = request.getBootcampEnterDate();
-        this.bootcampEnterCode = request.getBootcampEnterDate();
+        this.bootcampEndDate = request.getBootcampEndDate();
+        this.bootcampEnterCode = request.getBootcampEnterCode();
         this.bootcampStatus = request.getBootcampStatus();
         return this;
     }
