@@ -17,9 +17,13 @@ public class SkillSet {
     @Column(name = "skillset_id")
     private Long id;
     private String skillSetName;
-    @OneToMany
+    @OneToMany(mappedBy = "skillSet")
     private List<Curriculum> curriculumList;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "homework_question_id")
     private HomeworkQuestions homeworkQuestions;
+
+    public SkillSet(Long skillSetId) {
+        this.id = skillSetId;
+    }
 }

@@ -13,8 +13,10 @@ import lombok.Setter;
 public class CurriculumEditRequest {
     private Long id;
     private Long bootcampId;
-    private Long teacherId;
+    private String curriculumName;
+    private String teacherEmail;
     private String curriculumStartDate;
     private String curriculumEndDate;
+    private Long skillSetId;
     private EStatus curriculumStatus;
 }

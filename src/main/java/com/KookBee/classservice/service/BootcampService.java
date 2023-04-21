@@ -57,7 +57,7 @@ public class BootcampService {
 
     public Bootcamp updateBootcamp(BootcampEditRequest request) {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        Bootcamp bootcamp = bootcampRepository.findById(request.getBootcampId()).orElse(null);
+        Bootcamp bootcamp = bootcampRepository.findById(request.getId()).orElse(null);
         assert bootcamp != null;
         bootcampRepository.save(bootcamp.updateBootcamp(request, userId));
         return bootcamp;
@@ -65,6 +65,7 @@ public class BootcampService {
 
     public List<ManagerBootcampListResponse> getBootcampByManagerId() {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        System.out.println("@@@@@@@@@@@@@@@@@"+userId);
         List<Bootcamp> bootcampList = bootcampRepository.findByManagerId(userId);
         List<ManagerBootcampListResponse> response = bootcampList.stream().map(el -> {
             Campus campusName = userServiceClient.getCampusById(el.getCampusId());
