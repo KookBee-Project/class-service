@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,6 +33,8 @@ public class Curriculum {
     @JoinColumn(name = "skill_set_id")
     private SkillSet skillSet;
     private EStatus curriculumStatus;
+    @OneToMany(mappedBy = "curriculum", fetch = FetchType.LAZY)
+    private List<DayOff> dayOffList;
 
     public Curriculum(CurriculumInsertRequest request, Bootcamp bootcamp, Long id, SkillSet skillSet) {
         this.curriculumName = request.getCurriculumName();
@@ -51,4 +55,9 @@ public class Curriculum {
         this.curriculumStatus = request.getCurriculumStatus();
         return this;
     }
+
+    public Curriculum(Long curriculumId) {
+        this.id = curriculumId;
+    }
+        
 }

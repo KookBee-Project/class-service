@@ -19,8 +19,4 @@ public interface UserServiceClient {
     @GetMapping("/admin/manager/teacher/{teacherId}")
     User getTeacherByTeacherId(@PathVariable("teacherId") Long teacherId);
 
-
-//    @GetMapping("/campus/bootcamp/{managerId}")
-//    List<Campus> getCampusByIfd(@PathVariable("managerId") Long managerId);
-
 }
