@@ -1,19 +1,28 @@
 package com.KookBee.classservice.service;
 
 import com.KookBee.classservice.domain.dto.DayOffApplyDTO;
+import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.entity.DayOff;
+import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.request.DayOffApplyRequest;
+import com.KookBee.classservice.domain.response.StudentDayOffBootcampListResponse;
 import com.KookBee.classservice.exception.DayOffDateCheckException;
+import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.CurriculumRepository;
 import com.KookBee.classservice.repository.DayOffRepository;
+import com.KookBee.classservice.repository.StudentBootcampRepository;
 import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +30,7 @@ public class DayOffService {
     private final DayOffRepository dayOffRepository;
     private final CurriculumRepository curriculumRepository;
     private final JwtService jwtService;
+    private final StudentBootcampRepository studentBootcampRepository;
 
     public DayOff vacationApply(DayOffApplyRequest request) throws DayOffDateCheckException {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
@@ -46,5 +56,18 @@ public class DayOffService {
         }
         DayOffApplyDTO dto = new DayOffApplyDTO(request,userId,startCurriculumId);
         return dayOffRepository.save(new DayOff(dto));
+    }
+
+    public List<StudentDayOffBootcampListResponse> getBootcampList(){
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        List<StudentBootcamp> bootcampListByStudentId = studentBootcampRepository.findByStudentId(userId);
+        Optional<Integer> sumOfDays = dayOffRepository.findSumOfDaysByUserId(userId);
+        List<StudentDayOffBootcampListResponse> studentDayOffBootcampListResponses
+                = bootcampListByStudentId.stream().map(el->{
+            StudentDayOffBootcampListResponse response
+                    = new StudentDayOffBootcampListResponse(el.getBootcamp(),sumOfDays.orElse(0));
+            return response;
+        }).collect(Collectors.toList());
+        return  studentDayOffBootcampListResponses;
     }
 }
