@@ -9,6 +9,7 @@ import com.KookBee.classservice.domain.request.DayOffApplyRequest;
 import com.KookBee.classservice.domain.response.StudentDayOffBootcampListResponse;
 import com.KookBee.classservice.domain.response.StudentDayOffListResponse;
 import com.KookBee.classservice.exception.DayOffDateCheckException;
+import com.KookBee.classservice.exception.DayOffNoneCurriculumException;
 import com.KookBee.classservice.exception.DayOffUseDaysCheckException;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.CurriculumRepository;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +35,10 @@ public class DayOffService {
     private final CurriculumRepository curriculumRepository;
     private final JwtService jwtService;
     private final StudentBootcampRepository studentBootcampRepository;
+    private final BootcampRepository bootcampRepository;
 
-    public DayOff dayOffApply(DayOffApplyRequest request) throws DayOffDateCheckException, DayOffUseDaysCheckException {
+    public DayOff dayOffApply(DayOffApplyRequest request, Long bootcampId)
+            throws DayOffDateCheckException, DayOffUseDaysCheckException, DayOffNoneCurriculumException {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         // request의 시작일과 종료일을 LocalDate타입으로 변경
         LocalDate dayOffStartDate = LocalDate.parse(request.getDayOffStartDate(),
@@ -45,22 +49,39 @@ public class DayOffService {
         // 날짜를 통해 커리큘럼Id를 획득
         Long startCurriculumId = curriculumRepository
                 .findCIdByBootcampIdAndDate(
-                        request.getBootcampId(), dayOffStartDate).orElse(null);
+                        bootcampId, dayOffStartDate).orElseThrow(DayOffNoneCurriculumException::new);
         Long endCurriculumId = curriculumRepository
                 .findCIdByBootcampIdAndDate(
-                        request.getBootcampId(), dayOffEndDate).orElse(null);
+                        bootcampId, dayOffEndDate).orElseThrow(DayOffNoneCurriculumException::new);
 
         // 두 개의 커리큘럼이 다르면 다시 신청하도록 에러 반환
         if (startCurriculumId != endCurriculumId){
             throw new DayOffDateCheckException();
         }
+
+        // 남은 휴가일수와 신청 휴가일수 비교
+        Integer remainingDayOff = getRemainingDayOff(bootcampId, userId);
         DayOffApplyDTO dto = new DayOffApplyDTO(request,userId,startCurriculumId);
-        if (request.getRemainingDayOff() >= dto.getDays()){
+        if (remainingDayOff >= dto.getDays()){
             return dayOffRepository.save(new DayOff(dto));
         } else {
            throw new DayOffUseDaysCheckException();
         }
     }
+
+    // 남은 휴가일수 구하기---------------------------------
+    private Integer getRemainingDayOff(Long bootcampId, Long userId) {
+        Bootcamp bootcamp = bootcampRepository.findById(bootcampId).get();
+        LocalDate bootcampStartDateLD = LocalDate.parse(
+                bootcamp.getBootcampStartDate(), DateTimeFormatter.ISO_DATE);
+        Integer bootcampSumOfDays = bootcamp.getCurriculumList().stream().mapToInt(cu->
+                dayOffRepository.findSumOfDaysByUserId(userId,cu.getId()).orElse(0)).sum();
+        Integer remainingDayOff =
+                Math.toIntExact(ChronoUnit.DAYS.between(bootcampStartDateLD, LocalDate.now()))
+                        / 30 - bootcampSumOfDays;
+        return remainingDayOff;
+    }
+    // -------------------------------------------------
 
     public List<StudentDayOffBootcampListResponse> getBootcampList(){
         // 토큰에서 userId가져오기
@@ -86,9 +107,11 @@ public class DayOffService {
     public List<StudentDayOffListResponse> getDayOffList(Long bootcampId){
         // userId 가져오기
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        Optional<Bootcamp> bootcampById = bootcampRepository.findById(bootcampId);
         List<DayOff> byUserIdAndBootcampId = dayOffRepository.findByUserIdAndBootcampId(userId, bootcampId);
         List<StudentDayOffListResponse> responses =
-                byUserIdAndBootcampId.stream().map(StudentDayOffListResponse::new)
+                byUserIdAndBootcampId.stream().map(el->
+                                new StudentDayOffListResponse(el, bootcampById.get().getBootcampTitle()))
                         .collect(Collectors.toList());
         return responses;
     }
