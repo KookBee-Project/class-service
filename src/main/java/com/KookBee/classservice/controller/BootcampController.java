@@ -25,9 +25,9 @@ public class BootcampController {
     }
 
 
-    @PutMapping("/status")
-    public String updateBootcampStatus(@RequestBody BootcampStatusChangeRequest request) {
-        return bootcampService.updateBootcampStatus(request);
+    @DeleteMapping("/{bootcampId}")
+    public String deleteBootcamp(@PathVariable("bootcampId") Long bootcampId) {
+        return bootcampService.updateBootcampStatus(bootcampId);
     }
     @PutMapping
     public Bootcamp updateBootcamp(@RequestBody BootcampEditRequest request){

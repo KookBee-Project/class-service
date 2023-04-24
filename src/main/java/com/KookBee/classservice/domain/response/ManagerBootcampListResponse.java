@@ -2,6 +2,7 @@ package com.KookBee.classservice.domain.response;
 
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
+import com.KookBee.classservice.domain.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class ManagerBootcampListResponse {
     private String campusName;
     private String bootcampEnterCode;
     private List<Curriculum> curriculumList;
+    private EStatus curriculumStatus;
 
     public ManagerBootcampListResponse(Bootcamp bootcamp, String campusName) {
         this.bootcampId = bootcamp.getId();
@@ -33,5 +35,6 @@ public class ManagerBootcampListResponse {
         this.campusName = campusName;
         this.bootcampEnterCode = bootcamp.getBootcampEnterCode();
         this.curriculumList = bootcamp.getCurriculumList();
+        this.curriculumStatus = bootcamp.getBootcampStatus();
     }
 }
