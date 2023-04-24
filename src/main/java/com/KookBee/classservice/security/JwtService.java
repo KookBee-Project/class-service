@@ -1,7 +1,7 @@
-package com.KookBee.userservice.security;
+package com.KookBee.classservice.security;
 
-import com.KookBee.userservice.domain.entity.RefreshToken;
-import com.KookBee.userservice.repository.RefreshTokenRepository;
+import com.KookBee.classservice.domain.entity.RefreshToken;
+import com.KookBee.classservice.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -30,7 +29,9 @@ public class JwtService {
     @Value("${jwt.REFRESH_SECRET_KEY}")
     private String RefreshSecret;
 
-//    public void setAccessTokenInHttpOnlyCookie(HttpServletResponse response, String accessToken) {
+
+
+    //    public void setAccessTokenInHttpOnlyCookie(HttpServletResponse response, String accessToken) {
 //        // 쿠키 생성 및 값 설정
 //        response.addHeader("Set-Cookie", ResponseCookie.from("accessToken", accessToken)
 //                .maxAge(60 * 30)// 쿠키 만료일 설정 (예: 30분)
