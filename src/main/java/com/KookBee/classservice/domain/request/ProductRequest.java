@@ -15,6 +15,7 @@ import java.util.Date;
 public class ProductRequest {
     public Long managerId;
     public Long studentId;
+    private String bootcampTitle;
     public Date productRentalStartDate;
     public Date productRentalEndDate;
     public String productName;

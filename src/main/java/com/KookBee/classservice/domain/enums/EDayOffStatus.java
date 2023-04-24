@@ -1,5 +1,5 @@
 package com.KookBee.classservice.domain.enums;
 
-public enum EVacationStatus {
+public enum EDayOffStatus {
     PENDING, APPROVAL, REJECT
 }
