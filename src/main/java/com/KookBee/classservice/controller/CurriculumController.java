@@ -8,7 +8,9 @@ import com.KookBee.classservice.service.CurriculumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/class/curriculum")
@@ -28,5 +30,11 @@ public class CurriculumController {
     @GetMapping("/{bootcampId}")
     public List<ManagerCurriculumListResponse> getCurriculumByBootcampId(@PathVariable("bootcampId") Long bootcampId){
         return curriculumService.getCurriculumByBootcampId(bootcampId);
+    }
+
+    @DeleteMapping
+    public List<Curriculum> deleteCurriculum(@RequestBody List<Long> curriculumIds){
+
+        return curriculumService.deleteCurriculum(curriculumIds);
     }
 }

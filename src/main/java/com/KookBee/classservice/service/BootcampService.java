@@ -5,6 +5,7 @@ import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.dto.BootcampDTO;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
+import com.KookBee.classservice.domain.enums.EStatus;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
@@ -47,12 +48,12 @@ public class BootcampService {
 
     }
 
-    public String updateBootcampStatus(BootcampStatusChangeRequest request) {
+    public String updateBootcampStatus(Long bootcampId) {
         // 바꿔줘야 하는 아이
-        Bootcamp bootcamp = bootcampRepository.findById(request.getBootcampId()).orElse(null);
-        assert bootcamp != null;
-        bootcampRepository.save(bootcamp.updateStatus(request.getBootcampStatus()));
-        return request.getBootcampStatus().name() + "변경됨";
+        Optional<Bootcamp> findById = bootcampRepository.findById(bootcampId);
+        Bootcamp bootcamp = findById.orElseThrow(NullPointerException::new);
+        bootcampRepository.save(bootcamp.updateStatus(EStatus.DELETED));
+        return bootcamp.getBootcampStatus().name() + "변경됨";
     }
 
     public Bootcamp updateBootcamp(BootcampEditRequest request) {
@@ -65,7 +66,6 @@ public class BootcampService {
 
     public List<ManagerBootcampListResponse> getBootcampByManagerId() {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        System.out.println("@@@@@@@@@@@@@@@@@"+userId);
         List<Bootcamp> bootcampList = bootcampRepository.findByManagerId(userId);
         List<ManagerBootcampListResponse> response = bootcampList.stream().map(el -> {
             Campus campusName = userServiceClient.getCampusById(el.getCampusId());
