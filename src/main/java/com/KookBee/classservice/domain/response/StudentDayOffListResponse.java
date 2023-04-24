@@ -1,5 +1,6 @@
 package com.KookBee.classservice.domain.response;
 
+import com.KookBee.classservice.domain.entity.DayOff;
 import com.KookBee.classservice.domain.enums.EDayOffStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,4 +18,13 @@ public class StudentDayOffListResponse {
     private LocalDate dayOffEndDate;
     private Integer useDays;
     private EDayOffStatus dayOffStatus;
+
+
+    public StudentDayOffListResponse(DayOff dayOff) {
+        this.curriculumName = dayOff.getCurriculum().getCurriculumName();
+        this.dayOffStartDate = dayOff.getStartDate();
+        this.dayOffEndDate = dayOff.getEndDate();
+        this.useDays = dayOff.getDays();
+        this.dayOffStatus = dayOff.getStatus();
+    }
 }

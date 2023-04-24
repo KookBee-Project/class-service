@@ -9,6 +9,7 @@ import com.KookBee.classservice.domain.request.DayOffApplyRequest;
 import com.KookBee.classservice.domain.response.StudentDayOffBootcampListResponse;
 import com.KookBee.classservice.domain.response.StudentDayOffListResponse;
 import com.KookBee.classservice.exception.DayOffDateCheckException;
+import com.KookBee.classservice.exception.DayOffUseDaysCheckException;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.CurriculumRepository;
 import com.KookBee.classservice.repository.DayOffRepository;
@@ -33,7 +34,7 @@ public class DayOffService {
     private final JwtService jwtService;
     private final StudentBootcampRepository studentBootcampRepository;
 
-    public DayOff vacationApply(DayOffApplyRequest request) throws DayOffDateCheckException {
+    public DayOff dayOffApply(DayOffApplyRequest request) throws DayOffDateCheckException, DayOffUseDaysCheckException {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         // request의 시작일과 종료일을 LocalDate타입으로 변경
         LocalDate dayOffStartDate = LocalDate.parse(request.getDayOffStartDate(),
@@ -49,14 +50,16 @@ public class DayOffService {
                 .findCIdByBootcampIdAndDate(
                         request.getBootcampId(), dayOffEndDate).orElse(null);
 
-        System.out.println("start : " + startCurriculumId);
-        System.out.println("end : " + endCurriculumId);
         // 두 개의 커리큘럼이 다르면 다시 신청하도록 에러 반환
         if (startCurriculumId != endCurriculumId){
             throw new DayOffDateCheckException();
         }
         DayOffApplyDTO dto = new DayOffApplyDTO(request,userId,startCurriculumId);
-        return dayOffRepository.save(new DayOff(dto));
+        if (request.getRemainingDayOff() >= dto.getDays()){
+            return dayOffRepository.save(new DayOff(dto));
+        } else {
+           throw new DayOffUseDaysCheckException();
+        }
     }
 
     public List<StudentDayOffBootcampListResponse> getBootcampList(){
@@ -80,8 +83,13 @@ public class DayOffService {
         return  studentDayOffBootcampListResponses;
     }
 
-//    public List<StudentDayOffListResponse> getDayOffList(Long bootcampId){
-//        // 토큰에서 userId 가져오기
-//        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-//    }
+    public List<StudentDayOffListResponse> getDayOffList(Long bootcampId){
+        // userId 가져오기
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        List<DayOff> byUserIdAndBootcampId = dayOffRepository.findByUserIdAndBootcampId(userId, bootcampId);
+        List<StudentDayOffListResponse> responses =
+                byUserIdAndBootcampId.stream().map(StudentDayOffListResponse::new)
+                        .collect(Collectors.toList());
+        return responses;
+    }
 }
