@@ -70,7 +70,7 @@ public class BootcampService {
         List<ManagerBootcampListResponse> response = bootcampList.stream().map(el -> {
             Campus campusName = userServiceClient.getCampusById(el.getCampusId());
             return new ManagerBootcampListResponse(el, campusName.getCampusName());
-        }).collect(Collectors.toList());
+        }).toList().stream().filter(el -> el.getCurriculumStatus().equals(EStatus.PROCEEDING)).collect(Collectors.toList());
         return response;
     }
 
