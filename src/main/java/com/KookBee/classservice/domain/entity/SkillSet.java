@@ -1,5 +1,6 @@
 package com.KookBee.classservice.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,8 +18,10 @@ public class SkillSet {
     @Column(name = "skillset_id")
     private Long id;
     private String skillSetName;
+    @JsonIgnore
     @OneToMany(mappedBy = "skillSet")
     private List<Curriculum> curriculumList;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "homework_question_id")
     private HomeworkQuestions homeworkQuestions;

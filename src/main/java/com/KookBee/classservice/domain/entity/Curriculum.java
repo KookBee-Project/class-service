@@ -59,5 +59,9 @@ public class Curriculum {
     public Curriculum(Long curriculumId) {
         this.id = curriculumId;
     }
-        
+
+    public Curriculum delCurriculum(EStatus curriculumStatus){
+        this.curriculumStatus = curriculumStatus;
+        return this;
+    }
 }

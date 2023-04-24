@@ -5,6 +5,7 @@ import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.entity.SkillSet;
+import com.KookBee.classservice.domain.enums.EStatus;
 import com.KookBee.classservice.domain.request.CurriculumEditRequest;
 import com.KookBee.classservice.domain.request.CurriculumInsertRequest;
 import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -60,10 +62,25 @@ public class CurriculumService {
     public List<ManagerCurriculumListResponse> getCurriculumByBootcampId(Long bootcampId) {
         Bootcamp bootcamp = new Bootcamp(bootcampId);
         List<Curriculum> curriculum = curriculumRepository.findByBootcamp(bootcamp);
-        List<ManagerCurriculumListResponse> managerCurriculumListResponses = curriculum.stream().map(el -> {
+        return curriculum.stream().map(el -> {
             User teacher = userServiceClient.getTeacherByTeacherId(el.getTeacherId());
-            return new ManagerCurriculumListResponse(el, teacher.getUserEmail());
-        }).collect(Collectors.toList());
-        return managerCurriculumListResponses;
+            if(el.getCurriculumStatus().equals(EStatus.PROCEEDING))
+                return new ManagerCurriculumListResponse(el, teacher.getUserEmail());
+            return null;
+        }).toList().stream().filter(Objects::nonNull).collect(Collectors.toList());
+    }
+
+    public List<Curriculum> deleteCurriculum(List<Long> curriculumIds) {
+        try{
+            List<Curriculum> delCurriculumList = curriculumIds.stream().map(el -> {
+                Optional<Curriculum> findById = curriculumRepository.findById(el);
+                Curriculum curriculum = findById.orElseThrow(NullPointerException::new);
+                curriculum.delCurriculum(EStatus.DELETED);
+                return curriculumRepository.save(curriculum);
+            }).collect(Collectors.toList());
+            return delCurriculumList;
+        }catch (Exception e){
+            return null;
+        }
     }
 }
