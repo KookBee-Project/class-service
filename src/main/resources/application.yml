@@ -11,6 +11,7 @@ spring:
         bucket: kookbee-test-strorage
   datasource:
     url: jdbc:mysql://10.178.0.3:3306/kookbee_bootcamp?serverTimezone=Asia/Seoul
+#    url: jdbc:mysql://34.22.69.46:3306/kookbee_bootcamp?serverTimezone=Asia/Seoul
     username: bee
     password: 1q2w3e4r
   jpa:

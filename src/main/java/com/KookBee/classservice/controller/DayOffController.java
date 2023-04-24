@@ -3,7 +3,9 @@ package com.KookBee.classservice.controller;
 import com.KookBee.classservice.domain.entity.DayOff;
 import com.KookBee.classservice.domain.request.DayOffApplyRequest;
 import com.KookBee.classservice.domain.response.StudentDayOffBootcampListResponse;
+import com.KookBee.classservice.domain.response.StudentDayOffListResponse;
 import com.KookBee.classservice.exception.DayOffDateCheckException;
+import com.KookBee.classservice.exception.DayOffUseDaysCheckException;
 import com.KookBee.classservice.service.DayOffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,12 +20,17 @@ public class DayOffController {
     private final DayOffService dayOffService;
     @PostMapping("/apply")
     @ResponseStatus(HttpStatus.CREATED)
-    public DayOff dayOffApply(@RequestBody DayOffApplyRequest request) throws DayOffDateCheckException {
-        return dayOffService.vacationApply(request);
+    public DayOff dayOffApply(@RequestBody DayOffApplyRequest request) throws DayOffDateCheckException, DayOffUseDaysCheckException {
+        return dayOffService.dayOffApply(request);
     }
 
     @GetMapping("/bootcamplist")
     public List<StudentDayOffBootcampListResponse> getBootcampList(){
         return dayOffService.getBootcampList();
+    }
+
+    @GetMapping("/dayofflist/{bootcampId}")
+    public  List<StudentDayOffListResponse> getDayOffList(@PathVariable("bootcampId") Long bootcampId) {
+        return dayOffService.getDayOffList(bootcampId);
     }
 }
