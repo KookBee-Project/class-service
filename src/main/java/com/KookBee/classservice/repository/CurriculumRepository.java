@@ -20,4 +20,6 @@ public interface CurriculumRepository extends JpaRepository<Curriculum,Long> {
     Optional<Long> findCIdByBootcampIdAndDate(@Param("bootcampId") Long bootcampId, @Param("date") LocalDate date);
 
     List<Curriculum> findByBootcamp(Bootcamp bootcamp);
+
+    List<Curriculum> findAllByTeacherIdAndBootcampId(Long userId, Long bootcampId);
 }

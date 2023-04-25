@@ -5,13 +5,16 @@ import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.dto.BootcampDTO;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
+import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.enums.EStatus;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
 import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
+import com.KookBee.classservice.domain.response.TeacherBootcampListResponse;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.CurriculumRepository;
+import com.KookBee.classservice.repository.StudentBootcampRepository;
 import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,7 @@ public class BootcampService {
     private final BootcampRepository bootcampRepository;
     private final CurriculumRepository curriculumRepository;
     private final UserServiceClient userServiceClient;
+    private final StudentBootcampRepository studentBootcampRepository;
     private final JwtService jwtService;
 
     public Bootcamp createClass(BootcampInsertRequest request) {
@@ -74,26 +78,22 @@ public class BootcampService {
         return response;
     }
 
-    public List<Bootcamp> getBootcampByTeacherId() {
+    public List<TeacherBootcampListResponse> getBootcampByTeacherId() {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        if(jwtService.isValidTokens()){
-            try{
-                List<Curriculum> findByTeacherId = curriculumRepository.findAllByTeacherId(userId);
-                Map<Long, Bootcamp> map = new HashMap<>();
-                List<Bootcamp> bootcampList = findByTeacherId.stream().map(curriculum -> {
-                    Bootcamp orDefault = map.getOrDefault(curriculum.getBootcamp(), null);
-                    if(orDefault==null) {
-                        orDefault = curriculum.getBootcamp();
-                        map.put(curriculum.getBootcamp().getId(),orDefault);
-                    }
-                    return new Bootcamp(orDefault);
-                }).toList();
+//        if(jwtService.isValidTokens()){
+//            try{
+                List<Bootcamp> allByTeacherId = bootcampRepository.findAllByTeacherId(userId);
+                List<TeacherBootcampListResponse> bootcampList = allByTeacherId.stream().map(bootcamp -> {
+                    String campusName = userServiceClient.getCampusById(bootcamp.getCampusId()).getCampusName();
+                    Integer studentCount = studentBootcampRepository.countBybootcamp(bootcamp);
+                    return new TeacherBootcampListResponse(bootcamp, campusName, studentCount);
+                }).collect(Collectors.toList());
                 return bootcampList;
-            } catch (Exception e) {
-                return null;
-            }
-        }
-        return null;
+//            } catch (Exception e) {
+//                return null;
+//            }
+//        }
+//        return null;
     }
 
     public Bootcamp getBootcampById(Long bootcampId) {
