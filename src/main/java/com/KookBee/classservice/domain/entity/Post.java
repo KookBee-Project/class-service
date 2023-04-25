@@ -3,6 +3,7 @@ package com.KookBee.classservice.domain.entity;
 import com.KookBee.classservice.domain.dto.PostDTO;
 import com.KookBee.classservice.domain.enums.EPostType;
 import com.KookBee.classservice.domain.enums.EStatus;
+import com.KookBee.classservice.domain.request.PostEditRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -51,6 +52,11 @@ public class Post {
     }
     public Post updatePostType(EPostType postType){
         this.postType = postType;
+        return this;
+    }
+    public Post updatePost(PostEditRequest request){
+        this.postContent=request.getPostContent();
+        this.postTitle=request.getPostTitle();
         return this;
     }
 }

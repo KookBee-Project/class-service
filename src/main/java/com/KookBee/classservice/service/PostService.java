@@ -6,6 +6,7 @@ import com.KookBee.classservice.domain.entity.Post;
 import com.KookBee.classservice.domain.enums.EPostType;
 import com.KookBee.classservice.domain.enums.EStatus;
 import com.KookBee.classservice.domain.request.PostCreateRequest;
+import com.KookBee.classservice.domain.request.PostEditRequest;
 import com.KookBee.classservice.domain.request.PostUpdatePostTypeRequest;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.PostRepository;
@@ -65,6 +66,12 @@ public class PostService {
         else {
             return "변경실패";
         }
+    }
+    public String updatePost(Long id, PostEditRequest request){
+        Post findByIdPost = postRepository.findById(id).orElse(null);
+        assert findByIdPost != null;
+        postRepository.save(findByIdPost.updatePost(request));
+        return "포스트 변경완료";
     }
 
 }

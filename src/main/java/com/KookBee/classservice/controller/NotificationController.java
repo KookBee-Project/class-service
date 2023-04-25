@@ -3,6 +3,7 @@ package com.KookBee.classservice.controller;
 import com.KookBee.classservice.domain.entity.Post;
 import com.KookBee.classservice.domain.enums.EPostType;
 import com.KookBee.classservice.domain.request.PostCreateRequest;
+import com.KookBee.classservice.domain.request.PostEditRequest;
 import com.KookBee.classservice.domain.request.PostUpdatePostTypeRequest;
 import com.KookBee.classservice.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +35,12 @@ public class NotificationController {
     public String deleteNotification(@PathVariable Long postId){
         return postService.deletePost(postId);
     }
-    @PutMapping("/{postId}")
+    @PutMapping("/{postId}/status")
     public String changePostType(@PathVariable("postId") Long postId, @RequestBody PostUpdatePostTypeRequest request){
         return postService.updatePostType(postId, request);
     }
-
+    @PutMapping("/{postId}")
+    public String changePost(@PathVariable("postId")Long postId, @RequestBody PostEditRequest request){
+        return postService.updatePost(postId,request);
+    }
 }
