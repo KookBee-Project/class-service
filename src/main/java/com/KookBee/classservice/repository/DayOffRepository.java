@@ -15,8 +15,12 @@ public interface DayOffRepository extends JpaRepository<DayOff,Long> {
 
     List<DayOff> findByUserIdAndCurriculumId(Long userId, Long id);
 
-    // 커리큘럼id랑 유저id를 기져오는데 그 컬리큘럼의 아이디가 주어진 bootcampID
     @Query("select d,c from DayOff d join d.curriculum c " +
             "where c.bootcamp.id = :bootcampId and d.userId = :userId")
     List<DayOff> findByUserIdAndBootcampId(Long userId, Long bootcampId);
+
+    // 커리큘럼id랑 유저id를 기져오는데 그 컬리큘럼의 아이디가 주어진 bootcampID
+    @Query("select d,c,b from DayOff d join d.curriculum c " +
+            "join c.bootcamp b where b.managerId = :userId")
+    List<DayOff> findByManagerID(Long userId);
 }

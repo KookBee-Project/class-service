@@ -1,11 +1,16 @@
 package com.KookBee.classservice.service;
 
+import com.KookBee.classservice.client.Campus;
+import com.KookBee.classservice.client.User;
+import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.dto.DayOffApplyDTO;
+import com.KookBee.classservice.domain.dto.ManagerDayOffListDTO;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.entity.DayOff;
 import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.request.DayOffApplyRequest;
+import com.KookBee.classservice.domain.response.ManagerDayOffListResponse;
 import com.KookBee.classservice.domain.response.StudentDayOffBootcampListResponse;
 import com.KookBee.classservice.domain.response.StudentDayOffListResponse;
 import com.KookBee.classservice.exception.DayOffDateCheckException;
@@ -17,13 +22,11 @@ import com.KookBee.classservice.repository.DayOffRepository;
 import com.KookBee.classservice.repository.StudentBootcampRepository;
 import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +39,7 @@ public class DayOffService {
     private final JwtService jwtService;
     private final StudentBootcampRepository studentBootcampRepository;
     private final BootcampRepository bootcampRepository;
+    private final UserServiceClient userServiceClient;
 
     public DayOff dayOffApply(DayOffApplyRequest request, Long bootcampId)
             throws DayOffDateCheckException, DayOffUseDaysCheckException, DayOffNoneCurriculumException {
@@ -113,6 +117,21 @@ public class DayOffService {
                 byUserIdAndBootcampId.stream().map(el->
                                 new StudentDayOffListResponse(el, bootcampById.get().getBootcampTitle()))
                         .collect(Collectors.toList());
+        return responses;
+    }
+
+    public List<ManagerDayOffListResponse> getDayOffListForManager(){
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        // 일단 휴가를 찾아오자
+        List<DayOff> dayOffList = dayOffRepository.findByManagerID(userId);
+        List<ManagerDayOffListResponse> responses = dayOffList.stream().map(el->{
+            User user = userServiceClient.getUserById(el.getUserId());
+            Bootcamp bootcamp = el.getCurriculum().getBootcamp();
+            Long campusId = bootcamp.getCampusId();
+            Campus campus = userServiceClient.getCampusById(campusId);
+            ManagerDayOffListDTO dto = new ManagerDayOffListDTO(user, campus, bootcamp, el);
+            return new ManagerDayOffListResponse(dto);
+        }).toList();
         return responses;
     }
 }
