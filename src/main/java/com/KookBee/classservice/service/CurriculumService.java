@@ -12,6 +12,7 @@ import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
 import com.KookBee.classservice.domain.response.ManagerCurriculumListResponse;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.CurriculumRepository;
+import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class CurriculumService {
     private final CurriculumRepository curriculumRepository;
     private final BootcampRepository bootcampRepository;
     private final UserServiceClient userServiceClient;
+    private final JwtService jwtService;
 
     public List<Curriculum> insertCurriculum (List<CurriculumInsertRequest> request) {
        List<Curriculum> curriculumList =  request.stream().map(el-> {
@@ -82,5 +84,11 @@ public class CurriculumService {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public List<Curriculum> getTeacherCurriculumByBootcampId(Long bootcampId) {
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        List<Curriculum> curriculumList = curriculumRepository.findAllByTeacherIdAndBootcampId(userId, bootcampId);
+        return curriculumList;
     }
 }

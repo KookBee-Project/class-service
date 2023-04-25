@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface StudentBootcampRepository extends JpaRepository<StudentBootcamp, Long> {
     List<StudentBootcamp> findByStudentId(Long userId);
+
+    Integer countBybootcamp(Bootcamp bootcamp);
 }
