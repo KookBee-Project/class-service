@@ -2,6 +2,7 @@ package com.KookBee.classservice.controller;
 
 import com.KookBee.classservice.domain.entity.DayOff;
 import com.KookBee.classservice.domain.request.DayOffApplyRequest;
+import com.KookBee.classservice.domain.response.DayOffDetailResponse;
 import com.KookBee.classservice.domain.response.ManagerDayOffListResponse;
 import com.KookBee.classservice.domain.response.StudentDayOffBootcampListResponse;
 import com.KookBee.classservice.domain.response.StudentDayOffListResponse;
@@ -40,5 +41,10 @@ public class DayOffController {
     @GetMapping("/admin")
     public List<ManagerDayOffListResponse> getDayOffListForManager(){
         return dayOffService.getDayOffListForManager();
+    }
+
+    @GetMapping("/admin/{dayOffId}")
+    public DayOffDetailResponse getDayOffDetail(@PathVariable Long dayOffId){
+        return dayOffService.getDayOffDetail(dayOffId);
     }
 }

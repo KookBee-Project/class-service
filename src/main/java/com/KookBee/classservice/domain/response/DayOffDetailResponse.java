@@ -1,6 +1,6 @@
 package com.KookBee.classservice.domain.response;
 
-import com.KookBee.classservice.domain.dto.ManagerDayOffListDTO;
+import com.KookBee.classservice.domain.dto.DayOffDetailDTO;
 import com.KookBee.classservice.domain.enums.EDayOffStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,25 +12,30 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class ManagerDayOffListResponse {
-    private Long dayOffId;
+public class DayOffDetailResponse {
+    private String userType;
     private String campusName;
     private String bootcampName;
     private String studentName;
     private LocalDate dayOffStartDate;
     private LocalDate dayOffEndDate;
+    private Integer useDays;
+    private String dayOffReason;
+    private EDayOffStatus dayOffManagerStatus;
+    private EDayOffStatus dayOffTeacherStatus;
     private EDayOffStatus dayOffStatus;
 
-    public ManagerDayOffListResponse(ManagerDayOffListDTO dto) {
-        this.dayOffId = dto.getDayOffId();
+    public DayOffDetailResponse(DayOffDetailDTO dto) {
+        this.userType = dto.getUserType();
         this.campusName = dto.getCampusName();
-        if(dto.getBootcampName().length() <= 10)
-            this.bootcampName = dto.getBootcampName();
-        else
-            this.bootcampName = dto.getBootcampName().substring(0, 9) + "...";
+        this.bootcampName = dto.getBootcampName();
         this.studentName = dto.getStudentName();
         this.dayOffStartDate = dto.getDayOffStartDate();
         this.dayOffEndDate = dto.getDayOffEndDate();
+        this.useDays = dto.getUseDays();
+        this.dayOffReason = dto.getDayOffReason();
+        this.dayOffManagerStatus = dto.getDayOffManagerStatus();
+        this.dayOffTeacherStatus = dto.getDayOffTeacherStatus();
         this.dayOffStatus = dto.getDayOffStatus();
     }
 }

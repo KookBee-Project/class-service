@@ -4,12 +4,14 @@ import com.KookBee.classservice.client.Campus;
 import com.KookBee.classservice.client.User;
 import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.dto.DayOffApplyDTO;
+import com.KookBee.classservice.domain.dto.DayOffDetailDTO;
 import com.KookBee.classservice.domain.dto.ManagerDayOffListDTO;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.entity.DayOff;
 import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.request.DayOffApplyRequest;
+import com.KookBee.classservice.domain.response.DayOffDetailResponse;
 import com.KookBee.classservice.domain.response.ManagerDayOffListResponse;
 import com.KookBee.classservice.domain.response.StudentDayOffBootcampListResponse;
 import com.KookBee.classservice.domain.response.StudentDayOffListResponse;
@@ -133,5 +135,18 @@ public class DayOffService {
             return new ManagerDayOffListResponse(dto);
         }).toList();
         return responses;
+    }
+
+    public DayOffDetailResponse getDayOffDetail(Long dayOffId){
+        DayOff dayOff = dayOffRepository.findById(dayOffId).get();
+
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        User admin = userServiceClient.getUserById(userId);
+        User student = userServiceClient.getUserById(dayOff.getUserId());
+        Bootcamp bootcamp = dayOff.getCurriculum().getBootcamp();
+        Long campusId = bootcamp.getCampusId();
+        Campus campus = userServiceClient.getCampusById(campusId);
+        DayOffDetailDTO dto = new DayOffDetailDTO(dayOff, admin, student, campus, bootcamp);
+        return new DayOffDetailResponse(dto);
     }
 }
