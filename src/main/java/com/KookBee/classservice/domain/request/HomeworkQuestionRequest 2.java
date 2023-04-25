@@ -16,5 +16,5 @@ public class HomeworkQuestionRequest {
     private String homeworkQuestionTitle;
     private String homeworkQuestionContent;
     private String homeworkQuestionImage;
-    private Long skillSetId;
+    private List<Long> skillSetIdList;
 }

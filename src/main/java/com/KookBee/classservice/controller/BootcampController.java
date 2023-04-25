@@ -6,6 +6,7 @@ import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
 import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
+import com.KookBee.classservice.domain.response.TeacherBootcampListResponse;
 import com.KookBee.classservice.service.BootcampService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,9 @@ public class BootcampController {
     }
 
 
-    @PutMapping("/status")
-    public String updateBootcampStatus(@RequestBody BootcampStatusChangeRequest request) {
-        return bootcampService.updateBootcampStatus(request);
+    @DeleteMapping("/{bootcampId}")
+    public String deleteBootcamp(@PathVariable("bootcampId") Long bootcampId) {
+        return bootcampService.updateBootcampStatus(bootcampId);
     }
     @PutMapping
     public Bootcamp updateBootcamp(@RequestBody BootcampEditRequest request){
@@ -44,8 +45,8 @@ public class BootcampController {
         return bootcampService.getBootcampByManagerId();
     }
 
-    @GetMapping
-    public List<Bootcamp> getBootcampListByTeacherId(){
+    @GetMapping("/teacher")
+    public List<TeacherBootcampListResponse> getBootcampListByTeacherId(){
         return bootcampService.getBootcampByTeacherId();
     }
 

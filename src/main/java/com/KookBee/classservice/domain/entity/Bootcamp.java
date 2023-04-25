@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 public class Bootcamp {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "class_id")
+    @Column(name = "bootcamp_id")
     private Long id;
     private Long companyId;
     private Long campusId;
@@ -53,6 +53,7 @@ public class Bootcamp {
     }
 
     public Bootcamp(Bootcamp orDefault) {
+        this.id = orDefault.getId();
         this.companyId = orDefault.getCompanyId();
         this.campusId = orDefault.getCampusId();
         this.bootcampTitle = orDefault.getBootcampTitle();

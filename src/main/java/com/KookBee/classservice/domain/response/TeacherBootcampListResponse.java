@@ -14,17 +14,15 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ManagerBootcampListResponse {
+public class TeacherBootcampListResponse {
     private Long bootcampId;
     private String bootcampTitle;
     private String bootcampStartDate;
     private String bootcampEndDate;
     private String campusName;
-    private String bootcampEnterCode;
-    private List<Curriculum> curriculumList;
-    private EStatus curriculumStatus;
+    private Integer StudentCount;
 
-    public ManagerBootcampListResponse(Bootcamp bootcamp, String campusName) {
+    public TeacherBootcampListResponse(Bootcamp bootcamp, String campusName, Integer studentCount) {
         this.bootcampId = bootcamp.getId();
         if(bootcamp.getBootcampTitle().length() <= 10)
             this.bootcampTitle = bootcamp.getBootcampTitle();
@@ -33,8 +31,6 @@ public class ManagerBootcampListResponse {
         this.bootcampStartDate = bootcamp.getBootcampStartDate();
         this.bootcampEndDate = bootcamp.getBootcampEndDate();
         this.campusName = campusName;
-        this.bootcampEnterCode = bootcamp.getBootcampEnterCode();
-        this.curriculumList = bootcamp.getCurriculumList();
-        this.curriculumStatus = bootcamp.getBootcampStatus();
+        this.StudentCount = studentCount;
     }
 }

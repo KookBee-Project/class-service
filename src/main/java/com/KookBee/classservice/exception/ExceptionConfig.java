@@ -19,4 +19,14 @@ public class ExceptionConfig {
     public ResponseEntity<String> DayOffDateCheckException(DayOffDateCheckException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(DayOffUseDaysCheckException.class)
+    public ResponseEntity<String> DayOffUseDaysCheckException(DayOffUseDaysCheckException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DayOffNoneCurriculumException.class)
+    public ResponseEntity<String> DayOffNoneCurriculumException(DayOffNoneCurriculumException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
