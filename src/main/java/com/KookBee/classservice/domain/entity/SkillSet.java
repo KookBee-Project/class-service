@@ -15,16 +15,15 @@ import java.util.List;
 @Getter
 public class SkillSet {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "skillset_id")
+    @Column(name = "skill_set_id")
     private Long id;
     private String skillSetName;
     @JsonIgnore
     @OneToMany(mappedBy = "skillSet")
     private List<Curriculum> curriculumList;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "homework_question_id")
-    private HomeworkQuestions homeworkQuestions;
+    @OneToMany(mappedBy = "skillSet", fetch = FetchType.LAZY)
+    private List<HomeworkQuestions> homeworkQuestionsList;
 
     public SkillSet(Long skillSetId) {
         this.id = skillSetId;

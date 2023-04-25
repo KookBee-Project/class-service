@@ -19,27 +19,28 @@ public class HomeworkQuestions {
     private Long id;
     private Long userId;
     @ManyToOne
-    @JoinColumn(name = "bootcamp_id")
-    private Bootcamp bootcamp;
+    @JoinColumn(name = "curriculum_id")
+    private Curriculum curriculum;
     private String homeworkQuestionStartDate;
     private String homeworkQuestionEndDate;
     private String homeworkQuestionTitle;
     private String homeworkQuestionContent;
     private String homeworkQuestionImage;
-    @OneToMany(mappedBy = "homeworkQuestions", fetch = FetchType.LAZY)
-    private List<SkillSet> skillSetList;
+    @ManyToOne
+    @JoinColumn(name = "skill_set_id")
+    private SkillSet skillSet;
     @Enumerated(EnumType.STRING)
     private EStatus homeworkStatus = EStatus.PROCEEDING;
 
 
-    public HomeworkQuestions(HomeworkQuestionRequest request, Long userId, Bootcamp bootcamp, List<SkillSet> skillSetList) {
+    public HomeworkQuestions(HomeworkQuestionRequest request, Long userId, Curriculum curriculum, SkillSet skillSet) {
         this.userId = userId;
-        this.bootcamp = bootcamp;
+        this.curriculum = curriculum;
         this.homeworkQuestionStartDate = request.getHomeworkQuestionStartDate();
         this.homeworkQuestionEndDate = request.getHomeworkQuestionEndDate();
         this.homeworkQuestionTitle = request.getHomeworkQuestionTitle();
         this.homeworkQuestionContent = request.getHomeworkQuestionContent();
         this.homeworkQuestionImage = request.getHomeworkQuestionImage();
-        this.skillSetList = skillSetList;
+        this.skillSet = skillSet;
     }
 }

@@ -32,6 +32,7 @@ public class Curriculum {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "skill_set_id")
     private SkillSet skillSet;
+    @Enumerated(EnumType.STRING)
     private EStatus curriculumStatus;
     @OneToMany(mappedBy = "curriculum", fetch = FetchType.LAZY)
     private List<DayOff> dayOffList;

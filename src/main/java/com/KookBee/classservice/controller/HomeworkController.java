@@ -2,6 +2,7 @@ package com.KookBee.classservice.controller;
 
 import com.KookBee.classservice.domain.entity.HomeworkQuestions;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
+import com.KookBee.classservice.domain.response.TeacherHomeworkListResponse;
 import com.KookBee.classservice.service.HomeworkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,5 +23,10 @@ public class HomeworkController {
     @GetMapping("/{bootcampId}")
     public List<HomeworkQuestions> getTeacherHomeworkList(@PathVariable("bootcampId") Long bootcampId) {
         return homeworkService.getHomeworkList(bootcampId);
+    }
+
+    @GetMapping("/{homeworkId}")
+    public TeacherHomeworkListResponse getHomeworkDetail(@PathVariable("homeworkId") Long homeworkId){
+        return homeworkService.getHomeworkDetail(homeworkId);
     }
 }

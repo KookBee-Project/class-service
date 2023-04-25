@@ -21,6 +21,7 @@ public class StudentBootcamp {
     // 일단 제거 private String studentClassAttendance;
     //총 출석일
     //현제 출석일
+    @Enumerated(EnumType.STRING)
     private String studentClassStatus;
 
 //    public StudentClass(Classes classes){

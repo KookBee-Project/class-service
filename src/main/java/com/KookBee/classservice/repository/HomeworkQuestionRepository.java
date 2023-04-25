@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface HomeworkQuestionRepository extends JpaRepository<HomeworkQuestions, Long> {
     Optional<List<HomeworkQuestions>> findByBootcamp(Bootcamp bootcamp);
+
+    Integer countByBootcamp(Bootcamp bootcamp);
 }
