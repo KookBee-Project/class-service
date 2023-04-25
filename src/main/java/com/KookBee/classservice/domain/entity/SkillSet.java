@@ -23,7 +23,7 @@ public class SkillSet {
     private List<Curriculum> curriculumList;
     @JsonIgnore
     @OneToMany(mappedBy = "skillSet", fetch = FetchType.LAZY)
-    private List<HomeworkQuestions> homeworkQuestionsList;
+    private List<HomeworkQuestion> homeworkQuestionList;
 
     public SkillSet(Long skillSetId) {
         this.id = skillSetId;
