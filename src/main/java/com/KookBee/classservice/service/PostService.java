@@ -4,7 +4,9 @@ import com.KookBee.classservice.domain.dto.PostDTO;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Post;
 import com.KookBee.classservice.domain.enums.EPostType;
+import com.KookBee.classservice.domain.enums.EStatus;
 import com.KookBee.classservice.domain.request.PostCreateRequest;
+import com.KookBee.classservice.domain.request.PostUpdatePostTypeRequest;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.PostRepository;
 import com.KookBee.classservice.security.JwtService;
@@ -39,6 +41,30 @@ public class PostService {
         Optional<Bootcamp> bootcamp = bootcampRepository.findById(bootcampId);
 
         return postRepository.findAllByBootcampAndPostType(bootcamp.orElse(null),postType);
+    }
+    public String deletePost(Long postId) {
+        Optional<Post> deleteById = postRepository.findById(postId);
+        Post post = deleteById.orElse(null);
+        assert post != null;
+        postRepository.save(post.updateStatus(EStatus.DELETED));
+        return "삭제완료";
+    }
+    public String updatePostType(Long id, PostUpdatePostTypeRequest request) {
+        Post findPostById = postRepository.findById(id).orElse(null);
+        assert findPostById != null;
+        String newPostType = request.getPostType();
+        //이거 더 좋은방법이 없을지 생각해보자. post란게 새로 생길떄마다 코드를 추가해야 하니깐.
+        if (newPostType.equals("QNA")) {
+            postRepository.save(findPostById.updatePostType(EPostType.QNA));
+            return "Q&A로 변경완료";
+        }
+        if (newPostType.equals("NOTIFICATION")) {
+            postRepository.save(findPostById.updatePostType(EPostType.NOTIFICATION));
+            return "공지사항으로 변경완료";
+        }
+        else {
+            return "변경실패";
+        }
     }
 
 }

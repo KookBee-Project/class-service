@@ -30,6 +30,5 @@ public class PostDTO {
         this.postContent = request.getPostContent();
         this.fileUUID = request.getFileUUID();
         this.bootcampId = request.getBootcampId();
-        this.status = request.getStatus();
     }
 }

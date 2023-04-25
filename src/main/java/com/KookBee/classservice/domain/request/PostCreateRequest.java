@@ -18,7 +18,6 @@ public class PostCreateRequest {
     private String postContent;
     private Long bootcampId;
     private String fileUUID; // uuid 만 저장
-    private EStatus status;
 
 
 }

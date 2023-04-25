@@ -3,6 +3,7 @@ package com.KookBee.classservice.controller;
 import com.KookBee.classservice.domain.entity.Post;
 import com.KookBee.classservice.domain.enums.EPostType;
 import com.KookBee.classservice.domain.request.PostCreateRequest;
+import com.KookBee.classservice.domain.request.PostUpdatePostTypeRequest;
 import com.KookBee.classservice.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +30,13 @@ public class NotificationController {
         return postService.findAllNotificationPost(id, postType);
 
     }
-    @DeleteMapping("/delete}")
-    public void deleteNotification(PostDeleteRequest request){
-
+    @DeleteMapping("/{postId}")
+    public String deleteNotification(@PathVariable Long postId){
+        return postService.deletePost(postId);
+    }
+    @PutMapping("/{postId}")
+    public String changePostType(@PathVariable("postId") Long postId, @RequestBody PostUpdatePostTypeRequest request){
+        return postService.updatePostType(postId, request);
     }
 
 }

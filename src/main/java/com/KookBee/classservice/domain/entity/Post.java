@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 
@@ -33,7 +34,8 @@ public class Post {
     @JoinColumn(name = "bootcamp_id")
     private Bootcamp bootcamp; // 부트캠프 아이디 가져오기
     private String fileUUID; // uuid 만 저장
-    private EStatus status;
+    @Enumerated(EnumType.STRING)
+    private EStatus status = EStatus.PROCEEDING;
 
     public Post(PostDTO dto, Long userId) {
         this.postType = dto.getPostType();
@@ -42,7 +44,14 @@ public class Post {
         this.postCreateAt = LocalDate.now();
         this.writerId = userId;
         this.fileUUID = dto.getFileUUID();
-        this.status = dto.getStatus();
+    }
+    public Post updateStatus(EStatus status){
+        this.status = status;
+        return this;
+    }
+    public Post updatePostType(EPostType postType){
+        this.postType = postType;
+        return this;
     }
 }
 
