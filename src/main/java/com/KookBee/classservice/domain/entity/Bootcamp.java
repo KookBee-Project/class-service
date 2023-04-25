@@ -36,6 +36,9 @@ public class Bootcamp {
     @JsonIgnore
     @OneToMany(mappedBy = "bootcamp", fetch = FetchType.LAZY)
     private List<StudentBootcamp> studentBootcampList;
+    @JsonIgnore
+    @OneToMany(mappedBy = "bootcamp", fetch =FetchType.LAZY)
+    private List<Post> postList;
 
     public Bootcamp(BootcampDTO dto, Long userId) {
         this.companyId = dto.getCompanyId();
