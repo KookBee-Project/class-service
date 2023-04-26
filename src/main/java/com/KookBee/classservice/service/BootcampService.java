@@ -85,7 +85,7 @@ public class BootcampService {
                 List<Bootcamp> allByTeacherId = bootcampRepository.findAllByTeacherId(userId);
                 List<TeacherBootcampListResponse> bootcampList = allByTeacherId.stream().map(bootcamp -> {
                     String campusName = userServiceClient.getCampusById(bootcamp.getCampusId()).getCampusName();
-                    Integer studentCount = studentBootcampRepository.countBybootcamp(bootcamp);
+                    Integer studentCount = studentBootcampRepository.countByBootcamp(bootcamp);
                     return new TeacherBootcampListResponse(bootcamp, campusName, studentCount);
                 }).collect(Collectors.toList());
                 return bootcampList;

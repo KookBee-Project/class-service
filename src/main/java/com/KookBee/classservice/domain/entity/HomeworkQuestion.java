@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,6 +32,9 @@ public class HomeworkQuestion {
     @ManyToOne
     @JoinColumn(name = "skill_set_id")
     private SkillSet skillSet;
+    @JsonIgnore
+    @OneToMany(mappedBy = "homeworkQuestion")
+    private List<HomeworkAnswer> homeworkAnswerList;
     @Enumerated(EnumType.STRING)
     private EStatus homeworkStatus = EStatus.PROCEEDING;
 

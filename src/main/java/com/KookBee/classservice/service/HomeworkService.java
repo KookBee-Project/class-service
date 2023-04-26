@@ -5,6 +5,7 @@ import com.KookBee.classservice.domain.entity.HomeworkQuestion;
 import com.KookBee.classservice.domain.entity.SkillSet;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
 import com.KookBee.classservice.domain.response.TeacherHomeworkDetailResponse;
+import com.KookBee.classservice.domain.response.TeacherHomeworkListResponse;
 import com.KookBee.classservice.repository.*;
 import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -12,12 +13,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class HomeworkService {
 
     private final HomeworkQuestionRepository homeworkQuestionRepository;
+    private final HomeworkAnswerRepository homeworkAnswerRepository;
     private final BootcampRepository bootcampRepository;
     private final CurriculumRepository curriculumRepository;
     private final SkillSetRepository skillSetRepository;
@@ -40,14 +43,19 @@ public class HomeworkService {
 //        return null;
     }
 
-    public List<HomeworkQuestion> getHomeworkList(Long curriculumId) {
+    public List<TeacherHomeworkListResponse> getHomeworkList(Long curriculumId) {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 //        User user = userServiceClient.getUserById(userId);
 //        if(jwtService.isValidTokens() && user.getUserType() == "TEACHER"){
 //        try{
             Curriculum curriculum = new Curriculum(curriculumId);
-            List<HomeworkQuestion> findByBootcampId = homeworkQuestionRepository.findByCurriculum(curriculum);
-            return findByBootcampId;
+            List<HomeworkQuestion> findByCurriculumId = homeworkQuestionRepository.findByCurriculum(curriculum);
+            List<TeacherHomeworkListResponse> responses = findByCurriculumId.stream().map(el -> {
+                Integer summitStudent = homeworkAnswerRepository.countByHomeworkQuestion(el);
+                Integer totalStudent = studentBootcampRepository.countByBootcamp(el.getCurriculum().getBootcamp());
+                return new TeacherHomeworkListResponse(el, summitStudent, totalStudent);
+            }).collect(Collectors.toList());
+            return responses;
 //            } catch (Exception e) {
 //                return null;
 //            }
@@ -58,7 +66,7 @@ public class HomeworkService {
     public TeacherHomeworkDetailResponse getHomeworkDetail(Long homeworkId) {
         Optional<HomeworkQuestion> findById = homeworkQuestionRepository.findById(homeworkId);
         HomeworkQuestion homeworkQuestions = findById.orElseThrow(NullPointerException::new);
-        Integer totalStudent = studentBootcampRepository.countBybootcamp(homeworkQuestions.getCurriculum().getBootcamp());
+        Integer totalStudent = studentBootcampRepository.countByBootcamp(homeworkQuestions.getCurriculum().getBootcamp());
         return new TeacherHomeworkDetailResponse(homeworkQuestions, totalStudent);
     }
 }
