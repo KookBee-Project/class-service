@@ -1,6 +1,7 @@
 package com.KookBee.classservice.domain.response;
 
 import com.KookBee.classservice.domain.dto.ManagerDayOffListDTO;
+import com.KookBee.classservice.domain.dto.TeacherDayOffListDTO;
 import com.KookBee.classservice.domain.enums.EDayOffStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,16 +13,16 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class ManagerDayOffListResponse {
+public class DayOffListForTeacherResponse {
     private Long dayOffId;
     private String campusName;
     private String bootcampName;
     private String studentName;
     private LocalDate dayOffStartDate;
     private LocalDate dayOffEndDate;
-    private EDayOffStatus dayOffStatus;
+    private EDayOffStatus dayOffTeacherStatus;
 
-    public ManagerDayOffListResponse(ManagerDayOffListDTO dto) {
+    public DayOffListForTeacherResponse(TeacherDayOffListDTO dto) {
         this.dayOffId = dto.getDayOffId();
         this.campusName = dto.getCampusName();
         if(dto.getBootcampName().length() <= 10)
@@ -31,6 +32,6 @@ public class ManagerDayOffListResponse {
         this.studentName = dto.getStudentName();
         this.dayOffStartDate = dto.getDayOffStartDate();
         this.dayOffEndDate = dto.getDayOffEndDate();
-        this.dayOffStatus = dto.getDayOffStatus();
+        this.dayOffTeacherStatus = dto.getDayOffTeacherStatus();
     }
 }
