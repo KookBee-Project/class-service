@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TeacherHomeworkListResponse {
+public class TeacherHomeworkDetailResponse {
     private Long homeworkId;
     private String homeworkTitle;
     private String homeworkContent;
@@ -22,7 +22,7 @@ public class TeacherHomeworkListResponse {
     private Integer summitStudent;
     private Integer totalStudent;
 
-    public TeacherHomeworkListResponse(HomeworkQuestion homeworkQuestion, Integer totalStudent) {
+    public TeacherHomeworkDetailResponse(HomeworkQuestion homeworkQuestion, Integer totalStudent) {
         this.homeworkId = homeworkQuestion.getId();
         this.homeworkTitle = homeworkQuestion.getHomeworkQuestionTitle();
         this.homeworkContent = homeworkQuestion.getHomeworkQuestionContent();

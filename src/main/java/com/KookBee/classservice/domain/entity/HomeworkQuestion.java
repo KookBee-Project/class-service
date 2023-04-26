@@ -2,6 +2,7 @@ package com.KookBee.classservice.domain.entity;
 
 import com.KookBee.classservice.domain.enums.EStatus;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,7 @@ public class HomeworkQuestion {
     @Column(name = "homework_question_id")
     private Long id;
     private Long userId;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "curriculum_id")
     private Curriculum curriculum;
@@ -24,6 +26,7 @@ public class HomeworkQuestion {
     private String homeworkQuestionTitle;
     private String homeworkQuestionContent;
     private String homeworkQuestionImage;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "skill_set_id")
     private SkillSet skillSet;
