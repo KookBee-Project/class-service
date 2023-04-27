@@ -15,11 +15,10 @@ import java.util.Date;
 public class ProductRequest {
     public Long managerId;
     public Long studentId;
-    private String bootcampTitle;
+    private Long bootcampId;
     public Date productRentalStartDate;
     public Date productRentalEndDate;
-    public String productName;
-    public String productCode;
+    public Long productItemId;
     public EProductType productType;
     public EProductStatus productStatus;
     public Integer productCount;

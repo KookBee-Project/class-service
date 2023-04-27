@@ -3,16 +3,14 @@ package com.KookBee.classservice.service;
 import com.KookBee.classservice.client.Campus;
 import com.KookBee.classservice.client.User;
 import com.KookBee.classservice.client.UserServiceClient;
-import com.KookBee.classservice.domain.dto.DayOffApplyDTO;
-import com.KookBee.classservice.domain.dto.ManagerDayOffListDTO;
+import com.KookBee.classservice.domain.dto.*;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.entity.DayOff;
 import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.request.DayOffApplyRequest;
-import com.KookBee.classservice.domain.response.ManagerDayOffListResponse;
-import com.KookBee.classservice.domain.response.StudentDayOffBootcampListResponse;
-import com.KookBee.classservice.domain.response.StudentDayOffListResponse;
+import com.KookBee.classservice.domain.request.DayOffStatusModifyRequest;
+import com.KookBee.classservice.domain.response.*;
 import com.KookBee.classservice.exception.DayOffDateCheckException;
 import com.KookBee.classservice.exception.DayOffNoneCurriculumException;
 import com.KookBee.classservice.exception.DayOffUseDaysCheckException;
@@ -120,18 +118,53 @@ public class DayOffService {
         return responses;
     }
 
-    public List<ManagerDayOffListResponse> getDayOffListForManager(){
+    public List<DayOffListForManagerResponse> getDayOffListForManager(){
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         // 일단 휴가를 찾아오자
-        List<DayOff> dayOffList = dayOffRepository.findByManagerID(userId);
-        List<ManagerDayOffListResponse> responses = dayOffList.stream().map(el->{
+        List<DayOff> dayOffList = dayOffRepository.findByManagerId(userId);
+        List<DayOffListForManagerResponse> responses = dayOffList.stream().map(el->{
             User user = userServiceClient.getUserById(el.getUserId());
             Bootcamp bootcamp = el.getCurriculum().getBootcamp();
             Long campusId = bootcamp.getCampusId();
             Campus campus = userServiceClient.getCampusById(campusId);
             ManagerDayOffListDTO dto = new ManagerDayOffListDTO(user, campus, bootcamp, el);
-            return new ManagerDayOffListResponse(dto);
+            return new DayOffListForManagerResponse(dto);
         }).toList();
         return responses;
+    }
+
+    public List<DayOffListForTeacherResponse> getDayOffListForTeacher(){
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        // 일단 휴가를 찾아오자
+        List<DayOff> dayOffList = dayOffRepository.findByTeacherId(userId);
+        List<DayOffListForTeacherResponse> responses = dayOffList.stream().map(el->{
+            User user = userServiceClient.getUserById(el.getUserId());
+            Bootcamp bootcamp = el.getCurriculum().getBootcamp();
+            Long campusId = bootcamp.getCampusId();
+            Campus campus = userServiceClient.getCampusById(campusId);
+            TeacherDayOffListDTO dto = new TeacherDayOffListDTO(user, campus, bootcamp, el);
+            return new DayOffListForTeacherResponse(dto);
+        }).toList();
+        return responses;
+    }
+
+    public DayOffDetailResponse getDayOffDetail(Long dayOffId){
+        DayOff dayOff = dayOffRepository.findById(dayOffId).get();
+
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        User admin = userServiceClient.getUserById(userId);
+        User student = userServiceClient.getUserById(dayOff.getUserId());
+        Bootcamp bootcamp = dayOff.getCurriculum().getBootcamp();
+        Long campusId = bootcamp.getCampusId();
+        Campus campus = userServiceClient.getCampusById(campusId);
+        DayOffDetailDTO dto = new DayOffDetailDTO(dayOff, admin, student, campus, bootcamp);
+        return new DayOffDetailResponse(dto);
+    }
+
+    public void putDayOffStatus(Long dayOffId, DayOffStatusModifyRequest request){
+        DayOffStatusModifyDTO dto = new DayOffStatusModifyDTO(dayOffId, request);
+        DayOff dayOff = dayOffRepository.findById(dayOffId).get();
+        dayOff.updateDayOffStatus(dto);
+        dayOffRepository.save(dayOff);
     }
 }
