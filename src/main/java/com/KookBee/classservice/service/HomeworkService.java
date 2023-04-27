@@ -1,9 +1,9 @@
 package com.KookBee.classservice.service;
 
-import com.KookBee.classservice.domain.entity.Curriculum;
-import com.KookBee.classservice.domain.entity.HomeworkQuestion;
-import com.KookBee.classservice.domain.entity.SkillSet;
+import com.KookBee.classservice.domain.entity.*;
+import com.KookBee.classservice.domain.enums.EHomeworkStatus;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
+import com.KookBee.classservice.domain.response.StudentHomeworkListResponse;
 import com.KookBee.classservice.domain.response.TeacherHomeworkDetailResponse;
 import com.KookBee.classservice.domain.response.TeacherHomeworkListResponse;
 import com.KookBee.classservice.repository.*;
@@ -11,6 +11,8 @@ import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,5 +70,18 @@ public class HomeworkService {
         HomeworkQuestion homeworkQuestions = findById.orElseThrow(NullPointerException::new);
         Integer totalStudent = studentBootcampRepository.countByBootcamp(homeworkQuestions.getCurriculum().getBootcamp());
         return new TeacherHomeworkDetailResponse(homeworkQuestions, totalStudent);
+    }
+
+    public List<StudentHomeworkListResponse> getStudentHomeworkList(Long bootcampId) {
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        //        Bootcamp bootcamp = new Bootcamp(bootcampId);
+        //        List<Curriculum> findByBootcamp = curriculumRepository.findByBootcamp(bootcamp);
+        List<HomeworkQuestion> homeworkQuestions = homeworkQuestionRepository.findByBootcampId(bootcampId);
+        List<StudentHomeworkListResponse> responses = homeworkQuestions.stream().map(el -> {
+            Optional<HomeworkAnswer> getAnswer = homeworkAnswerRepository.findByHomeworkQuestionAndUserId(el, userId);
+            HomeworkAnswer answer = getAnswer.orElse(null);
+            return new StudentHomeworkListResponse(el, el.getCurriculum().getBootcamp().getBootcampTitle(), el.getSkillSet(), answer);
+        }).toList();
+        return responses;
     }
 }

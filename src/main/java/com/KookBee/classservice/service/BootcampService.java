@@ -7,6 +7,7 @@ import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.enums.EStatus;
+import com.KookBee.classservice.domain.request.BootcampCodeRequest;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
@@ -116,15 +117,15 @@ public class BootcampService {
     }
 
 
-    public StudentBootcamp addBootcamp(String bootcampCode) throws BootcampUserCheckException, BootcampCodeCheckException {
+    public StudentBootcamp addBootcamp(BootcampCodeRequest request) throws BootcampUserCheckException, BootcampCodeCheckException {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        Optional<Bootcamp> findByBootcampCode = bootcampRepository.findByBootcampEnterCode(bootcampCode);
+        System.out.println(request.getBootcampCode());
+        Optional<Bootcamp> findByBootcampCode = bootcampRepository.findByBootcampEnterCode(request.getBootcampCode());
         Bootcamp bootcamp = findByBootcampCode.orElseThrow(BootcampCodeCheckException::new);
-        StudentBootcamp studentBootcamp = new StudentBootcamp(userId, bootcamp);
-        try{
-            return studentBootcampRepository.save(studentBootcamp);
-        }catch (Exception e) {
+        Optional<StudentBootcamp> check = studentBootcampRepository.findByBootcampAndStudentId(bootcamp, userId);
+        if(check.isPresent())
             throw new BootcampUserCheckException();
-        }
+        StudentBootcamp studentBootcamp = new StudentBootcamp(userId, bootcamp);
+        return studentBootcampRepository.save(studentBootcamp);
     }
 }

@@ -3,6 +3,7 @@ package com.KookBee.classservice.controller;
 
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.StudentBootcamp;
+import com.KookBee.classservice.domain.request.BootcampCodeRequest;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
@@ -30,7 +31,7 @@ public class BootcampController {
     }
 
     @PostMapping("/student")
-    public StudentBootcamp addBootcamp(@RequestBody String bootcampCode) throws BootcampCodeCheckException, BootcampUserCheckException {
+    public StudentBootcamp addBootcamp(@RequestBody BootcampCodeRequest bootcampCode) throws BootcampCodeCheckException, BootcampUserCheckException {
         return bootcampService.addBootcamp(bootcampCode);
     }
 
@@ -61,6 +62,5 @@ public class BootcampController {
     public List<TeacherBootcampListResponse> getBootcampListByTeacherId(){
         return bootcampService.getBootcampByTeacherId();
     }
-
 
 }

@@ -24,7 +24,10 @@ public class StudentBootcampListResponse {
 
     public StudentBootcampListResponse(Bootcamp bootcamp, String campusName) {
         this.bootcampId = bootcamp.getId();
-        this.bootcampTitle = bootcamp.getBootcampTitle();
+        if(bootcamp.getBootcampTitle().length() <= 10)
+            this.bootcampTitle = bootcamp.getBootcampTitle();
+        else
+            this.bootcampTitle = bootcamp.getBootcampTitle().substring(0, 9) + "...";
         this.bootcampStartDate = bootcamp.getBootcampStartDate();
         this.bootcampEndDate = bootcamp.getBootcampEndDate();
         this.campusName = campusName;
