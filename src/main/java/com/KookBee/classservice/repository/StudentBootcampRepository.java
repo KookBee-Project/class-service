@@ -15,4 +15,5 @@ public interface StudentBootcampRepository extends JpaRepository<StudentBootcamp
 
     List<StudentBootcamp> findByBootcamp(Bootcamp bootcamp);
 
+    Optional<StudentBootcamp> findByBootcampAndStudentId(Bootcamp bootcamp, Long userId);
 }

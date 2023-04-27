@@ -17,7 +17,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
@@ -42,5 +42,4 @@ eureka:
 #    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 #    preferIpAddress: true
 #    ip-address: 34.22.69.46
-
 

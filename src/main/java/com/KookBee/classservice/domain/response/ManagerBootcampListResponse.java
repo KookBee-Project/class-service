@@ -1,5 +1,6 @@
 package com.KookBee.classservice.domain.response;
 
+import com.KookBee.classservice.domain.dto.CurriculumResponse;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.enums.EStatus;
@@ -21,7 +22,7 @@ public class ManagerBootcampListResponse {
     private String bootcampEndDate;
     private String campusName;
     private String bootcampEnterCode;
-    private List<Curriculum> curriculumList;
+    private List<CurriculumResponse> curriculumList;
     private EStatus curriculumStatus;
 
     public ManagerBootcampListResponse(Bootcamp bootcamp, String campusName) {
@@ -34,7 +35,8 @@ public class ManagerBootcampListResponse {
         this.bootcampEndDate = bootcamp.getBootcampEndDate();
         this.campusName = campusName;
         this.bootcampEnterCode = bootcamp.getBootcampEnterCode();
-        this.curriculumList = bootcamp.getCurriculumList();
+        this.curriculumList = bootcamp.getCurriculumList().stream()
+                .map(el->(new CurriculumResponse(el))).toList();
         this.curriculumStatus = bootcamp.getBootcampStatus();
     }
 }

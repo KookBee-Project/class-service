@@ -1,5 +1,6 @@
 package com.KookBee.classservice.domain.entity;
 
+import com.KookBee.classservice.domain.enums.EHomeworkStatus;
 import com.KookBee.classservice.domain.enums.EStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -25,5 +26,5 @@ public class HomeworkAnswer {
     private String homeworkAnswerContent;
     private String homeworkAnswerImages;
     @Enumerated(EnumType.STRING)
-    private EStatus homeworkAnswerStatus;
+    private EHomeworkStatus homeworkAnswerStatus;
 }
