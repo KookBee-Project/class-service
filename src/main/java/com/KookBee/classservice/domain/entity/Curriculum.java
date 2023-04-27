@@ -16,8 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class Curriculum {
-    @JsonIgnore
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "curriculum_id")
     private Long id;
     @JsonIgnore
@@ -36,6 +35,8 @@ public class Curriculum {
     private EStatus curriculumStatus;
     @OneToMany(mappedBy = "curriculum", fetch = FetchType.LAZY)
     private List<DayOff> dayOffList;
+    @OneToMany(mappedBy = "curriculum", fetch = FetchType.LAZY)
+    private List<HomeworkQuestion> homeworkQuestions;
 
     public Curriculum(CurriculumInsertRequest request, Bootcamp bootcamp, Long id, SkillSet skillSet) {
         this.curriculumName = request.getCurriculumName();

@@ -3,6 +3,7 @@ package com.KookBee.classservice.controller;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.entity.HomeworkQuestion;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
+import com.KookBee.classservice.domain.response.StudentHomeworkListResponse;
 import com.KookBee.classservice.domain.response.TeacherHomeworkDetailResponse;
 import com.KookBee.classservice.domain.response.TeacherHomeworkListResponse;
 import com.KookBee.classservice.service.CurriculumService;
@@ -31,5 +32,10 @@ public class HomeworkController {
     @GetMapping("/detail/{homeworkId}")
     public TeacherHomeworkDetailResponse getHomeworkDetail(@PathVariable("homeworkId") Long homeworkId){
         return homeworkService.getHomeworkDetail(homeworkId);
+    }
+
+    @GetMapping("/student/list/{bootcampId}")
+    public List<StudentHomeworkListResponse> getStudentHomeworkList(@PathVariable("bootcampId") Long bootcampId){
+        return homeworkService.getStudentHomeworkList(bootcampId);
     }
 }
