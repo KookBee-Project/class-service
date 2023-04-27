@@ -68,7 +68,7 @@ public class JwtService {
                 .setHeaderParam("type","jwt")
                 .claim("userId",userId)
                 .setIssuedAt(now)
-                .setExpiration(new Date(System.currentTimeMillis()+1*(1000*60*30))) // 만료기간은 30분으로 설정
+                .setExpiration(new Date(System.currentTimeMillis()+1*(1000*60*30*6))) // 만료기간은 30분으로 설정
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 //        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();

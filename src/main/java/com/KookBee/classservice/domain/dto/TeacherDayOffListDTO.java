@@ -15,22 +15,22 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class ManagerDayOffListDTO {
+public class TeacherDayOffListDTO {
     private Long dayOffId;
     private String campusName;
     private String bootcampName;
     private String studentName;
     private LocalDate dayOffStartDate;
     private LocalDate dayOffEndDate;
-    private EDayOffStatus dayOffManagerStatus;
+    private EDayOffStatus dayOffTeacherStatus;
 
-    public ManagerDayOffListDTO(User user, Campus campus, Bootcamp bootcamp, DayOff dayOff) {
+    public TeacherDayOffListDTO(User user, Campus campus, Bootcamp bootcamp, DayOff dayOff) {
         this.dayOffId = dayOff.getId();
         this.campusName = campus.getCampusName();
         this.bootcampName = bootcamp.getBootcampTitle();
         this.studentName = user.getUserName();
         this.dayOffStartDate = dayOff.getStartDate();
         this.dayOffEndDate = dayOff.getEndDate();
-        this.dayOffManagerStatus = dayOff.getManagerApproval();
+        this.dayOffTeacherStatus = dayOff.getTeacherApproval();
     }
 }

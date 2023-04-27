@@ -2,9 +2,8 @@ package com.KookBee.classservice.controller;
 
 import com.KookBee.classservice.domain.entity.DayOff;
 import com.KookBee.classservice.domain.request.DayOffApplyRequest;
-import com.KookBee.classservice.domain.response.ManagerDayOffListResponse;
-import com.KookBee.classservice.domain.response.StudentDayOffBootcampListResponse;
-import com.KookBee.classservice.domain.response.StudentDayOffListResponse;
+import com.KookBee.classservice.domain.request.DayOffStatusModifyRequest;
+import com.KookBee.classservice.domain.response.*;
 import com.KookBee.classservice.exception.DayOffDateCheckException;
 import com.KookBee.classservice.exception.DayOffNoneCurriculumException;
 import com.KookBee.classservice.exception.DayOffUseDaysCheckException;
@@ -37,8 +36,23 @@ public class DayOffController {
         return dayOffService.getDayOffList(bootcampId);
     }
 
-    @GetMapping("/admin")
-    public List<ManagerDayOffListResponse> getDayOffListForManager(){
+    @GetMapping("/admin/manager")
+    public List<DayOffListForManagerResponse> getDayOffListForManager(){
         return dayOffService.getDayOffListForManager();
+    }
+
+    @GetMapping("/admin/teacher")
+    public List<DayOffListForTeacherResponse> getDayOffListForTeacher(){
+        return dayOffService.getDayOffListForTeacher();
+    }
+
+    @GetMapping("/admin/{dayOffId}")
+    public DayOffDetailResponse getDayOffDetail(@PathVariable Long dayOffId){
+        return dayOffService.getDayOffDetail(dayOffId);
+    }
+
+    @PutMapping("/admin/{dayOffId}")
+    public void putDayOffStatusModify(@PathVariable Long dayOffId, @RequestBody DayOffStatusModifyRequest request){
+        dayOffService.putDayOffStatus(dayOffId, request);
     }
 }
