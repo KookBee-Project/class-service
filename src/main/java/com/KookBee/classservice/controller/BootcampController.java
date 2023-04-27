@@ -2,11 +2,15 @@ package com.KookBee.classservice.controller;
 
 
 import com.KookBee.classservice.domain.entity.Bootcamp;
+import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
 import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
+import com.KookBee.classservice.domain.response.StudentBootcampListResponse;
 import com.KookBee.classservice.domain.response.TeacherBootcampListResponse;
+import com.KookBee.classservice.exception.BootcampCodeCheckException;
+import com.KookBee.classservice.exception.BootcampUserCheckException;
 import com.KookBee.classservice.service.BootcampService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +29,10 @@ public class BootcampController {
         return bootcampService.createClass(request);
     }
 
+    @PostMapping("/student")
+    public StudentBootcamp addBootcamp(@RequestBody String bootcampCode) throws BootcampCodeCheckException, BootcampUserCheckException {
+        return bootcampService.addBootcamp(bootcampCode);
+    }
 
     @DeleteMapping("/{bootcampId}")
     public String deleteBootcamp(@PathVariable("bootcampId") Long bootcampId) {
@@ -35,11 +43,15 @@ public class BootcampController {
         return bootcampService.updateBootcamp(request);
     }
 
+
     @GetMapping("/{bootcampId}")
     public Bootcamp getBootCampDetail(@PathVariable("bootcampId") Long bootcampId){
         return bootcampService.getBootcampById(bootcampId);
     }
-
+    @GetMapping("/student")
+    public List<StudentBootcampListResponse> getBootcampByStudent(){
+        return bootcampService.getBootcampByStudentId();
+    }
     @GetMapping("/manager")
     public List<ManagerBootcampListResponse> getBootcampByManagerId() {
         return bootcampService.getBootcampByManagerId();
