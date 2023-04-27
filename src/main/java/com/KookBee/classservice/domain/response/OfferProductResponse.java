@@ -6,16 +6,16 @@ import com.KookBee.classservice.domain.enums.EProductType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class OfferProductResponse {
     private Long id;
     private Long bootcampId;
     public Long studentId;
-    public Date productRentalStartDate;
+    public LocalDate productRentalStartDate;
     public Long productItemId;
     public EProductType productType;
-    public EProductStatus productStatus;
     public Integer productCount;
 
     public OfferProductResponse(Product product){
@@ -25,7 +25,6 @@ public class OfferProductResponse {
         this.productRentalStartDate = product.getProductRentalStartDate();
         this.productItemId = product.getProductItemId();
         this.productType = product.getProductType();
-        this.productStatus = product.getProductStatus();
         this.productCount = product.getProductCount();
     }
 }

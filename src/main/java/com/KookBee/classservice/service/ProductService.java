@@ -11,6 +11,7 @@ import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.enums.EProductType;
 import com.KookBee.classservice.domain.request.ProductItemsRequest;
 import com.KookBee.classservice.domain.request.ProductRequest;
+import com.KookBee.classservice.domain.request.PutProductItemsRequest;
 import com.KookBee.classservice.domain.response.*;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.ProductItemsRepository;
@@ -52,7 +53,7 @@ public class ProductService {
     // Manager - 부트캠프 리스트 조회
     public List<ManagerBootcampListResponse> getManagerBootcampList(){
         Long managerId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        List<Bootcamp> bootcamps= bootcampRepository.findByManagerId(managerId);
+        List<Bootcamp> bootcamps = bootcampRepository.findByManagerId(managerId);
         List<ManagerBootcampListResponse> response = bootcamps.stream().map(el -> {
             Campus campusName = userServiceClient.getCampusById(el.getCampusId());
             return new ManagerBootcampListResponse(el, campusName.getCampusName());
@@ -125,4 +126,41 @@ public class ProductService {
         }
         return null;
     }
+
+    // BootcampId -> bootcampTitle 조회
+    public String getBootcampTitle(Long bootcampId){
+        Optional<Bootcamp> bootcamp = bootcampRepository.findById(bootcampId);
+        Bootcamp bootcamp1 = bootcamp.orElseThrow(NullPointerException::new);
+        String bootcampTitle = bootcamp1.getBootcampTitle();
+        return bootcampTitle;
+    }
+
+    // BootcampId -> ProductResponse 호출
+    public List<ProductResponse> getProduct(Long bootcampId){
+        List<Product> byBootcampId = productRepository.findByBootcampId(bootcampId);
+        List<ProductResponse> productResponses = byBootcampId.stream().map(el -> {
+            Optional<ProductItems> productItemNameById = productItemsRepository.findById(el.getProductItemId());
+            ProductItems productItems = productItemNameById.orElseThrow(NullPointerException::new);
+            User userById = userServiceClient.getUserById(el.studentId);
+            return new ProductResponse(el, productItems.getProductItemName(), userById.getUserName());
+        }).toList();
+        return productResponses;
+    }
+
+    // productItemId -> productItemName 호출
+    public String getProductItemName(Long productItemId){
+        Optional<ProductItems> byId = productItemsRepository.findById(productItemId);
+        ProductItems productItems = byId.orElseThrow(NullPointerException::new);
+        return productItems.getProductItemName();
+    }
+
+    // 등록시 수량 차감
+    public String putProductItemCounts(PutProductItemsRequest request){
+        Optional<ProductItems> byId = productItemsRepository.findById(request.getProductItemId());
+        ProductItems productItems = byId.orElseThrow(NullPointerException::new);
+        productItems.setProductItemCounts(productItems.getProductItemCounts() - request.getProductItemCounts());
+        productItemsRepository.save(productItems);
+        return "등록이 완료되었습니다.";
+    }
 }
+
