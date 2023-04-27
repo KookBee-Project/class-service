@@ -4,7 +4,6 @@ import com.KookBee.classservice.domain.entity.DayOff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,5 +21,9 @@ public interface DayOffRepository extends JpaRepository<DayOff,Long> {
     // 커리큘럼id랑 유저id를 기져오는데 그 컬리큘럼의 아이디가 주어진 bootcampID
     @Query("select d,c,b from DayOff d join d.curriculum c " +
             "join c.bootcamp b where b.managerId = :userId")
-    List<DayOff> findByManagerID(Long userId);
+    List<DayOff> findByManagerId(Long userId);
+
+    @Query("select d,c from DayOff d join d.curriculum c " +
+            "where c.teacherId = :userId")
+    List<DayOff> findByTeacherId(Long userId);
 }

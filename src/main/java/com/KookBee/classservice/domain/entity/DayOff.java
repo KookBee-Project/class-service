@@ -1,6 +1,7 @@
 package com.KookBee.classservice.domain.entity;
 
 import com.KookBee.classservice.domain.dto.DayOffApplyDTO;
+import com.KookBee.classservice.domain.dto.DayOffStatusModifyDTO;
 import com.KookBee.classservice.domain.enums.EDayOffStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,5 +43,13 @@ public class DayOff {
         this.managerApproval = dto.getManagerApproval();
         this.teacherApproval = dto.getTeacherApproval();
         this.status = dto.getStatus();
+    }
+
+    public DayOff updateDayOffStatus(DayOffStatusModifyDTO dto) {
+        this.id = dto.getDayOffId();
+        this.managerApproval = dto.getDayOffManagerStatus();
+        this.teacherApproval = dto.getDayOffTeacherStatus();
+        this.status = dto.getDayOffStatus();
+        return this;
     }
 }
