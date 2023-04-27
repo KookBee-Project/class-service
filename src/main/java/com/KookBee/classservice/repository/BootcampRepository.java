@@ -14,6 +14,9 @@ public interface BootcampRepository extends JpaRepository <Bootcamp,Long> {
     @Query("select distinct b from Bootcamp b join fetch b.curriculumList c where c.teacherId = :userId")
     List<Bootcamp> findAllByTeacherId(@Param("userId") Long userId);
 
+    Bootcamp findCampusIdById(Long bootcampId);
+
+
 //    @Transactional
 //    @Modifying
 //    @Query("UPDATE Classes c SET c.classStatus = :status WHERE c.id = :classId and c.campusId = :campusId")
