@@ -11,4 +11,6 @@ public interface StudentBootcampRepository extends JpaRepository<StudentBootcamp
     List<StudentBootcamp> findByStudentId(Long userId);
 
     Integer countBybootcamp(Bootcamp bootcamp);
+
+    List<StudentBootcamp> findByBootcamp(Bootcamp bootcamp);
 }

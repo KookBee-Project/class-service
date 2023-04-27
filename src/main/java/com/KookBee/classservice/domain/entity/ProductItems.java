@@ -1,5 +1,6 @@
 package com.KookBee.classservice.domain.entity;
 
+import com.KookBee.classservice.domain.request.ProductItemsRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +19,11 @@ public class ProductItems {
     private Integer productItemCounts;
     private Long managerId;
     private String campusName;
+
+    public ProductItems(ProductItemsRequest request) {
+        this.managerId = request.getManagerId();
+        this.productItemName = request.getProductItemName();
+        this.productItemCounts = request.getProductItemCounts();
+        this.campusName = request.getCampusName();
+    }
 }

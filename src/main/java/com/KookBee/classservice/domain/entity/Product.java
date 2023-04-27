@@ -20,11 +20,10 @@ public class Product {
     public Long id;
     public Long managerId;
     public Long studentId;
-    private String bootcampTitle;
+    private Long bootcampId;
     public Date productRentalStartDate;
     public Date productRentalEndDate;
-    public String productName;
-    public String productCode;
+    public Long productItemId;
     @Enumerated(EnumType.STRING)
     public EProductType productType;
     @Enumerated(EnumType.STRING)
@@ -36,11 +35,10 @@ public class Product {
         this.studentId = productRequest.getStudentId();
         this.productRentalStartDate = productRequest.getProductRentalStartDate();
         this.productRentalEndDate = productRequest.getProductRentalEndDate();
-        this.productName = productRequest.getProductName();
-        this.productCode = productRequest.getProductCode();
+        this.productItemId = productRequest.getProductItemId();
         this.productType = productRequest.getProductType();
         this.productStatus = productRequest.getProductStatus();
         this.productCount = productRequest.getProductCount();
-        this.bootcampTitle = productRequest.getBootcampTitle();
+        this.bootcampId = productRequest.getBootcampId();
     }
 }

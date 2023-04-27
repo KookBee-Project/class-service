@@ -2,16 +2,20 @@ package com.KookBee.classservice.service;
 
 
 import com.KookBee.classservice.client.Campus;
+import com.KookBee.classservice.client.User;
 import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Product;
+import com.KookBee.classservice.domain.entity.ProductItems;
+import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.enums.EProductType;
+import com.KookBee.classservice.domain.request.ProductItemsRequest;
 import com.KookBee.classservice.domain.request.ProductRequest;
-import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
-import com.KookBee.classservice.domain.response.OfferProductResponse;
-import com.KookBee.classservice.domain.response.RentalProductResponse;
+import com.KookBee.classservice.domain.response.*;
 import com.KookBee.classservice.repository.BootcampRepository;
+import com.KookBee.classservice.repository.ProductItemsRepository;
 import com.KookBee.classservice.repository.ProductRepository;
+import com.KookBee.classservice.repository.StudentBootcampRepository;
 import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +33,8 @@ public class ProductService {
     private final BootcampRepository bootcampRepository;
     private final JwtService jwtService;
     private final UserServiceClient userServiceClient;
+    private final ProductItemsRepository productItemsRepository;
+    private final StudentBootcampRepository studentBootcampRepository;
 
     // Manager 물품 대여 및 제공 서비스 등록
     public String postProductService(ProductRequest productRequest) {
@@ -43,7 +49,7 @@ public class ProductService {
         }
     }
 
-    // Manager 부트캠프 리스트 조회
+    // Manager - 부트캠프 리스트 조회
     public List<ManagerBootcampListResponse> getManagerBootcampList(){
         Long managerId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         List<Bootcamp> bootcamps= bootcampRepository.findByManagerId(managerId);
@@ -54,8 +60,22 @@ public class ProductService {
         return response;
     }
 
+    // Manager - Product Item 등록
+    public String postProductItems(ProductItemsRequest request){
+        Long managerId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        request.setManagerId(managerId);
+        ProductItems items = new ProductItems(request);
+        productItemsRepository.save(items);
+        return "등록이 완료되었습니다.";
+    }
 
-
+    // Manager - Product Items 조회
+    public List<ProductItemsResponse> getProductItems(String campusName){
+        Long managerId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        List<ProductItems> byCampusId = productItemsRepository.findByCampusNameAndManagerId(campusName, managerId);
+        List<ProductItemsResponse> responses = byCampusId.stream().map(ProductItemsResponse::new).collect(Collectors.toList());
+        return responses;
+    }
 
     // Student 물품 제공 내역 조회
     public List<OfferProductResponse> getOfferProductService(){
@@ -74,5 +94,35 @@ public class ProductService {
                 .map(RentalProductResponse::new)
                 .collect(Collectors.toList());
         return responses;
+    }
+
+    // Student List 조회
+    public List<StudentListResponse> getStudentList(Long bootcampId){
+        Bootcamp bootcamp = new Bootcamp(bootcampId);
+        List<StudentBootcamp> studentIdByBootcampId = studentBootcampRepository.findByBootcamp(bootcamp);
+        List<StudentListResponse> responses = studentIdByBootcampId.stream().map(el->{
+            User userById = userServiceClient.getUserById(el.getStudentId());
+            return new StudentListResponse(el, userById);
+        }).toList();
+        return responses;
+    }
+
+    public List<ProductListResponse> getProductItemList(Long bootcampId){
+        Bootcamp bootcamp = bootcampRepository.findCampusIdById(bootcampId);
+        Long campusId = bootcamp.getCampusId();
+        Campus campus = userServiceClient.getCampusById(campusId);
+        Long managerId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        List<ProductItems> byCampusNameAndManagerId = productItemsRepository.findByCampusNameAndManagerId(campus.getCampusName(), managerId);
+        List<ProductListResponse> responses = byCampusNameAndManagerId.stream().map(ProductListResponse::new).collect(Collectors.toList());
+        return responses;
+    }
+
+    public Integer getProductItemCount(Long productItemId){
+        Optional<ProductItems> byProductItemId = productItemsRepository.findById(productItemId);
+        if(byProductItemId.isPresent()){
+            Integer count = byProductItemId.get().getProductItemCounts();
+            return count;
+        }
+        return null;
     }
 }
