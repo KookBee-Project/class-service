@@ -7,29 +7,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TeacherHomeworkListResponse {
     private Long homeworkId;
-    private String homeworkTitle;
-    private String homeworkContent;
-    private String homeworkStartDate;
-    private String homeworkEndDate;
-    private String curriculumName;
+    private String homeworkQuestionTitle;
+    private String homeworkQuestionStartDate;
+    private String homeworkQuestionEndDate;
     private SkillSet skillSet;
     private Integer summitStudent;
     private Integer totalStudent;
 
-    public TeacherHomeworkListResponse(HomeworkQuestion homeworkQuestion, Integer totalStudent) {
-        this.homeworkId = homeworkQuestion.getId();
-        this.homeworkTitle = homeworkQuestion.getHomeworkQuestionTitle();
-        this.homeworkContent = homeworkQuestion.getHomeworkQuestionContent();
-        this.homeworkStartDate = homeworkQuestion.getHomeworkQuestionStartDate();
-        this.homeworkEndDate = homeworkQuestion.getHomeworkQuestionEndDate();
-        this.curriculumName = homeworkQuestion.getCurriculum().getCurriculumName();
-        this.skillSet = homeworkQuestion.getSkillSet();
+    public TeacherHomeworkListResponse(HomeworkQuestion el, Integer summitStudent, Integer totalStudent) {
+        this.homeworkId = el.getId();
+        if(el.getHomeworkQuestionTitle().length() <= 10)
+            this.homeworkQuestionTitle = el.getHomeworkQuestionTitle();
+        else
+            this.homeworkQuestionTitle = el.getHomeworkQuestionTitle().substring(0, 9) + "...";
+        this.homeworkQuestionStartDate = el.getHomeworkQuestionStartDate();
+        this.homeworkQuestionEndDate = el.getHomeworkQuestionEndDate();
+        this.skillSet = el.getSkillSet();
+        this.summitStudent = summitStudent;
         this.totalStudent = totalStudent;
     }
 }

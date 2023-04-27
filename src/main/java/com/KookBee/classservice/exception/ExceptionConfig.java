@@ -29,4 +29,14 @@ public class ExceptionConfig {
     public ResponseEntity<String> DayOffNoneCurriculumException(DayOffNoneCurriculumException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(BootcampCodeCheckException.class)
+    public ResponseEntity<String> BootcampCodeCheckException(BootcampCodeCheckException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BootcampUserCheckException.class)
+    public ResponseEntity<String> BootcampUserCheckException(BootcampUserCheckException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

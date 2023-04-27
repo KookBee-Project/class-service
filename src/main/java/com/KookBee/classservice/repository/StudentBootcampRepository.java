@@ -1,6 +1,7 @@
 package com.KookBee.classservice.repository;
 
 import com.KookBee.classservice.domain.entity.Bootcamp;
+import com.KookBee.classservice.domain.entity.HomeworkQuestion;
 import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,7 +11,8 @@ import java.util.Optional;
 public interface StudentBootcampRepository extends JpaRepository<StudentBootcamp, Long> {
     List<StudentBootcamp> findByStudentId(Long userId);
 
-    Integer countBybootcamp(Bootcamp bootcamp);
+    Integer countByBootcamp(Bootcamp bootcamp);
 
     List<StudentBootcamp> findByBootcamp(Bootcamp bootcamp);
+
 }

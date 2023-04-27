@@ -1,5 +1,6 @@
 package com.KookBee.classservice.domain.entity;
 
+import com.KookBee.classservice.domain.enums.EStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,12 @@ public class StudentBootcamp {
     //총 출석일
     //현제 출석일
     private String studentClassStatus;
+
+    public StudentBootcamp(Long studentId, Bootcamp bootcamp) {
+        this.studentId = studentId;
+        this.bootcamp = bootcamp;
+        this.studentClassStatus = String.valueOf(EStatus.PROCEEDING);
+    }
 
 //    public StudentClass(Classes classes){
 //        this.classId = classes.getId();
