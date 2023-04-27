@@ -10,6 +10,7 @@ import com.KookBee.classservice.domain.enums.EStatus;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
+import com.KookBee.classservice.domain.response.BootcampNameListResponse;
 import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
 import com.KookBee.classservice.domain.response.StudentBootcampListResponse;
 import com.KookBee.classservice.domain.response.TeacherBootcampListResponse;
@@ -126,5 +127,14 @@ public class BootcampService {
         }catch (Exception e) {
             throw new BootcampUserCheckException();
         }
+    }
+
+    public List<BootcampNameListResponse> getBootcampNameList(){
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        List<Bootcamp> byStudentId = bootcampRepository.findByStudentId(userId);
+        List<BootcampNameListResponse> responses = byStudentId.stream().map(el->{
+                return new BootcampNameListResponse(el);
+        }).toList();
+        return responses;
     }
 }

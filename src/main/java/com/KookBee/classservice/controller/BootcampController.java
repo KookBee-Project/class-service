@@ -6,6 +6,7 @@ import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
+import com.KookBee.classservice.domain.response.BootcampNameListResponse;
 import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
 import com.KookBee.classservice.domain.response.StudentBootcampListResponse;
 import com.KookBee.classservice.domain.response.TeacherBootcampListResponse;
@@ -62,5 +63,9 @@ public class BootcampController {
         return bootcampService.getBootcampByTeacherId();
     }
 
+    @GetMapping("/namelist")
+    public List<BootcampNameListResponse> getBootcampNameList(){
+        return bootcampService.getBootcampNameList();
+    }
 
 }
