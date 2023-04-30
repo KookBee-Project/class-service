@@ -5,10 +5,7 @@ import com.KookBee.classservice.domain.entity.HomeworkAnswer;
 import com.KookBee.classservice.domain.entity.HomeworkQuestion;
 import com.KookBee.classservice.domain.request.HomeworkAnswerRequest;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
-import com.KookBee.classservice.domain.response.StudentHomeworkDetailResponse;
-import com.KookBee.classservice.domain.response.StudentHomeworkListResponse;
-import com.KookBee.classservice.domain.response.TeacherHomeworkDetailResponse;
-import com.KookBee.classservice.domain.response.TeacherHomeworkListResponse;
+import com.KookBee.classservice.domain.response.*;
 import com.KookBee.classservice.service.CurriculumService;
 import com.KookBee.classservice.service.HomeworkService;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +46,11 @@ public class HomeworkController {
     @GetMapping("/student/detail/{homeworkId}")
     public StudentHomeworkDetailResponse getStudentHomeworkDetail(@PathVariable("homeworkId") Long homeworkId){
         return homeworkService.getStudentHomeworkDetail(homeworkId);
+    }
+
+    @GetMapping("/answer/detail/{homeworkAnswerId}")
+    public StudentHomeworkAnswerDetailResponse getStudentHomeworkAnswerDetail(@PathVariable("homeworkAnswerId") Long homeworkAnswerId){
+        return homeworkService.getStudentHomeworkAnswerDetail(homeworkAnswerId);
     }
 
 }

@@ -5,10 +5,7 @@ import com.KookBee.classservice.domain.entity.*;
 import com.KookBee.classservice.domain.enums.EHomeworkStatus;
 import com.KookBee.classservice.domain.request.HomeworkAnswerRequest;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
-import com.KookBee.classservice.domain.response.StudentHomeworkDetailResponse;
-import com.KookBee.classservice.domain.response.StudentHomeworkListResponse;
-import com.KookBee.classservice.domain.response.TeacherHomeworkDetailResponse;
-import com.KookBee.classservice.domain.response.TeacherHomeworkListResponse;
+import com.KookBee.classservice.domain.response.*;
 import com.KookBee.classservice.repository.*;
 import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -99,4 +96,10 @@ public class HomeworkService {
         return new StudentHomeworkDetailResponse(homeworkQuestions, teacherName);
     }
 
+    public StudentHomeworkAnswerDetailResponse getStudentHomeworkAnswerDetail(Long homeworkAnswerId) {
+        Optional<HomeworkAnswer> findById = homeworkAnswerRepository.findById(homeworkAnswerId);
+        HomeworkAnswer homeworkAnswer = findById.orElseThrow(NullPointerException::new);
+        String teacherName = userServiceClient.getTeacherByTeacherId(homeworkAnswer.getHomeworkQuestion().getUserId()).getUserName();
+        return new StudentHomeworkAnswerDetailResponse(homeworkAnswer, teacherName);
+    }
 }

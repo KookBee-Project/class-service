@@ -27,8 +27,10 @@ public class HomeworkAnswer {
     @JoinColumn(name = "homework_question_id")
     private HomeworkQuestion homeworkQuestion;
     private String homeworkAnswerUpdateAt;
+    private Integer homeworkAnswerScore;
     private String homeworkAnswerContent;
     private String homeworkAnswerImages;
+    private String homeworkAnswerComment;
     @Enumerated(EnumType.STRING)
     private EHomeworkStatus homeworkAnswerStatus;
 
