@@ -2,11 +2,15 @@ package com.KookBee.classservice.domain.entity;
 
 import com.KookBee.classservice.domain.enums.EHomeworkStatus;
 import com.KookBee.classservice.domain.enums.EStatus;
+import com.KookBee.classservice.domain.request.HomeworkAnswerRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
@@ -27,4 +31,13 @@ public class HomeworkAnswer {
     private String homeworkAnswerImages;
     @Enumerated(EnumType.STRING)
     private EHomeworkStatus homeworkAnswerStatus;
+
+    public HomeworkAnswer(HomeworkAnswerRequest request, Long userId, HomeworkQuestion homeworkQuestion) {
+        this.userId = userId;
+        this.homeworkQuestion = homeworkQuestion;
+        this.homeworkAnswerUpdateAt =  new SimpleDateFormat("yyyy-MM-dd").toString();
+        this.homeworkAnswerContent = request.getHomeworkAnswerContent();
+        this.homeworkAnswerImages = request.getHomeworkAnswerImages();
+        this.homeworkAnswerStatus = EHomeworkStatus.SUBMIT;
+    }
 }

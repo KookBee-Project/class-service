@@ -18,7 +18,8 @@ public class TeacherHomeworkDetailResponse {
     private String homeworkStartDate;
     private String homeworkEndDate;
     private String curriculumName;
-    private SkillSet skillSet;
+    private String skillSetName;
+    private Long skillSetId;
     private Integer summitStudent;
     private Integer totalStudent;
 
@@ -29,7 +30,8 @@ public class TeacherHomeworkDetailResponse {
         this.homeworkStartDate = homeworkQuestion.getHomeworkQuestionStartDate();
         this.homeworkEndDate = homeworkQuestion.getHomeworkQuestionEndDate();
         this.curriculumName = homeworkQuestion.getCurriculum().getCurriculumName();
-        this.skillSet = homeworkQuestion.getSkillSet();
+        this.skillSetName = homeworkQuestion.getSkillSet().getSkillSetName();
+        this.skillSetId = homeworkQuestion.getSkillSet().getId();
         this.totalStudent = totalStudent;
     }
 }

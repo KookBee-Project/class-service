@@ -1,8 +1,11 @@
 package com.KookBee.classservice.service;
 
+import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.entity.*;
 import com.KookBee.classservice.domain.enums.EHomeworkStatus;
+import com.KookBee.classservice.domain.request.HomeworkAnswerRequest;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
+import com.KookBee.classservice.domain.response.StudentHomeworkDetailResponse;
 import com.KookBee.classservice.domain.response.StudentHomeworkListResponse;
 import com.KookBee.classservice.domain.response.TeacherHomeworkDetailResponse;
 import com.KookBee.classservice.domain.response.TeacherHomeworkListResponse;
@@ -27,6 +30,7 @@ public class HomeworkService {
     private final CurriculumRepository curriculumRepository;
     private final SkillSetRepository skillSetRepository;
     private final StudentBootcampRepository studentBootcampRepository;
+    private final UserServiceClient userServiceClient;
     private final JwtService jwtService;
 
     public HomeworkQuestion createHomework(HomeworkQuestionRequest request) {
@@ -44,7 +48,12 @@ public class HomeworkService {
 //        }
 //        return null;
     }
-
+    public HomeworkAnswer createHomeworkAnswer(HomeworkAnswerRequest request) {
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        HomeworkQuestion homeworkQuestion = new HomeworkQuestion(request.getHomeworkQuestionId());
+        HomeworkAnswer homeworkAnswer = new HomeworkAnswer(request, userId, homeworkQuestion);
+        return homeworkAnswerRepository.save(homeworkAnswer);
+    }
     public List<TeacherHomeworkListResponse> getHomeworkList(Long curriculumId) {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 //        User user = userServiceClient.getUserById(userId);
@@ -74,8 +83,6 @@ public class HomeworkService {
 
     public List<StudentHomeworkListResponse> getStudentHomeworkList(Long bootcampId) {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        //        Bootcamp bootcamp = new Bootcamp(bootcampId);
-        //        List<Curriculum> findByBootcamp = curriculumRepository.findByBootcamp(bootcamp);
         List<HomeworkQuestion> homeworkQuestions = homeworkQuestionRepository.findByBootcampId(bootcampId);
         List<StudentHomeworkListResponse> responses = homeworkQuestions.stream().map(el -> {
             Optional<HomeworkAnswer> getAnswer = homeworkAnswerRepository.findByHomeworkQuestionAndUserId(el, userId);
@@ -84,4 +91,12 @@ public class HomeworkService {
         }).toList();
         return responses;
     }
+
+    public StudentHomeworkDetailResponse getStudentHomeworkDetail(Long homeworkId) {
+        Optional<HomeworkQuestion> findById = homeworkQuestionRepository.findById(homeworkId);
+        HomeworkQuestion homeworkQuestions = findById.orElseThrow(NullPointerException::new);
+        String teacherName = userServiceClient.getTeacherByTeacherId(homeworkQuestions.getUserId()).getUserName();
+        return new StudentHomeworkDetailResponse(homeworkQuestions, teacherName);
+    }
+
 }

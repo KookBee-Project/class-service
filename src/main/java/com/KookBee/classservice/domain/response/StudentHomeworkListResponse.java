@@ -15,6 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class StudentHomeworkListResponse {
     private Long homeworkQuestionId;
+    private Long homeworkAnswerId;
     private String bootcampTitle;
     private String curriculumName;
     private String skillSetName;
@@ -34,10 +35,14 @@ public class StudentHomeworkListResponse {
         this.homeworkQuestionTitle = homeworkQuestion.getHomeworkQuestionTitle();
         this.homeworkQuestionStartDate = homeworkQuestion.getHomeworkQuestionStartDate();
         this.homeworkQuestionEndDate = homeworkQuestion.getHomeworkQuestionEndDate();
-        if(answer == null)
+        if(answer == null) {
+            this.homeworkAnswerId = null;
             this.homeworkAnswerStatus = null;
-        else
+        }
+        else {
+            this.homeworkAnswerId = answer.getId();
             this.homeworkAnswerStatus = answer.getHomeworkAnswerStatus();
+        }
     }
 
 }

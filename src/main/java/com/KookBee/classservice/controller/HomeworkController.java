@@ -1,8 +1,11 @@
 package com.KookBee.classservice.controller;
 
 import com.KookBee.classservice.domain.entity.Curriculum;
+import com.KookBee.classservice.domain.entity.HomeworkAnswer;
 import com.KookBee.classservice.domain.entity.HomeworkQuestion;
+import com.KookBee.classservice.domain.request.HomeworkAnswerRequest;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
+import com.KookBee.classservice.domain.response.StudentHomeworkDetailResponse;
 import com.KookBee.classservice.domain.response.StudentHomeworkListResponse;
 import com.KookBee.classservice.domain.response.TeacherHomeworkDetailResponse;
 import com.KookBee.classservice.domain.response.TeacherHomeworkListResponse;
@@ -24,6 +27,10 @@ public class HomeworkController {
         return homeworkService.createHomework(request);
     }
 
+    @PostMapping("/answer")
+    public HomeworkAnswer createHomeworkAnswer(@RequestBody HomeworkAnswerRequest request){
+        return homeworkService.createHomeworkAnswer(request);
+    }
     @GetMapping("/list/{curriculumId}")
     public List<TeacherHomeworkListResponse> getTeacherHomeworkList(@PathVariable("curriculumId") Long curriculumId) {
         return homeworkService.getHomeworkList(curriculumId);
@@ -38,4 +45,10 @@ public class HomeworkController {
     public List<StudentHomeworkListResponse> getStudentHomeworkList(@PathVariable("bootcampId") Long bootcampId){
         return homeworkService.getStudentHomeworkList(bootcampId);
     }
+
+    @GetMapping("/student/detail/{homeworkId}")
+    public StudentHomeworkDetailResponse getStudentHomeworkDetail(@PathVariable("homeworkId") Long homeworkId){
+        return homeworkService.getStudentHomeworkDetail(homeworkId);
+    }
+
 }

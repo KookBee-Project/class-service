@@ -49,4 +49,8 @@ public class HomeworkQuestion {
         this.homeworkQuestionImage = request.getHomeworkQuestionImage();
         this.skillSet = skillSet;
     }
+
+    public HomeworkQuestion(Long homeworkQuestionId) {
+        this.id = homeworkQuestionId;
+    }
 }
