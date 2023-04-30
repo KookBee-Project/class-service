@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentHomeworkAnswerDetailResponse {
+    private String homeworkQuestionTitle;
     private String bootcampName;
     private String curriculumName;
     private String teacherName;
@@ -21,9 +22,11 @@ public class StudentHomeworkAnswerDetailResponse {
     private String homeworkQuestionContent;
     private String homeworkAnswerContent;
     private Integer homeworkAnswerScore;
+    private String homeworkAnswerImages;
     private String homeworkAnswerComment;
 
     public StudentHomeworkAnswerDetailResponse(HomeworkAnswer homeworkAnswer, String teacherName) {
+        this.homeworkQuestionTitle = homeworkAnswer.getHomeworkQuestion().getHomeworkQuestionTitle();
         this.bootcampName = homeworkAnswer.getHomeworkQuestion().getCurriculum().getBootcamp().getBootcampTitle();
         this.curriculumName = homeworkAnswer.getHomeworkQuestion().getCurriculum().getCurriculumName();
         this.teacherName = teacherName;
@@ -33,6 +36,7 @@ public class StudentHomeworkAnswerDetailResponse {
         this.homeworkQuestionEndDate = homeworkAnswer.getHomeworkQuestion().getHomeworkQuestionEndDate();
         this.homeworkQuestionContent = homeworkAnswer.getHomeworkQuestion().getHomeworkQuestionContent();
         this.homeworkAnswerContent = homeworkAnswer.getHomeworkAnswerContent();
+        this.homeworkAnswerImages = "https://storage.googleapis.com/kookbee-test-strorage/" + homeworkAnswer.getHomeworkAnswerImages();
         this.homeworkAnswerScore = homeworkAnswer.getHomeworkAnswerScore();
         this.homeworkAnswerComment = homeworkAnswer.getHomeworkAnswerComment();
     }

@@ -1,8 +1,10 @@
 package com.KookBee.classservice.service;
 
+import com.KookBee.classservice.client.Teacher;
 import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.entity.*;
 import com.KookBee.classservice.domain.enums.EHomeworkStatus;
+import com.KookBee.classservice.domain.request.HomeworkAnswerEditRequest;
 import com.KookBee.classservice.domain.request.HomeworkAnswerRequest;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
 import com.KookBee.classservice.domain.response.*;
@@ -101,5 +103,22 @@ public class HomeworkService {
         HomeworkAnswer homeworkAnswer = findById.orElseThrow(NullPointerException::new);
         String teacherName = userServiceClient.getTeacherByTeacherId(homeworkAnswer.getHomeworkQuestion().getUserId()).getUserName();
         return new StudentHomeworkAnswerDetailResponse(homeworkAnswer, teacherName);
+    }
+
+    public List<TeacherHomeworkAnswerListResponse> getTeacherHomeworkAnswerList(Long homeworkQuestionId) {
+        Optional<HomeworkQuestion> findById = homeworkQuestionRepository.findById(homeworkQuestionId);
+        HomeworkQuestion homeworkQuestion = findById.orElseThrow(NullPointerException::new);
+        List<TeacherHomeworkAnswerListResponse> responses = homeworkQuestion.getHomeworkAnswerList().stream().map(homeworkAnswer -> {
+            String studentName = userServiceClient.getUserById(homeworkAnswer.getUserId()).getUserName();
+            return new TeacherHomeworkAnswerListResponse(homeworkAnswer, studentName);
+        }).toList();
+        return responses;
+    }
+
+    public HomeworkAnswer updateHomeworkAnswer(HomeworkAnswerEditRequest request) {
+        Optional<HomeworkAnswer> findById = homeworkAnswerRepository.findById(request.getHomeworkAnswerId());
+        HomeworkAnswer homeworkAnswer = findById.orElseThrow(NullPointerException::new);
+        homeworkAnswer.updateHomeworkAnswer(request.getHomeworkAnswerContent(), request.getHomeworkAnswerImages());
+        return homeworkAnswerRepository.save(homeworkAnswer);
     }
 }

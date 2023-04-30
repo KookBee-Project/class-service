@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -37,9 +39,14 @@ public class HomeworkAnswer {
     public HomeworkAnswer(HomeworkAnswerRequest request, Long userId, HomeworkQuestion homeworkQuestion) {
         this.userId = userId;
         this.homeworkQuestion = homeworkQuestion;
-        this.homeworkAnswerUpdateAt =  new SimpleDateFormat("yyyy-MM-dd").toString();
+        this.homeworkAnswerUpdateAt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.homeworkAnswerContent = request.getHomeworkAnswerContent();
         this.homeworkAnswerImages = request.getHomeworkAnswerImages();
         this.homeworkAnswerStatus = EHomeworkStatus.SUBMIT;
+    }
+
+    public void updateHomeworkAnswer(String homeworkAnswerContent, String homeworkAnswerImages) {
+        this.homeworkAnswerContent = homeworkAnswerContent;
+        this.homeworkAnswerImages = homeworkAnswerImages;
     }
 }
