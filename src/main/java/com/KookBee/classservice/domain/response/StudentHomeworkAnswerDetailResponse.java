@@ -20,6 +20,7 @@ public class StudentHomeworkAnswerDetailResponse {
     private String homeworkQuestionStartDate;
     private String homeworkQuestionEndDate;
     private String homeworkQuestionContent;
+    private String homeworkQuestionImages;
     private String homeworkAnswerContent;
     private Integer homeworkAnswerScore;
     private String homeworkAnswerImages;
@@ -35,8 +36,9 @@ public class StudentHomeworkAnswerDetailResponse {
         this.homeworkQuestionStartDate = homeworkAnswer.getHomeworkQuestion().getHomeworkQuestionStartDate();
         this.homeworkQuestionEndDate = homeworkAnswer.getHomeworkQuestion().getHomeworkQuestionEndDate();
         this.homeworkQuestionContent = homeworkAnswer.getHomeworkQuestion().getHomeworkQuestionContent();
+        this.homeworkQuestionImages = homeworkAnswer.getHomeworkQuestion().getHomeworkQuestionImage();
         this.homeworkAnswerContent = homeworkAnswer.getHomeworkAnswerContent();
-        this.homeworkAnswerImages = "https://storage.googleapis.com/kookbee-test-strorage/" + homeworkAnswer.getHomeworkAnswerImages();
+        this.homeworkAnswerImages = homeworkAnswer.getHomeworkAnswerImages();
         this.homeworkAnswerScore = homeworkAnswer.getHomeworkAnswerScore();
         this.homeworkAnswerComment = homeworkAnswer.getHomeworkAnswerComment();
     }

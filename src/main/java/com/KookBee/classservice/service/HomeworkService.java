@@ -4,6 +4,7 @@ import com.KookBee.classservice.client.Teacher;
 import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.entity.*;
 import com.KookBee.classservice.domain.enums.EHomeworkStatus;
+import com.KookBee.classservice.domain.request.HomeworkAnswerCommentRequest;
 import com.KookBee.classservice.domain.request.HomeworkAnswerEditRequest;
 import com.KookBee.classservice.domain.request.HomeworkAnswerRequest;
 import com.KookBee.classservice.domain.request.HomeworkQuestionRequest;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -86,7 +88,11 @@ public class HomeworkService {
         List<StudentHomeworkListResponse> responses = homeworkQuestions.stream().map(el -> {
             Optional<HomeworkAnswer> getAnswer = homeworkAnswerRepository.findByHomeworkQuestionAndUserId(el, userId);
             HomeworkAnswer answer = getAnswer.orElse(null);
-            return new StudentHomeworkListResponse(el, el.getCurriculum().getBootcamp().getBootcampTitle(), el.getSkillSet(), answer);
+            try {
+                return new StudentHomeworkListResponse(el, el.getCurriculum().getBootcamp().getBootcampTitle(), el.getSkillSet(), answer);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }).toList();
         return responses;
     }
@@ -119,6 +125,20 @@ public class HomeworkService {
         Optional<HomeworkAnswer> findById = homeworkAnswerRepository.findById(request.getHomeworkAnswerId());
         HomeworkAnswer homeworkAnswer = findById.orElseThrow(NullPointerException::new);
         homeworkAnswer.updateHomeworkAnswer(request.getHomeworkAnswerContent(), request.getHomeworkAnswerImages());
+        return homeworkAnswerRepository.save(homeworkAnswer);
+    }
+
+    public TeacherHomeworkAnswerDetailResponse getTeacherHomeworkAnswerDetail(Long homeworkAnswerId) {
+        Optional<HomeworkAnswer> findById = homeworkAnswerRepository.findById(homeworkAnswerId);
+        HomeworkAnswer homeworkAnswer = findById.orElseThrow(NullPointerException::new);
+        String studentName = userServiceClient.getUserById(homeworkAnswer.getUserId()).getUserName();
+        return new TeacherHomeworkAnswerDetailResponse(homeworkAnswer, studentName);
+    }
+
+    public HomeworkAnswer createHomeworkAnswerComment(HomeworkAnswerCommentRequest request) {
+        Optional<HomeworkAnswer> findById = homeworkAnswerRepository.findById(request.getHomeworkAnswerId());
+        HomeworkAnswer homeworkAnswer = findById.orElseThrow(NullPointerException::new);
+        homeworkAnswer.addComment(request);
         return homeworkAnswerRepository.save(homeworkAnswer);
     }
 }

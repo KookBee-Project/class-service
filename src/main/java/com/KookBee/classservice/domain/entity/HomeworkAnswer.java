@@ -2,6 +2,7 @@ package com.KookBee.classservice.domain.entity;
 
 import com.KookBee.classservice.domain.enums.EHomeworkStatus;
 import com.KookBee.classservice.domain.enums.EStatus;
+import com.KookBee.classservice.domain.request.HomeworkAnswerCommentRequest;
 import com.KookBee.classservice.domain.request.HomeworkAnswerRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -48,5 +49,11 @@ public class HomeworkAnswer {
     public void updateHomeworkAnswer(String homeworkAnswerContent, String homeworkAnswerImages) {
         this.homeworkAnswerContent = homeworkAnswerContent;
         this.homeworkAnswerImages = homeworkAnswerImages;
+    }
+
+    public void addComment(HomeworkAnswerCommentRequest request) {
+        this.homeworkAnswerComment = request.getHomeworkAnswerComment();
+        this.homeworkAnswerScore = request.getHomeworkAnswerScore();
+        this.homeworkAnswerStatus = EHomeworkStatus.COMPLETE;
     }
 }
