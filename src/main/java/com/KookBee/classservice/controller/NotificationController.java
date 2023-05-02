@@ -29,7 +29,6 @@ public class NotificationController {
     @GetMapping("/{bootcampId}/{postType}")
     public List<Post> getPostList(@PathVariable("bootcampId") Long id,@PathVariable("postType") EPostType postType) {
         return postService.findAllNotificationPost(id, postType);
-
     }
     @DeleteMapping("/{postId}")
     public String deleteNotification(@PathVariable Long postId){

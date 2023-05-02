@@ -13,6 +13,7 @@ import lombok.ToString;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -23,6 +24,7 @@ public class Post {
 
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="post_id")
     private Long id;
     @Enumerated(EnumType.STRING)
     private EPostType postType;
@@ -34,6 +36,9 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bootcamp_id")
     private Bootcamp bootcamp; // 부트캠프 아이디 가져오기
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    private List<Comment> commentList;
+
     private String fileUUID; // uuid 만 저장
     @Enumerated(EnumType.STRING)
     private EStatus status = EStatus.PROCEEDING;
