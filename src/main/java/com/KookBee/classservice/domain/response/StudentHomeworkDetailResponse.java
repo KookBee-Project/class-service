@@ -20,6 +20,7 @@ public class StudentHomeworkDetailResponse {
     private String homeworkStartDate;
     private String homeworkEndDate;
     private String homeworkContent;
+    private String homeworkImage;
 
     public StudentHomeworkDetailResponse(HomeworkQuestion homeworkQuestion, String teacherName) {
         this.homeworkTitle = homeworkQuestion.getHomeworkQuestionTitle();
@@ -31,5 +32,6 @@ public class StudentHomeworkDetailResponse {
         this.homeworkStartDate = homeworkQuestion.getHomeworkQuestionStartDate();
         this.homeworkEndDate = homeworkQuestion.getHomeworkQuestionEndDate();
         this.homeworkContent = homeworkQuestion.getHomeworkQuestionContent();
+        this.homeworkImage = homeworkQuestion.getHomeworkQuestionImage();
     }
 }
