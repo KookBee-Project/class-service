@@ -11,13 +11,16 @@ spring:
         bucket: kookbee-test-strorage
   datasource:
 #    url: jdbc:mysql://10.178.0.3:3306/kookbee_bootcamp?serverTimezone=Asia/Seoul
-    url: jdbc:mysql://34.22.69.46:3306/kookbee_bootcamp?serverTimezone=Asia/Seoul
-    username: bee
-    password: 1q2w3e4r
+#    url: jdbc:mysql://34.22.69.46:3306/kookbee_bootcamp?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/kookbee_bootcamp?serverTimezone=Asia/Seoul
+#    username: bee
+#    password: 1q2w3e4r
+    username: root
+    password: 12345678
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true

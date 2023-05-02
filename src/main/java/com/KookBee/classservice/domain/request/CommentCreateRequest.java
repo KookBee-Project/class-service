@@ -1,12 +1,19 @@
 package com.KookBee.classservice.domain.request;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileDownRequest {
-    private Long id;
+@Getter
+@Setter
+public class CommentCreateRequest {
+    private String commentContents;
+
 }
