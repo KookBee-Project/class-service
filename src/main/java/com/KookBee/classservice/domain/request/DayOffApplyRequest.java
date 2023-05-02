@@ -14,5 +14,4 @@ public class DayOffApplyRequest {
     private String dayOffStartDate;
     private String dayOffEndDate;
     private String dayOffReason;
-    private Long bootcampId;
 }

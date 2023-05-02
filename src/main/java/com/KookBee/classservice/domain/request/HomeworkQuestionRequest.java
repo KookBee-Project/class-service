@@ -10,11 +10,11 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class HomeworkQuestionRequest {
-    private Long bootcampId;
+    private Long curriculumId;
     private String homeworkQuestionStartDate;
     private String homeworkQuestionEndDate;
     private String homeworkQuestionTitle;
     private String homeworkQuestionContent;
     private String homeworkQuestionImage;
-    private List<Long> skillSetIdList;
+    private Long skillSetId;
 }

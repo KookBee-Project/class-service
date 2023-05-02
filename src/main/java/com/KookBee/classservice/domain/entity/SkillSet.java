@@ -1,5 +1,6 @@
 package com.KookBee.classservice.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,14 +15,15 @@ import java.util.List;
 @Getter
 public class SkillSet {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "skillset_id")
+    @Column(name = "skill_set_id")
     private Long id;
     private String skillSetName;
+    @JsonIgnore
     @OneToMany(mappedBy = "skillSet")
     private List<Curriculum> curriculumList;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "homework_question_id")
-    private HomeworkQuestions homeworkQuestions;
+    @JsonIgnore
+    @OneToMany(mappedBy = "skillSet", fetch = FetchType.LAZY)
+    private List<HomeworkQuestion> homeworkQuestionList;
 
     public SkillSet(Long skillSetId) {
         this.id = skillSetId;

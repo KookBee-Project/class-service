@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -20,15 +21,12 @@ public class Product {
     public Long id;
     public Long managerId;
     public Long studentId;
-    private String bootcampTitle;
-    public Date productRentalStartDate;
-    public Date productRentalEndDate;
-    public String productName;
-    public String productCode;
+    private Long bootcampId;
+    public LocalDate productRentalStartDate;
+    public LocalDate productRentalEndDate;
+    public Long productItemId;
     @Enumerated(EnumType.STRING)
     public EProductType productType;
-    @Enumerated(EnumType.STRING)
-    public EProductStatus productStatus;
     public Integer productCount;
 
     public Product(ProductRequest productRequest) {
@@ -36,11 +34,9 @@ public class Product {
         this.studentId = productRequest.getStudentId();
         this.productRentalStartDate = productRequest.getProductRentalStartDate();
         this.productRentalEndDate = productRequest.getProductRentalEndDate();
-        this.productName = productRequest.getProductName();
-        this.productCode = productRequest.getProductCode();
+        this.productItemId = productRequest.getProductItemId();
         this.productType = productRequest.getProductType();
-        this.productStatus = productRequest.getProductStatus();
         this.productCount = productRequest.getProductCount();
-        this.bootcampTitle = productRequest.getBootcampTitle();
+        this.bootcampId = productRequest.getBootcampId();
     }
 }
