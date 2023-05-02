@@ -16,7 +16,7 @@ public class TeacherHomeworkListResponse {
     private String homeworkQuestionTitle;
     private String homeworkQuestionStartDate;
     private String homeworkQuestionEndDate;
-    private SkillSet skillSet;
+    private String skillSetName;
     private Integer summitStudent;
     private Integer totalStudent;
 
@@ -28,7 +28,7 @@ public class TeacherHomeworkListResponse {
             this.homeworkQuestionTitle = el.getHomeworkQuestionTitle().substring(0, 9) + "...";
         this.homeworkQuestionStartDate = el.getHomeworkQuestionStartDate();
         this.homeworkQuestionEndDate = el.getHomeworkQuestionEndDate();
-        this.skillSet = el.getSkillSet();
+        this.skillSetName = el.getSkillSet().getSkillSetName();
         this.summitStudent = summitStudent;
         this.totalStudent = totalStudent;
     }
