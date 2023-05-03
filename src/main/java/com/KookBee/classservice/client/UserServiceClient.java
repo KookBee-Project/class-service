@@ -18,5 +18,4 @@ public interface UserServiceClient {
 
     @GetMapping("/user/admin/manager/teacher/{teacherId}")
     User getTeacherByTeacherId(@PathVariable("teacherId") Long teacherId);
-
 }

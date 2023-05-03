@@ -91,7 +91,7 @@ public class DayOffService {
         // 토큰에서 userId가져오기
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         // userId로 부트캠프 목록 가져오기
-        List<StudentBootcamp> bootcampListByStudentId = studentBootcampRepository.findByStudentId(userId);
+        List<StudentBootcamp> bootcampListByStudentId = studentBootcampRepository.findListByStudentId(userId);
         // 가져온 정보들을 response로 만들어주기
         List<StudentDayOffBootcampListResponse> studentDayOffBootcampListResponses
                 = bootcampListByStudentId.stream().map(el->{

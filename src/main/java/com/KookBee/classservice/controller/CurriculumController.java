@@ -1,6 +1,7 @@
 package com.KookBee.classservice.controller;
 
 import com.KookBee.classservice.domain.entity.Curriculum;
+import com.KookBee.classservice.domain.entity.SkillSet;
 import com.KookBee.classservice.domain.request.CurriculumEditRequest;
 import com.KookBee.classservice.domain.request.CurriculumInsertRequest;
 import com.KookBee.classservice.domain.response.ManagerCurriculumListResponse;
@@ -36,5 +37,10 @@ public class CurriculumController {
     public List<Curriculum> deleteCurriculum(@RequestBody List<Long> curriculumIds){
 
         return curriculumService.deleteCurriculum(curriculumIds);
+    }
+
+    @GetMapping("/skillset/{id}")
+    public Curriculum getCurriculumByCurriculumId(@PathVariable Long id) {
+        return curriculumService.getCurriculum(id);
     }
 }

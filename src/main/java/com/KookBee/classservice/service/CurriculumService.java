@@ -91,4 +91,8 @@ public class CurriculumService {
         List<Curriculum> curriculumList = curriculumRepository.findAllByTeacherIdAndBootcampId(userId, bootcampId);
         return curriculumList;
     }
+
+    public Curriculum getCurriculum (Long id) {
+        return curriculumRepository.findById(id).orElse(null);
+    }
 }
