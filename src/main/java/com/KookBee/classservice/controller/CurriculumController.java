@@ -39,8 +39,12 @@ public class CurriculumController {
         return curriculumService.deleteCurriculum(curriculumIds);
     }
 
-    @GetMapping("/skillset/{id}")
-    public Curriculum getCurriculumByCurriculumId(@PathVariable Long id) {
-        return curriculumService.getCurriculum(id);
+    @GetMapping("/curriculumList")
+    public List<Curriculum> getCurriculumByUserId() {
+        return curriculumService.getCurriculum();
+    }
+    @GetMapping("/{curriculumId}")
+    public Curriculum getCurriculumByCurriculumId(@PathVariable Long curriculumId) {
+        return curriculumService.getCurriculumByCurriculumId(curriculumId);
     }
 }
