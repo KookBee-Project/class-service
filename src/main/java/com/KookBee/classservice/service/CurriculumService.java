@@ -5,6 +5,7 @@ import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.entity.SkillSet;
+import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.enums.EStatus;
 import com.KookBee.classservice.domain.request.CurriculumEditRequest;
 import com.KookBee.classservice.domain.request.CurriculumInsertRequest;
@@ -13,6 +14,7 @@ import com.KookBee.classservice.domain.response.ManagerCurriculumListResponse;
 import com.KookBee.classservice.domain.response.TeacherCurriculumListResponse;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.CurriculumRepository;
+import com.KookBee.classservice.repository.StudentBootcampRepository;
 import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ public class CurriculumService {
     private final CurriculumRepository curriculumRepository;
     private final BootcampRepository bootcampRepository;
     private final UserServiceClient userServiceClient;
+    private final StudentBootcampRepository studentBootcampRepository;
     private final JwtService jwtService;
 
     public List<Curriculum> insertCurriculum (List<CurriculumInsertRequest> request) {
@@ -92,5 +95,19 @@ public class CurriculumService {
         List<Curriculum> curriculumList = curriculumRepository.findAllByTeacherIdAndBootcampId(userId, bootcampId);
         List<TeacherCurriculumListResponse> responses = curriculumList.stream().map(TeacherCurriculumListResponse::new).collect(Collectors.toList());
         return responses;
+    }
+
+    public List<Curriculum> getCurriculum () {
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        List<StudentBootcamp> studentBootcamps = studentBootcampRepository.findListByStudentId(userId);
+        List<Curriculum> curriculumList = new ArrayList<>();
+        studentBootcamps.stream().map(e ->
+                curriculumList.addAll(e.getBootcamp().getCurriculumList())
+                );
+        return curriculumList;
+    }
+    public Curriculum getCurriculumByCurriculumId(Long curriculumId) {
+        return curriculumRepository.findById(curriculumId).orElse(null);
+
     }
 }
