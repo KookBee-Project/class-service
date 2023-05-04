@@ -74,7 +74,7 @@ public class BootcampService {
     }
     public List<StudentBootcampListResponse> getBootcampByStudentId() {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        List<StudentBootcamp> findByStudentId = studentBootcampRepository.findByStudentId(userId);
+        List<StudentBootcamp> findByStudentId = studentBootcampRepository.findListByStudentId(userId);
         List<StudentBootcampListResponse> responses = findByStudentId.stream().map(el -> {
             String campusName = userServiceClient.getCampusById(el.getBootcamp().getCampusId()).getCampusName();
             return new StudentBootcampListResponse(el.getBootcamp(), campusName);
