@@ -22,4 +22,10 @@ public interface CurriculumRepository extends JpaRepository<Curriculum,Long> {
     List<Curriculum> findByBootcamp(Bootcamp bootcamp);
 
     List<Curriculum> findAllByTeacherIdAndBootcampId(Long userId, Long bootcampId);
+    @Query("select c from Curriculum c " +
+            "join fetch c.bootcamp b " +
+            "join fetch b.studentBootcampList sb " +
+            "where sb.studentId = :userId")
+    List<Curriculum> get(@Param("userId") Long userId);
+
 }

@@ -20,6 +20,6 @@ public interface BootcampRepository extends JpaRepository <Bootcamp,Long> {
 
     @Query("select b,sb from Bootcamp b join b.studentBootcampList sb " +
             "where sb.studentId = :studentId")
-    List<Bootcamp> findByStudentId(Long studentId);
+    List<Bootcamp> findByStudentId(@Param("studentId") Long studentId);
 
 }

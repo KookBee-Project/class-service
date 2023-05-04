@@ -97,14 +97,14 @@ public class CurriculumService {
         return responses;
     }
 
-    public List<Curriculum> getCurriculum () {
-        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        List<StudentBootcamp> studentBootcamps = studentBootcampRepository.findListByStudentId(userId);
-        List<Curriculum> curriculumList = new ArrayList<>();
-        studentBootcamps.stream().map(e ->
-                curriculumList.addAll(e.getBootcamp().getCurriculumList())
-                );
-        return curriculumList;
+    public List<Curriculum> getCurriculum (Long userId) {
+//        List<StudentBootcamp> studentBootcamps = studentBootcampRepository.findListByStudentId(userId);
+//        List<Curriculum> curriculumList = new ArrayList<>();
+//        studentBootcamps.stream().map(e ->
+//                curriculumList.addAll(e.getBootcamp().getCurriculumList())
+//                );
+//        curriculumRepository.get(userId);
+        return curriculumRepository.get(userId);
     }
     public Curriculum getCurriculumByCurriculumId(Long curriculumId) {
         return curriculumRepository.findById(curriculumId).orElse(null);

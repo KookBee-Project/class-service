@@ -133,9 +133,7 @@ public class BootcampService {
     public List<BootcampNameListResponse> getBootcampNameList(){
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         List<Bootcamp> byStudentId = bootcampRepository.findByStudentId(userId);
-        List<BootcampNameListResponse> responses = byStudentId.stream().map(el->{
-                return new BootcampNameListResponse(el);
-        }).toList();
+        List<BootcampNameListResponse> responses = byStudentId.stream().map(BootcampNameListResponse::new).toList();
         return responses;
     }
 }
