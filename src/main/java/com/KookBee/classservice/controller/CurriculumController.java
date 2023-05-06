@@ -5,7 +5,7 @@ import com.KookBee.classservice.domain.entity.SkillSet;
 import com.KookBee.classservice.domain.request.CurriculumEditRequest;
 import com.KookBee.classservice.domain.request.CurriculumInsertRequest;
 import com.KookBee.classservice.domain.response.ManagerCurriculumListResponse;
-import com.KookBee.classservice.domain.response.TeacherCurriculumListResponse;
+import com.KookBee.classservice.domain.response.TeacherAndStudentCurriculumListResponse;
 import com.KookBee.classservice.service.CurriculumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ public class CurriculumController {
     }
 
     @GetMapping("/teacher/{bootcampId}")
-    public List<TeacherCurriculumListResponse> getCurriculumList(@PathVariable("bootcampId") Long bootcampId){
+    public List<TeacherAndStudentCurriculumListResponse> getCurriculumList(@PathVariable("bootcampId") Long bootcampId){
         return curriculumService.getTeacherCurriculumByBootcampId(bootcampId);
     }
 
@@ -46,7 +46,7 @@ public class CurriculumController {
     }
 
     @GetMapping("/curriculumList/{userId}")
-    public List<Curriculum> getCurriculumByUserId(@PathVariable("userId") Long userId) {
+    public List<TeacherAndStudentCurriculumListResponse> getCurriculumByUserId(@PathVariable("userId") Long userId) {
         return curriculumService.getCurriculum(userId);
     }
     @GetMapping("/{curriculumId}")
