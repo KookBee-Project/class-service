@@ -14,18 +14,20 @@ import lombok.Setter;
 public class TeacherAndStudentCurriculumListResponse {
     private Long curriculumId;
     private String curriculumName;
+    private Long teacherId;
     private String curriculumStartDate;
     private String curriculumEndDate;
-    private SkillSet skillSet;
+    private String skillSetName;
     private String bootcampTitle;
 
 
     public TeacherAndStudentCurriculumListResponse(Curriculum curriculum) {
         this.curriculumId = curriculum.getId();
         this.curriculumName = curriculum.getCurriculumName();
+        this.teacherId = curriculum.getTeacherId();
         this.curriculumStartDate = curriculum.getCurriculumStartDate();
         this.curriculumEndDate = curriculum.getCurriculumEndDate();
-        this.skillSet = curriculum.getSkillSet();
+        this.skillSetName = curriculum.getSkillSet().getSkillSetName();
         if(curriculum.getBootcamp().getBootcampTitle().length() <= 10)
             this.bootcampTitle = curriculum.getBootcamp().getBootcampTitle();
         else
