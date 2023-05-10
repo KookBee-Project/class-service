@@ -49,7 +49,7 @@ public class CurriculumController {
     public List<TeacherAndStudentCurriculumListResponse> getCurriculumByUserId(@PathVariable("userId") Long userId) {
         return curriculumService.getCurriculum(userId);
     }
-    @GetMapping("/{curriculumId}")
+    @GetMapping("/list/{curriculumId}")
     public Curriculum getCurriculumByCurriculumId(@PathVariable Long curriculumId) {
         return curriculumService.getCurriculumByCurriculumId(curriculumId);
     }
