@@ -34,7 +34,6 @@ public class StudentHomeworkListResponse {
         else this.bootcampTitle = bootcampTitle.substring(0, 9) + "...";
         if(homeworkQuestion.getCurriculum().getCurriculumName().length() <= 10) this.curriculumName = homeworkQuestion.getCurriculum().getCurriculumName();
         else this.curriculumName = homeworkQuestion.getCurriculum().getCurriculumName().substring(0, 9);
-        this.curriculumName = homeworkQuestion.getCurriculum().getCurriculumName();
         this.skillSetName = skillSet.getSkillSetName();
         this.homeworkQuestionTitle = homeworkQuestion.getHomeworkQuestionTitle();
         this.homeworkQuestionStartDate = homeworkQuestion.getHomeworkQuestionStartDate();

@@ -120,7 +120,6 @@ public class BootcampService {
 
     public StudentBootcamp addBootcamp(BootcampCodeRequest request) throws BootcampUserCheckException, BootcampCodeCheckException {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        System.out.println(request.getBootcampCode());
         Optional<Bootcamp> findByBootcampCode = bootcampRepository.findByBootcampEnterCode(request.getBootcampCode());
         Bootcamp bootcamp = findByBootcampCode.orElseThrow(BootcampCodeCheckException::new);
         Optional<StudentBootcamp> check = studentBootcampRepository.findByBootcampAndStudentId(bootcamp, userId);
