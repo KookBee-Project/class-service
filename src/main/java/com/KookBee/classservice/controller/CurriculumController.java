@@ -4,6 +4,7 @@ import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.entity.SkillSet;
 import com.KookBee.classservice.domain.request.CurriculumEditRequest;
 import com.KookBee.classservice.domain.request.CurriculumInsertRequest;
+import com.KookBee.classservice.domain.response.CurriculumCalendarResponse;
 import com.KookBee.classservice.domain.response.ManagerCurriculumListResponse;
 import com.KookBee.classservice.domain.response.TeacherAndStudentCurriculumListResponse;
 import com.KookBee.classservice.service.CurriculumService;
@@ -52,5 +53,9 @@ public class CurriculumController {
     @GetMapping("/list/{curriculumId}")
     public Curriculum getCurriculumByCurriculumId(@PathVariable Long curriculumId) {
         return curriculumService.getCurriculumByCurriculumId(curriculumId);
+    }
+    @GetMapping("/student/{bootcampId}")
+    public List<CurriculumCalendarResponse> getCurriculumForCalendar(@PathVariable("bootcampId") Long bootcampId){
+        return curriculumService.getCurriculumForCalendar(bootcampId);
     }
 }
