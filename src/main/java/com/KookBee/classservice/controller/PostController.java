@@ -1,10 +1,11 @@
 package com.KookBee.classservice.controller;
 
-import com.KookBee.classservice.domain.entity.Post;
 import com.KookBee.classservice.domain.enums.EPostType;
 import com.KookBee.classservice.domain.request.PostCreateRequest;
 import com.KookBee.classservice.domain.request.PostEditRequest;
 import com.KookBee.classservice.domain.request.PostUpdatePostTypeRequest;
+import com.KookBee.classservice.domain.response.notification.PostDetailResponse;
+import com.KookBee.classservice.domain.response.notification.PostListResponse;
 import com.KookBee.classservice.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,26 +13,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/class/notification")
+@RequestMapping("/class/post")
 @RequiredArgsConstructor
-public class NotificationController {
+public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public Post createNotificationPost(@RequestBody PostCreateRequest request) {
+    public PostDetailResponse createNotificationPost(@RequestBody PostCreateRequest request) {
         return postService.createPost(request);
     }
     @GetMapping("/{postId}")
-    public Post getPostDetail(@PathVariable("postId") Long postId){
+    public PostDetailResponse getPostDetail(@PathVariable("postId") Long postId){
         return postService.findOnePost(postId);
 
     }
     @GetMapping("/{bootcampId}/{postType}")
-    public List<Post> getPostList(@PathVariable("bootcampId") Long id,@PathVariable("postType") EPostType postType) {
-        return postService.findAllNotificationPost(id, postType);
+    public List<PostListResponse> getPostList(@PathVariable("bootcampId") Long id, @PathVariable("postType") EPostType postType) {
+        return postService.findAllPostByPostType(id, postType);
     }
     @DeleteMapping("/{postId}")
-    public String deleteNotification(@PathVariable Long postId){
+    public PostDetailResponse deleteNotification(@PathVariable Long postId){
         return postService.deletePost(postId);
     }
     @PutMapping("/{postId}/status")
