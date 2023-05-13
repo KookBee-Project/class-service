@@ -19,4 +19,24 @@ public class ExceptionConfig {
     public ResponseEntity<String> DayOffDateCheckException(DayOffDateCheckException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(DayOffUseDaysCheckException.class)
+    public ResponseEntity<String> DayOffUseDaysCheckException(DayOffUseDaysCheckException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DayOffNoneCurriculumException.class)
+    public ResponseEntity<String> DayOffNoneCurriculumException(DayOffNoneCurriculumException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BootcampCodeCheckException.class)
+    public ResponseEntity<String> BootcampCodeCheckException(BootcampCodeCheckException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BootcampUserCheckException.class)
+    public ResponseEntity<String> BootcampUserCheckException(BootcampUserCheckException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

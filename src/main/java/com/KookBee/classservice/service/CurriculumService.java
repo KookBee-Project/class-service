@@ -5,17 +5,21 @@ import com.KookBee.classservice.client.UserServiceClient;
 import com.KookBee.classservice.domain.entity.Bootcamp;
 import com.KookBee.classservice.domain.entity.Curriculum;
 import com.KookBee.classservice.domain.entity.SkillSet;
+import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.enums.EStatus;
 import com.KookBee.classservice.domain.request.CurriculumEditRequest;
 import com.KookBee.classservice.domain.request.CurriculumInsertRequest;
-import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
+import com.KookBee.classservice.domain.response.CurriculumCalendarResponse;
 import com.KookBee.classservice.domain.response.ManagerCurriculumListResponse;
+import com.KookBee.classservice.domain.response.TeacherAndStudentCurriculumListResponse;
+import com.KookBee.classservice.domain.response.TeacherHomeworkListResponse;
 import com.KookBee.classservice.repository.BootcampRepository;
 import com.KookBee.classservice.repository.CurriculumRepository;
+import com.KookBee.classservice.repository.StudentBootcampRepository;
+import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +32,8 @@ public class CurriculumService {
     private final CurriculumRepository curriculumRepository;
     private final BootcampRepository bootcampRepository;
     private final UserServiceClient userServiceClient;
+    private final StudentBootcampRepository studentBootcampRepository;
+    private final JwtService jwtService;
 
     public List<Curriculum> insertCurriculum (List<CurriculumInsertRequest> request) {
        List<Curriculum> curriculumList =  request.stream().map(el-> {
@@ -82,5 +88,35 @@ public class CurriculumService {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public List<TeacherAndStudentCurriculumListResponse> getTeacherCurriculumByBootcampId(Long bootcampId) {
+        Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+        List<Curriculum> curriculumList = curriculumRepository.findAllByTeacherIdAndBootcampId(userId, bootcampId);
+        return curriculumList.stream().map(TeacherAndStudentCurriculumListResponse::new).collect(Collectors.toList());
+    }
+
+    public List<TeacherAndStudentCurriculumListResponse> getCurriculum (Long userId) {
+//        List<StudentBootcamp> studentBootcamps = studentBootcampRepository.findListByStudentId(userId);
+//        List<Curriculum> curriculumList = new ArrayList<>();
+//        studentBootcamps.stream().map(e ->
+//                curriculumList.addAll(e.getBootcamp().getCurriculumList())
+//                );
+//        curriculumRepository.get(userId);
+        List<Curriculum> curriculum = curriculumRepository.get(userId);
+        return curriculum.stream().map(TeacherAndStudentCurriculumListResponse::new).toList();
+    }
+    public Curriculum getCurriculumByCurriculumId(Long curriculumId) {
+        return curriculumRepository.findById(curriculumId).orElse(null);
+
+    }
+
+    public List<CurriculumCalendarResponse> getCurriculumForCalendar(Long bootcampId) {
+        Bootcamp bootcamp = new Bootcamp(bootcampId);
+        List<Curriculum> curriculumList = curriculumRepository.findByBootcamp(bootcamp);
+        return curriculumList.stream().map(el -> {
+            String teacherName = userServiceClient.getTeacherByTeacherId(el.getTeacherId()).getUserName();
+            return new CurriculumCalendarResponse(el, teacherName);
+        }).collect(Collectors.toList());
     }
 }

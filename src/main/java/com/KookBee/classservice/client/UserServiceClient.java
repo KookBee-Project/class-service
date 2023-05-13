@@ -1,8 +1,10 @@
 package com.KookBee.classservice.client;
 
+import com.KookBee.classservice.client.dto.StudentIdAndStudentNameDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -18,5 +20,4 @@ public interface UserServiceClient {
 
     @GetMapping("/user/admin/manager/teacher/{teacherId}")
     User getTeacherByTeacherId(@PathVariable("teacherId") Long teacherId);
-
 }

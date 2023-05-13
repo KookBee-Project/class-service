@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -15,9 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString
 public class Curriculum {
-    @JsonIgnore
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "curriculum_id")
     private Long id;
     @JsonIgnore
@@ -32,9 +33,12 @@ public class Curriculum {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "skill_set_id")
     private SkillSet skillSet;
+    @Enumerated(EnumType.STRING)
     private EStatus curriculumStatus;
     @OneToMany(mappedBy = "curriculum", fetch = FetchType.LAZY)
     private List<DayOff> dayOffList;
+    @OneToMany(mappedBy = "curriculum", fetch = FetchType.LAZY)
+    private List<HomeworkQuestion> homeworkQuestions;
 
     public Curriculum(CurriculumInsertRequest request, Bootcamp bootcamp, Long id, SkillSet skillSet) {
         this.curriculumName = request.getCurriculumName();

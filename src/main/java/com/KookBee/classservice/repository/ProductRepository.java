@@ -10,4 +10,8 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByStudentIdAndProductType(Long studentId, EProductType productType);
 
+    List<Product> findByBootcampId(Long bootcampId);
+
+    List<Long> findProductItemIdByBootcampId(Long bootcampId);
+
 }
