@@ -10,4 +10,8 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment,Long> {
     @Query("select count(c) from Comment c where c.post.id = :postId")
     Integer answerCount(@Param("postId") Long postId);
+  
 }
+
+
+

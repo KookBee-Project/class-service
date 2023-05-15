@@ -11,10 +11,14 @@ import com.KookBee.classservice.domain.request.BootcampCodeRequest;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
+
 import com.KookBee.classservice.domain.response.BootcampNameListResponse;
 import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
 import com.KookBee.classservice.domain.response.StudentBootcampListResponse;
 import com.KookBee.classservice.domain.response.TeacherBootcampListResponse;
+
+import com.KookBee.classservice.domain.response.*;
+
 import com.KookBee.classservice.exception.BootcampCodeCheckException;
 import com.KookBee.classservice.exception.BootcampUserCheckException;
 import com.KookBee.classservice.repository.BootcampRepository;
@@ -135,4 +139,15 @@ public class BootcampService {
         List<BootcampNameListResponse> responses = byStudentId.stream().map(BootcampNameListResponse::new).toList();
         return responses;
     }
+
+    public CampusInfoResponse getCampusInfo(Long bootcampId){
+        Optional<Bootcamp> byId = bootcampRepository.findById(bootcampId);
+        Long campusId = byId.get().getCampusId();
+        Campus campusById = userServiceClient.getCampusById(campusId);
+        CampusInfoResponse response = new CampusInfoResponse();
+        response.setCampusAddress(campusById.getCampusAddress());
+        response.setCampusName((campusById.getCampusName()));
+        return response;
+    }
+
 }

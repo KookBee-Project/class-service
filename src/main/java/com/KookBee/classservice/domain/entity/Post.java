@@ -43,11 +43,12 @@ public class Post {
     private EStatus status = EStatus.PROCEEDING;
     private Long viewCount = 0L;
 
-    public Post(PostDTO dto, Long userId) {
+    public Post(PostDTO dto, Long userId, Bootcamp bootcamp) {
         this.postType = dto.getPostType();
         this.postTitle = dto.getPostTitle();
         this.postContent = dto.getPostContent();
         this.postCreateAt = LocalDate.now();
+        this.bootcamp = bootcamp;
         this.writerId = userId;
         this.fileUUID = dto.getFileUUID();
     }

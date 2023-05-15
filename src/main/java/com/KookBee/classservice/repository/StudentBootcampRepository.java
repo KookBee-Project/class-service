@@ -30,4 +30,5 @@ public interface StudentBootcampRepository extends JpaRepository<StudentBootcamp
             "order by sb.bootcamp.bootcampEndDate")
     List<String> findEndDateList(@Param("userId") Long userId,
                                  @Param("status") EStatus status);
+
 }

@@ -30,10 +30,10 @@ public class PostService {
     private final UserServiceClient userServiceClient;
 
     public PostDetailResponse createPost (PostCreateRequest request) { //QNA NOTIFICATION 둘다 이걸로 생성
-//        Long userId = 1L ; //로그인 귀찮아서 테스트용
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         PostDTO dto = new PostDTO(request);
-        Post post = new Post(dto, userId);
+        Bootcamp bootcamp = new Bootcamp(request.getBootcampId());
+        Post post = new Post(dto, userId, bootcamp);
         String userName = userServiceClient.getUserById(post.getWriterId()).getUserName();
         return new PostDetailResponse(postRepository.save(post),userName);
     }

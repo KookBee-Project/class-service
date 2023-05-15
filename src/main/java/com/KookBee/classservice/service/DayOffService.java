@@ -10,7 +10,11 @@ import com.KookBee.classservice.domain.entity.DayOff;
 import com.KookBee.classservice.domain.entity.StudentBootcamp;
 import com.KookBee.classservice.domain.request.DayOffApplyRequest;
 import com.KookBee.classservice.domain.request.DayOffStatusModifyRequest;
+
 import com.KookBee.classservice.domain.response.dayoff.*;
+
+import com.KookBee.classservice.domain.response.*;
+
 import com.KookBee.classservice.exception.DayOffDateCheckException;
 import com.KookBee.classservice.exception.DayOffNoneCurriculumException;
 import com.KookBee.classservice.exception.DayOffUseDaysCheckException;
@@ -69,6 +73,7 @@ public class DayOffService {
         } else {
            throw new DayOffUseDaysCheckException();
         }
+
     }
 
     // 남은 휴가일수 구하기---------------------------------
@@ -84,6 +89,7 @@ public class DayOffService {
         return remainingDayOff;
     }
     // -------------------------------------------------
+
     public StudentDayOffResponse getDayOff(Long bootcampId){
         // 토큰에서 userId가져오기
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();

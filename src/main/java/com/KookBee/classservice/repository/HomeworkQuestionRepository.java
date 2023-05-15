@@ -32,4 +32,5 @@ public interface HomeworkQuestionRepository extends JpaRepository<HomeworkQuesti
             "WHERE b.id = :bootcampId " +
             "ORDER BY hq.homeworkQuestionEndDate DESC")
     List<HomeworkQuestion> findByBootcampIdOrderByEndDate(@Param("bootcampId") Long bootcampId);
+
 }
