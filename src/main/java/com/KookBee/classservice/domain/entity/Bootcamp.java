@@ -40,7 +40,6 @@ public class Bootcamp {
     @OneToMany(mappedBy = "bootcamp", fetch =FetchType.LAZY)
     private List<Post> postList;
 
-
     public Bootcamp(BootcampDTO dto, Long userId) {
         this.companyId = dto.getCompanyId();
         this.campusId = dto.getCampusId();
