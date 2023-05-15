@@ -39,4 +39,16 @@ public class ExceptionConfig {
     public ResponseEntity<String> BootcampUserCheckException(BootcampUserCheckException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(RestaurantCheckException.class)
+    public ResponseEntity<String> restaurantCheckException(RestaurantCheckException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ParticipateException.class)
+    public ResponseEntity<String> ParticipateException(ParticipateException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+
 }

@@ -5,10 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Vector;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class PutProductItemsRequest {
-    private Long productItemId;
-    private Integer productCount;
+public class PostRestaurantInfoRequest {
+    private String restaurantName;
+    private Double restaurantPositionLa;
+    private Double restaurantPositionMa;
 }
