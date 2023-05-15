@@ -57,28 +57,9 @@ public class DayOffController {
         dayOffService.putDayOffStatus(dayOffId, request);
     }
 
-    @GetMapping("/{bootcampId}")
+    @GetMapping("/list/{bootcampId}")
     public  List<StudentDayOffListResponse> getDayOffList(@PathVariable("bootcampId") Long bootcampId) {
         return dayOffService.getDayOffList(bootcampId);
     }
 
-    @GetMapping("/admin/manager")
-    public List<DayOffListForManagerResponse> getDayOffListForManager(){
-        return dayOffService.getDayOffListForManager();
-    }
-
-    @GetMapping("/admin/teacher")
-    public List<DayOffListForTeacherResponse> getDayOffListForTeacher(){
-        return dayOffService.getDayOffListForTeacher();
-    }
-
-    @GetMapping("/admin/{dayOffId}")
-    public DayOffDetailResponse getDayOffDetail(@PathVariable Long dayOffId){
-        return dayOffService.getDayOffDetail(dayOffId);
-    }
-
-    @PutMapping("/admin/{dayOffId}")
-    public void putDayOffStatusModify(@PathVariable Long dayOffId, @RequestBody DayOffStatusModifyRequest request){
-        dayOffService.putDayOffStatus(dayOffId, request);
-    }
 }

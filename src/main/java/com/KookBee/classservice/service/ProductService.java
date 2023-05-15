@@ -122,27 +122,6 @@ public class ProductService {
         return responses;
     }
 
-    // Student List 조회
-    public List<StudentListResponse> getStudentList(Long bootcampId){
-        Bootcamp bootcamp = new Bootcamp(bootcampId);
-        List<StudentBootcamp> studentIdByBootcampId = studentBootcampRepository.findByBootcamp(bootcamp);
-        List<StudentListResponse> responses = studentIdByBootcampId.stream().map(el->{
-            User userById = userServiceClient.getUserById(el.getStudentId());
-            return new StudentListResponse(el, userById);
-        }).toList();
-        return responses;
-    }
-
-    public List<ProductListResponse> getProductItemList(Long bootcampId){
-        Bootcamp bootcamp = bootcampRepository.findCampusIdById(bootcampId);
-        Long campusId = bootcamp.getCampusId();
-        Campus campus = userServiceClient.getCampusById(campusId);
-        Long managerId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        List<ProductItems> byCampusNameAndManagerId = productItemsRepository.findByCampusNameAndManagerId(campus.getCampusName(), managerId);
-        List<ProductListResponse> responses = byCampusNameAndManagerId.stream().map(ProductListResponse::new).collect(Collectors.toList());
-        return responses;
-    }
-
     public Integer getProductItemCount(Long productItemId){
         Optional<ProductItems> byProductItemId = productItemsRepository.findById(productItemId);
         if(byProductItemId.isPresent()){
