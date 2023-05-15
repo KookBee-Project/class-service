@@ -82,18 +82,22 @@ public class ProductService {
     public List<OfferProductResponse> getOfferProductService(){
         Long studentId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         List<Product> product = productRepository.findByStudentIdAndProductType(studentId, EProductType.OFFER);
-        List<OfferProductResponse> responses = product.stream()
-                .map(OfferProductResponse::new)
-                .collect(Collectors.toList());
+        List<OfferProductResponse> responses = product.stream().map(el -> {
+            String bootcampTitle = bootcampRepository.findById(el.getBootcampId()).get().getBootcampTitle();
+            String productItemName =  productItemsRepository.findById(el.productItemId).get().getProductItemName();
+            return new OfferProductResponse(el, bootcampTitle, productItemName);
+        }).toList();
         return responses;
     }
     // Student 물품 대여 내역 조회
     public List<RentalProductResponse> getRentalProductService(){
         Long studentId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         List<Product> product = productRepository.findByStudentIdAndProductType(studentId, EProductType.RENTAL);
-        List<RentalProductResponse> responses = product.stream()
-                .map(RentalProductResponse::new)
-                .collect(Collectors.toList());
+        List<RentalProductResponse> responses = product.stream().map(el -> {
+            String bootcampTitle = bootcampRepository.findById(el.getBootcampId()).get().getBootcampTitle();
+            String productItemName =  productItemsRepository.findById(el.productItemId).get().getProductItemName();
+            return new RentalProductResponse(el, bootcampTitle, productItemName);
+        }).toList();
         return responses;
     }
 
@@ -158,7 +162,9 @@ public class ProductService {
     public String putProductItemCounts(PutProductItemsRequest request){
         Optional<ProductItems> byId = productItemsRepository.findById(request.getProductItemId());
         ProductItems productItems = byId.orElseThrow(NullPointerException::new);
-        productItems.setProductItemCounts(productItems.getProductItemCounts() - request.getProductItemCounts());
+        Integer productItemCounts = productItems.getProductItemCounts();
+        Integer minusCounts = request.getProductCount();
+        productItems.setProductItemCounts(productItemCounts - minusCounts);
         productItemsRepository.save(productItems);
         return "등록이 완료되었습니다.";
     }

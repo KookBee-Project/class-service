@@ -1,15 +1,14 @@
-package com.KookBee.classservice.client;
+package com.KookBee.classservice.domain.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Campus {
-    private Long id;
+@Getter @Setter
+public class CampusInfoResponse {
     private String campusName;
-
     private String campusAddress;
 }
