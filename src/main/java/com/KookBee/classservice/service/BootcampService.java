@@ -11,10 +11,14 @@ import com.KookBee.classservice.domain.request.BootcampCodeRequest;
 import com.KookBee.classservice.domain.request.BootcampEditRequest;
 import com.KookBee.classservice.domain.request.BootcampInsertRequest;
 import com.KookBee.classservice.domain.request.BootcampStatusChangeRequest;
+
 import com.KookBee.classservice.domain.response.BootcampNameListResponse;
 import com.KookBee.classservice.domain.response.ManagerBootcampListResponse;
 import com.KookBee.classservice.domain.response.StudentBootcampListResponse;
 import com.KookBee.classservice.domain.response.TeacherBootcampListResponse;
+
+import com.KookBee.classservice.domain.response.*;
+
 import com.KookBee.classservice.exception.BootcampCodeCheckException;
 import com.KookBee.classservice.exception.BootcampUserCheckException;
 import com.KookBee.classservice.repository.BootcampRepository;
@@ -24,6 +28,9 @@ import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,10 +81,16 @@ public class BootcampService {
     }
     public List<StudentBootcampListResponse> getBootcampByStudentId() {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        List<StudentBootcamp> findByStudentId = studentBootcampRepository.findByStudentId(userId);
+        List<StudentBootcamp> findByStudentId = studentBootcampRepository.findListByStudentId(userId);
         List<StudentBootcampListResponse> responses = findByStudentId.stream().map(el -> {
             String campusName = userServiceClient.getCampusById(el.getBootcamp().getCampusId()).getCampusName();
-            return new StudentBootcampListResponse(el.getBootcamp(), campusName);
+            LocalDate bootcampStartDateLD = LocalDate.parse(
+                    el.getBootcamp().getBootcampStartDate(), DateTimeFormatter.ISO_DATE);
+            LocalDate bootcampEndDateLD = LocalDate.parse(
+                    el.getBootcamp().getBootcampEndDate(), DateTimeFormatter.ISO_DATE);
+            float attendanceRate =
+                    Math.round((float)ChronoUnit.DAYS.between(bootcampStartDateLD, LocalDate.now()) / (float) ChronoUnit.DAYS.between(bootcampStartDateLD, bootcampEndDateLD) * 100);
+            return new StudentBootcampListResponse(el.getBootcamp(), campusName, attendanceRate);
         }).toList();
 
         return responses;
@@ -120,7 +133,6 @@ public class BootcampService {
 
     public StudentBootcamp addBootcamp(BootcampCodeRequest request) throws BootcampUserCheckException, BootcampCodeCheckException {
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-        System.out.println(request.getBootcampCode());
         Optional<Bootcamp> findByBootcampCode = bootcampRepository.findByBootcampEnterCode(request.getBootcampCode());
         Bootcamp bootcamp = findByBootcampCode.orElseThrow(BootcampCodeCheckException::new);
         Optional<StudentBootcamp> check = studentBootcampRepository.findByBootcampAndStudentId(bootcamp, userId);
@@ -133,9 +145,18 @@ public class BootcampService {
     public List<BootcampNameListResponse> getBootcampNameList(){
         Long userId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
         List<Bootcamp> byStudentId = bootcampRepository.findByStudentId(userId);
-        List<BootcampNameListResponse> responses = byStudentId.stream().map(el->{
-                return new BootcampNameListResponse(el);
-        }).toList();
+        List<BootcampNameListResponse> responses = byStudentId.stream().map(BootcampNameListResponse::new).toList();
         return responses;
     }
+
+    public CampusInfoResponse getCampusInfo(Long bootcampId){
+        Optional<Bootcamp> byId = bootcampRepository.findById(bootcampId);
+        Long campusId = byId.get().getCampusId();
+        Campus campusById = userServiceClient.getCampusById(campusId);
+        CampusInfoResponse response = new CampusInfoResponse();
+        response.setCampusAddress(campusById.getCampusAddress());
+        response.setCampusName((campusById.getCampusName()));
+        return response;
+    }
+
 }

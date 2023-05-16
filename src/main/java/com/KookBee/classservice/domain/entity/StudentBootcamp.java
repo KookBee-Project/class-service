@@ -5,12 +5,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-
+@ToString
 public class StudentBootcamp {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_bootcamp_id")

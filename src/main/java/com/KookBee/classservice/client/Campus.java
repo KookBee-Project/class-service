@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class Campus {
     private Long id;
     private String campusName;
+
+    private String campusAddress;
 }

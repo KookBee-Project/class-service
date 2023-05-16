@@ -9,21 +9,21 @@ import java.util.Date;
 
 public class RentalProductResponse {
     private Long id;
-    private Long bootcampId;
+    public String bootcampTitle;
     public Long studentId;
     public LocalDate productRentalStartDate;
     public LocalDate productRentalEndDate;
-    public Long productItemId;
+    public String productItemName;
     public EProductType productType;
     public Integer productCount;
 
-    public RentalProductResponse(Product product){
+    public RentalProductResponse(Product product, String bootcampTitle, String productItemName){
         this.id = product.getId();
-        this.bootcampId = product.getBootcampId();
+        this.bootcampTitle = bootcampTitle;
         this.studentId = product.getStudentId();
         this.productRentalStartDate = product.getProductRentalStartDate();
         this.productRentalEndDate = product.getProductRentalEndDate();
-        this.productItemId = product.getProductItemId();
+        this.productItemName = productItemName;
         this.productType = product.getProductType();
         this.productCount = product.getProductCount();
     }

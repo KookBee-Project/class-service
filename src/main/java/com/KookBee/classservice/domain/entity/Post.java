@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -42,12 +41,14 @@ public class Post {
     private String fileUUID; // uuid 만 저장
     @Enumerated(EnumType.STRING)
     private EStatus status = EStatus.PROCEEDING;
+    private Long viewCount = 0L;
 
-    public Post(PostDTO dto, Long userId) {
+    public Post(PostDTO dto, Long userId, Bootcamp bootcamp) {
         this.postType = dto.getPostType();
         this.postTitle = dto.getPostTitle();
         this.postContent = dto.getPostContent();
         this.postCreateAt = LocalDate.now();
+        this.bootcamp = bootcamp;
         this.writerId = userId;
         this.fileUUID = dto.getFileUUID();
     }
@@ -63,6 +64,9 @@ public class Post {
         this.postContent=request.getPostContent();
         this.postTitle=request.getPostTitle();
         return this;
+    }
+    public void incrementViewCount() {
+        this.viewCount=viewCount+1;
     }
 }
 

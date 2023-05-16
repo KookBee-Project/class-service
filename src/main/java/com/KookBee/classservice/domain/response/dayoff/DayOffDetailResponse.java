@@ -1,4 +1,4 @@
-package com.KookBee.classservice.domain.response;
+package com.KookBee.classservice.domain.response.dayoff;
 
 import com.KookBee.classservice.domain.dto.DayOffDetailDTO;
 import com.KookBee.classservice.domain.enums.EDayOffStatus;

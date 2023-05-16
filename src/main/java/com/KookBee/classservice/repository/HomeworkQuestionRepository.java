@@ -24,4 +24,13 @@ public interface HomeworkQuestionRepository extends JpaRepository<HomeworkQuesti
             "JOIN c.bootcamp b " +
             "WHERE b.id = :bootcampId")
     List<HomeworkQuestion> findByBootcampId(@Param("bootcampId") Long bootcampId);
+
+    @Query("SELECT hq, c, b " +
+            "FROM HomeworkQuestion hq " +
+            "JOIN hq.curriculum c " +
+            "JOIN c.bootcamp b " +
+            "WHERE b.id = :bootcampId " +
+            "ORDER BY hq.homeworkQuestionEndDate DESC")
+    List<HomeworkQuestion> findByBootcampIdOrderByEndDate(@Param("bootcampId") Long bootcampId);
+
 }

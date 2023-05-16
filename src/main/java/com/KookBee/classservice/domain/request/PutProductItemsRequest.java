@@ -10,5 +10,5 @@ import lombok.Setter;
 @Getter @Setter
 public class PutProductItemsRequest {
     private Long productItemId;
-    private Integer productItemCounts;
+    private Integer productCount;
 }
