@@ -53,6 +53,10 @@ public class EatingTogetherService {
         EatingTogether eatingTogether = new EatingTogether(request);
         eatingTogether.setUserId(userId);
         eatingTogetherRepository.save(eatingTogether);
+        EatingParty eatingParty = new EatingParty();
+        eatingParty.setEatingTogether(eatingTogether);
+        eatingParty.setUserId(userId);
+        eatingPartyRepository.save(eatingParty);
         return "등록에 성공하였습니다.";
     }
 
