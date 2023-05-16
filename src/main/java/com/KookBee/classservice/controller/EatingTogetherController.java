@@ -30,7 +30,6 @@ public class EatingTogetherController {
 
     @PostMapping
     public String postWrite(@RequestBody EatingTogetherRequest request){
-        System.out.println(request);
         return eatingTogetherService.postWrite(request);
     }
 
