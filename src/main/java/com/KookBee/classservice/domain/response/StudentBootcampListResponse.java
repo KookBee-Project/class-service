@@ -20,9 +20,10 @@ public class StudentBootcampListResponse {
     private String bootcampStartDate;
     private String bootcampEndDate;
     private String campusName;
+    private Float attendanceRate;
     private EStatus curriculumStatus;
 
-    public StudentBootcampListResponse(Bootcamp bootcamp, String campusName) {
+    public StudentBootcampListResponse(Bootcamp bootcamp, String campusName, float attendanceRate) {
         this.bootcampId = bootcamp.getId();
         if(bootcamp.getBootcampTitle().length() <= 10)
             this.bootcampTitle = bootcamp.getBootcampTitle();
@@ -31,6 +32,7 @@ public class StudentBootcampListResponse {
         this.bootcampStartDate = bootcamp.getBootcampStartDate();
         this.bootcampEndDate = bootcamp.getBootcampEndDate();
         this.campusName = campusName;
+        this.attendanceRate = attendanceRate;
         this.curriculumStatus = bootcamp.getBootcampStatus();
     }
 }

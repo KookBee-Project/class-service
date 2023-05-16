@@ -28,6 +28,9 @@ import com.KookBee.classservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +84,13 @@ public class BootcampService {
         List<StudentBootcamp> findByStudentId = studentBootcampRepository.findListByStudentId(userId);
         List<StudentBootcampListResponse> responses = findByStudentId.stream().map(el -> {
             String campusName = userServiceClient.getCampusById(el.getBootcamp().getCampusId()).getCampusName();
-            return new StudentBootcampListResponse(el.getBootcamp(), campusName);
+            LocalDate bootcampStartDateLD = LocalDate.parse(
+                    el.getBootcamp().getBootcampStartDate(), DateTimeFormatter.ISO_DATE);
+            LocalDate bootcampEndDateLD = LocalDate.parse(
+                    el.getBootcamp().getBootcampEndDate(), DateTimeFormatter.ISO_DATE);
+            float attendanceRate =
+                    Math.round((float)ChronoUnit.DAYS.between(bootcampStartDateLD, LocalDate.now()) / (float) ChronoUnit.DAYS.between(bootcampStartDateLD, bootcampEndDateLD) * 100);
+            return new StudentBootcampListResponse(el.getBootcamp(), campusName, attendanceRate);
         }).toList();
 
         return responses;
